@@ -1,4 +1,6 @@
-# volumes:
+volumes:
+  moneyminder:
+    external: true
 services:
   fastapi:
     environment:
