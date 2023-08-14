@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS hello_world;
 
-CREATE TABLE hello_world (
+CREATE TABLE IF NOT EXISTS hello_world (
     id SERIAL NOT NULL UNIQUE PRIMARY KEY,
     hello TEXT NOT NULL
 );

@@ -1,10 +1,13 @@
 volumes:
   moneyminder:
     external: true
+  pg-admin:
+    external: true
 services:
   fastapi:
     environment:
       CORS_HOST: http://localhost:3000
+      DATABASE_URL: postgresql://moneyminder:moneyminder@db/moneyminder
     build:
       context: api
       dockerfile: Dockerfile.dev
@@ -27,3 +30,27 @@ services:
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
       REACT_APP_API_HOST: ${REACT_APP_API_HOST}
+
+  db:
+    build:
+      context: data
+      dockerfile: Dockerfile.dev
+    volumes:
+      - moneyminder:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: moneyminder
+      POSTGRES_USER: moneyminder
+      POSTGRES_DB: moneyminder
+    ports:
+      - "15432:5432"
+
+  pg-admin:
+    image: dpage/pgadmin4
+    volumes:
+      - pg-admin:/var/lib/pgadmin
+    ports:
+      - 8082:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: me@me.com
+      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_DISABLE_POSTFIX: 1
