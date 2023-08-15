@@ -8,6 +8,10 @@ services:
     environment:
       CORS_HOST: http://localhost:3000
       DATABASE_URL: postgresql://moneyminder:moneyminder@db/moneyminder
+      WAIT_HOSTS: db:5432
+      WAIT_BEFORE: 5
+      WAIT_TIMEOUT: 60
+      SIGNING_KEY: PLACEHOLDER
     build:
       context: api
       dockerfile: Dockerfile.dev
