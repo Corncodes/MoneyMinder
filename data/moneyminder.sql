@@ -1,35 +1,33 @@
-DROP TABLE IF EXISTS hello_world;
 DROP TABLE IF EXISTS accounts;
 DROP TABLE IF EXISTS budgets;
-DROP TABLE IF EXISTS expense_item;
-
-CREATE TABLE IF NOT EXISTS hello_world (
-    id SERIAL NOT NULL UNIQUE PRIMARY KEY,
-    hello TEXT NOT NULL
-);
+DROP TABLE IF EXISTS expense_items;
 
 CREATE TABLE IF NOT EXISTS accounts (
-    id SERIAL NOT NULL UNIQUE PRIMARY KEY,
-    first_name TEXT NOT NULL,
-    last_name TEXT NOT NULL,
-    email TEXT NOT NULL UNIQUE,
-    hashed_password TEXT NOT NULL
+  id SERIAL NOT NULL UNIQUE PRIMARY KEY,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
+  hashed_password TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS  budgets (
+CREATE TABLE IF NOT EXISTS budgets (
   id SERIAL NOT NULL PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
   primary_budget BOOLEAN NOT NULL,
+  complete BOOLEAN DEFAULT FALSE,
   monthly_income INT NOT NULL,
-  monthly_spending_total INT NOT NULL,
-  monthly_balance INT NOT NULL,
+  monthly_spending_total INT,
+  monthly_balance INT,
   accounts_id INT NOT NULL REFERENCES accounts(id)
 );
 
-
-
-INSERT INTO hello_world VALUES
-  (1, 'Hello World!');
+CREATE TABLE IF NOT EXISTS expense_items (
+  id SERIAL NOT NULL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  amount INT NOT NULL,
+  order INT,
+  budget_id INT NOT NULL REFERENCES budgets(id)
+);
 
 INSERT INTO accounts VALUES
   (100, 'user', '#1', 'user1@email.com', 'oasifjpeokj;alkfje3207'),
@@ -37,7 +35,25 @@ INSERT INTO accounts VALUES
   (102, 'user', '#3', 'user3@email.com', 'oasifjpeokj;alkgje3207');
 
 INSERT INTO budgets VALUES
-  (100, 'a-b-one', TRUE, 8000, 6000, 2000, 100),
-  (101, 'a-b-two', FALSE, 800, 600, 200, 100),
-  (102, 'b-b-one', TRUE, 10000, 6000, 4000, 101),
-  (103, 'c-b-one', TRUE, 4000, 3000, 1000, 102);
+  (100, 'a-b-one', TRUE, TRUE, 8000, 6000, 2000, 100),
+  (101, 'a-b-two', FALSE, TRUE, 800, 600, 200, 100),
+  (102, 'b-b-one', TRUE, TRUE, 10000, 6000, 4000, 101),
+  (103, 'c-b-one', TRUE, TRUE, 4000, 3000, 1000, 102);
+
+INSERT INTO expense_items VALUES
+  (1000, 'Housing', 3000, 1, 100),
+  (1001, 'Auto', 350, 2, 100),
+  (1002, 'Insurance', 200, 3, 100),
+  (1003, 'Fun Money', 300, 4, 100),
+  (1004, 'Housing', 2000, 1, 101),
+  (1005, 'Auto', 250, 2, 101),
+  (1006, 'Insurance', 300, 3, 101),
+  (1007, 'Fun Money', 100, 4, 101),
+  (1008, 'Housing', 1000, 1, 102),
+  (1009, 'Auto', 500, 2, 102),
+  (1010, 'Insurance', 2000 3,, 102),
+  (1011, 'Fun Money', 3000 4,0, 102),
+  (1012, 'Housing', 100, 1, 103),
+  (1013, 'Auto', 50, 2, 103),
+  (1014, 'Insurance', 30, 3, 103),
+  (1015, 'Fun Money', 10, 4, 103);

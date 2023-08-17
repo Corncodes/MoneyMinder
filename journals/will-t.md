@@ -30,12 +30,13 @@ There were two big breakthroughs.
 
 ## August 17, 2023
 
-*
-*
-*
+* Built new tables for budgets and expense_items.
+* Wrote the insert statements to populate new tables with dummy data.
+* Cleaned up our Excalidraw to help us make better informed decisions about DB tables and pydantic models.
 
-Template text
+Corn "drove" today. There was a lot of theoretical discussion about what needed to happen next with this project. We talked through the addition of our budget and expense items. I worked on building out new tables and linking them with foreign keys. Got those connections working and we tested with a INNER JOIN query in PG Admin. That was cool to see functioning! We started working on building out models, queries, and routers for budgets and expense items, but ran out of time. We also talked through the process of what saving budgets is going to look like during the customer's budget creation journey.
 
+A fun breakthrough for me was getting the foreign key relationships working in the database and seeing the INNER JOIN work in PG Admin!
 
 ## August 21, 2023
 

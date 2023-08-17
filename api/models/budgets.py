@@ -4,8 +4,6 @@ from pydantic import BaseModel
 class BudgetIn(BaseModel):
     name: str
     monthly_income: int
-    monthly_spending_total: int
-    monthly_balance: 
 
 
 class BudgetOut(BaseModel):
@@ -15,7 +13,5 @@ class BudgetOut(BaseModel):
     monthly_income: int
     monthly_spending_total: int
     monthly_balance: int
-    accounts_id: int
-
-class ExpenseIn(BaseModel):
-    
+    account_id: int
+    complete: bool
