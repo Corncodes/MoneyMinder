@@ -62,6 +62,9 @@ class AccountQueries:
         )
 
 
+# class BudgetQueries:
+
+
 # class Queries:
 #     @property
 #     def collection(self):

@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 class DuplicateAccountError(ValueError):
@@ -17,6 +18,7 @@ class AccountOut(BaseModel):
     email: str
     first_name: str
     last_name: str
+    budgets: Optional[str]
 
 
 class AccountOutWithPassword(AccountOut):
