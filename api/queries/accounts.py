@@ -36,7 +36,7 @@ class AccountQueries:
     ) -> AccountOutWithPassword:
         with pool.connection() as conn:
             with conn.cursor() as cur:
-                cur.execute(
+                 cur.execute(
                     """
                     INSERT INTO accounts (
                         first_name, last_name, email, hashed_password
@@ -60,13 +60,3 @@ class AccountQueries:
             last_name=record[3],
             hashed_password=record[4],
         )
-
-
-# class BudgetQueries:
-
-
-# class Queries:
-#     @property
-#     def collection(self):
-#         db = client[self.DB_NAME]
-#         return db[self.COLLECTION]

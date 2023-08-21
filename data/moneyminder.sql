@@ -15,18 +15,18 @@ CREATE TABLE IF NOT EXISTS budgets (
   name VARCHAR(100) NOT NULL,
   primary_budget BOOLEAN NOT NULL,
   complete BOOLEAN DEFAULT FALSE,
-  monthly_income INT NOT NULL,
-  monthly_spending_total INT,
-  monthly_balance INT,
-  accounts_id INT NOT NULL REFERENCES accounts(id)
+  monthly_income INTEGER NOT NULL,
+  monthly_spending_total INTEGER,
+  monthly_balance INTEGER,
+  account_id SMALLINT NOT NULL REFERENCES accounts(id)
 );
 
 CREATE TABLE IF NOT EXISTS expense_items (
   id SERIAL NOT NULL PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
-  amount INT NOT NULL,
-  order INT,
-  budget_id INT NOT NULL REFERENCES budgets(id)
+  amount INTEGER NOT NULL,
+  ordering SMALLINT,
+  budget_id INTEGER NOT NULL REFERENCES budgets(id)
 );
 
 INSERT INTO accounts VALUES
@@ -51,8 +51,8 @@ INSERT INTO expense_items VALUES
   (1007, 'Fun Money', 100, 4, 101),
   (1008, 'Housing', 1000, 1, 102),
   (1009, 'Auto', 500, 2, 102),
-  (1010, 'Insurance', 2000 3,, 102),
-  (1011, 'Fun Money', 3000 4,0, 102),
+  (1010, 'Insurance', 2000, 3, 102),
+  (1011, 'Fun Money', 3000, 4, 102),
   (1012, 'Housing', 100, 1, 103),
   (1013, 'Auto', 50, 2, 103),
   (1014, 'Insurance', 30, 3, 103),

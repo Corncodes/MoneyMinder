@@ -1,8 +1,31 @@
+## August 21, 2023
+Task:
+    - Build out budgets backend
+
+Completed:
+    - CRUD budgets
+
+Design:
+    - EDIT BUDGET front-end button would route user to 
+
+Breakthroughs:
+    - BudgetOut vs BudgetsOut: the BudgetsOut model inherits from Basemodel and has one field that reads budgets: list[BudgetOut]
+        - When using queries that return a list, the ResponseModel needs to be a list as well, so this accomplishes that requirement
+    - RETURNING: this SQL clause is basically a shorthand way to write a SELECT clause after you've already written a different clause e.g. UPDATE something, and then grab a field(s) from the things you just updated, or DELETE something, and then grab a field *before* it's deleted
+    - passing in user_id from authentication: back during wireframing I having the idea that we might be able to grab user data from the authentication token if we need it anywhere on a page, and today I actually tried it out and it worked! We've been pasting this boilerplate parameter
+    > account_data: dict = Depends(authenticator.get_current_account_data)
+    to protect routes from non-logged-in users, and turns out you can just grab
+    account_data.id
+
+Reflections:
+Got a lot done today! CRUD on budgets doesn't seem like a lot at face value, but we were chugging along basically all day and it took a lot of small breakthroughs to put it all together. I think on Thursday, we just had a lot of mental obstacles that were keeping us from just putting our heads down and writing code, and we had some of those same mental obstacles this morning while we tried to reason out in our heads how things *should* work before ever having real practice just doing these things and seeing how they work. At this point I don't even remember the things I was hung up on this morning before we moved on to just writing code, but by this point I've basically got it all figured out, so I feel pretty good about that! Although I'm still a little confused about Depends and Response and how IDs are passed into URLs, but that's a problem for another day ¯\_(ツ)_/¯
+
+
 ## August 17, 2023
-Task
+Task:
     - Building out budgets & expenses backend (group)
 
-Completed
+Completed:
     - Models for budgets & expenses
     - Test data for database
 
@@ -13,7 +36,8 @@ Design:
     - budget POST will be made upon saving the budget name & monthly income
         - Monthly balance & spending total calculated in back-end after POST
          and then again upon the addition of each expense item
-    - Added the Complete boolean to the budget
+    - "Save incomplete budgets" moved up from stretch goal to MVP
+        - Added the Complete boolean to the budget
     - Added order (priority? ordering?) field to expense
 
 Breakthroughs:
@@ -25,6 +49,7 @@ Breakthroughs:
 Reflection:
 Realized we have tomorrow off, so we won't be finishing our back end this week :')
 We didn't get all too much work done today mainly because of deliberating over those design decisions above. Franz unfortunately lost power while driving and it took us a while to get back on track after that, plus scheduled break times coming in just as we got the ball rolling on actual coding. I think I derailed our discussion onto figuring out aggregates for far too long rather than just accepting what *just works*, but at least we have the design more fleshed out now.
+
 
 ## August 16, 2023
 Task:

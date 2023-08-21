@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import List
-from budgets import BudgetOut
+from .budgets import BudgetOut
 
 
 class DuplicateAccountError(ValueError):
