@@ -1,12 +1,37 @@
+## August 23, 2023
+Task:
+    - Build out expenses backend (group)
+    - Set up Vite
+
+Completed:
+    - Build out expenses backend
+        - Refactored get_budgets
+        - Wrote Update_expense, delete_expense
+    - Set up Vite
+
+Design:
+    - get_budgets returns budgets /w expenses
+        - This aligns better to DDD
+
+Breakthroughs:
+    - Refactoring get_budget to contain expenses: [] instead of a list with 1 object where every field is null.
+        - Did this by writing a conditional "if rows[0][-1]:" before the loop that appends to expenses
+            - This checks that the budget_id foreign_key field is not None
+        - Also had to rewrite the expense field of the model to be expenses: List[ExpenseOut] = [] (although I'm not 100% sure we need this?)
+
+Reflections:
+Franz drove. Easy day today, no big obstacles, no pacing issues for the most part. During morning lecture I refactored get_budgets according to the idea from yesterday, and it was pretty easy to set up. There was one bug that it caused issues pulling the expense name and expense id because we renamed them in the query, so we solved that by just renaming it everywhere as expense_name and expense_id instead of name and id.
+
+
 ## August 22, 2023
 Task:
     - Build out expenses backend
 
 Completed:
-    - Create & read expenses
+    - Refactored get_budgets; finished create_expense
 
 Design:
-    - None
+    - get_budget returns expenses which is more in line with aggregate design
 
 Breakthroughs:
     - Inner join vs outer join: I realized an inner join between budgets and expenses on budget_id would not return the budget without expenses if the budget did not have expenses. Changed it to a left join and it worked

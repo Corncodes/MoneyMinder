@@ -3,7 +3,7 @@ from typing import Optional
 
 
 class ExpenseOut(BaseModel):
-    expense_id: Optional[str]
+    expense_id: Optional[int]
     expense_name: Optional[str]
     amount: Optional[int]
     ordering: Optional[int]
@@ -13,3 +13,9 @@ class ExpenseOut(BaseModel):
 class ExpenseIn(BaseModel):
     expense_name: str
     amount: int
+
+
+class UpdateExpense(ExpenseIn):
+    expense_name: str
+    amount: int
+    ordering: int

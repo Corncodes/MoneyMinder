@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS budgets (
   monthly_income INTEGER NOT NULL,
   monthly_spending_total INTEGER,
   monthly_balance INTEGER,
-  account_id SMALLINT NOT NULL REFERENCES accounts(id)
+  account_id SMALLINT NOT NULL REFERENCES accounts(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS expense_items (
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS expense_items (
   expense_name VARCHAR(100) NOT NULL,
   amount INTEGER NOT NULL,
   ordering SMALLINT,
-  budget_id INTEGER NOT NULL REFERENCES budgets(id)
+  budget_id INTEGER NOT NULL REFERENCES budgets(id) ON DELETE CASCADE
 );
 
 INSERT INTO accounts VALUES

@@ -1,6 +1,6 @@
 import os
 from psycopg_pool import ConnectionPool
-from models.budgets import BudgetIn, BudgetOut, BudgetsOut
+from models.budgets import BudgetsOut
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
@@ -14,7 +14,8 @@ class BudgetQueries:
                         """
                         SELECT budgets.*, expense_items.*
                         FROM budgets
-                        LEFT JOIN expense_items ON (budgets.id = expense_items.budget_id)
+                        LEFT JOIN expense_items
+                        ON (budgets.id = expense_items.budget_id)
                         WHERE budgets.id = %s
                         """,
                         [budget_id],
@@ -42,12 +43,15 @@ class BudgetQueries:
                         rows[0], cur.description, budget_fields
                     )
                     budget["expenses"] = []
-                    for row in rows:
-                        budget["expenses"].append(
-                            self.record_to_dict(
-                                row, cur.description, expense_fields
+                    if rows[0][-1]:
+                        for row in rows:
+                            budget["expenses"].append(
+                                self.record_to_dict(
+                                    row,
+                                    cur.description,
+                                    expense_fields
+                                )
                             )
-                        )
                     return budget
         except Exception as e:
             print(e)
@@ -261,7 +265,7 @@ class BudgetQueries:
 #             "monthly_balance",
 #             "account_id",
 #         ]
-#                 return self.record_to_dict(row, cur.description, budget_fields)
+#                 return self.record_to_dict(row, cur.description, budget_fields) # noqa
 #     except Exception as e:
 #         print(e)
 #         return {"message": "Could not get that budget"}

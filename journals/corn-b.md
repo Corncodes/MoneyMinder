@@ -1,9 +1,13 @@
-## August 19 2023
+## August 23 2023 
+Today, Franz put on cruise control in his Audi Prestige
+TFSI quattro. There was a lot of time today to work on CRUD for expenses continuing off from yesterday. Amanuel came in clutch with introducing a line of code that he even surprised himself that worked! Rainy day here in Cle, kinda hope VB gets cancelled @8:45 but ya know, we'll see
+ah-ha: The code Amanuel wrote sent my brain to Jupiter but Will brought me back down to Earth with a really good breakdown of what each line of code did, while Franz shared his screen to point at the things Will further explained
+## August 22 2023
 Today, Amanuel led the way in a "" on our path to complete CRUD for Expenses. Got a late start on the day with lecture & Career Services meeting
 got a late
 ah-ha:
 
-## August 18 2023
+## August 21 2023
 Today, Will casually drove the Ferrari F8 spider. The term for the day is "snowballing", completing each step one by one and going through trial & error through pgadmin & terminal. Basically, went through CRUD for the budgets.
 ah-ha: Inside of the budgets routers, when completing the first get all budget, I was confused on a variable name but did not articulate it well enough until Will asked me again what I was confused on after clarification my problem was answered. Thanks Will!
 ## August 17 2023

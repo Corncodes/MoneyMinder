@@ -1,3 +1,7 @@
+## August 23rd 2023
+Franz drove. UD in CRUD for expenses/expense items completed.
+
+
 ## August 22nd 2023
 Amanuel drove. CR in CRUD for expenses/expense items completed. Need to complete UD in CRUD and tidy up the R.
 

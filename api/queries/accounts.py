@@ -36,7 +36,7 @@ class AccountQueries:
     ) -> AccountOutWithPassword:
         with pool.connection() as conn:
             with conn.cursor() as cur:
-                 cur.execute(
+                cur.execute(
                     """
                     INSERT INTO accounts (
                         first_name, last_name, email, hashed_password

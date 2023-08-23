@@ -1,10 +1,25 @@
-## August 23, 2023
+## August 24, 2023
 
-*
-*
-*
+* 
+* 
+* 
 
 Template text
+
+## August 23, 2023
+
+* Altered names of expense_item id and name to read `expense_id` and `expense_name` so that functions would work and return the correct information (we were renaming column headers in our get_budget SQL query)
+* Added the `ON DELETE CASCADE` feature to the budgets and expense_items tables.
+* Finished up the CREATE, UPDATE, and DELETE actions on expenses
+* Fixed issue where the `get_budgets` endpoint was returning a list with a single object for expenses where each key's value was null.
+
+We started off the day by making changes to our expense_items table's id and name names. In our get_budget function, we were running a SQL query that was renaming column headers. That was breaking other queries because the names didn't match. We updated the tables and removed renaming portion of the SQL query so that we could just use expense_items.*. Made sure that everything was working before Amanuel push the changes up to his branch.
+
+After lunch, Dalonte jumped into our room to chat about a question that I had had regarding aggregates in Domain Driven Design, and how to implement them with FastAPI and PostgreSQL. The conversation lost me a little bit, but it ultimately came out that the direction we had already been going down was correct.
+
+Franz "drove" today. We worked through building out the remaining needed actions for expenses (CREATE, UPDATE, & DELETE). As of now, we've decided *not* to use get methods for expenses as we're getting that data with the gets for budgets.
+
+We also discovered that the `get_budgets` endpoint was returning incorrect data. If the budget had no expenses on it, we wanted to just see `expenses: []`. Instead, we were getting an expense object who's values were all null regardless of if the budget had an expense or not. we added an if in the function to check if the budget id (that would be added from the expense) was truthy or not. If it was truthy, we build the expense objects and add them to the budget object. If it is falsey, we return the budget without appending anything to the `expenses: []` list.
 
 ## August 22, 2023
 
