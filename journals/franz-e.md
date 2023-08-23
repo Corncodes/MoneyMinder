@@ -1,5 +1,8 @@
+## August 22nd 2023
+Amanuel drove. CR in CRUD for expenses/expense items completed. Need to complete UD in CRUD and tidy up the R.
+
+
 ## August 21st 2023
-Today,
 Will drove. Completed the budget endpoints.
 
 
@@ -8,7 +11,7 @@ Franz drove! Then Corn drove. I started creating the router, query, and models f
 
 
 ## August 16th 2023
-Amanuel drove. Finished back-end authentication. 
+Amanuel drove. Finished back-end authentication.
 
 
 ## August 15th 2023
@@ -16,4 +19,4 @@ Will drove. Started on back-end authentication. Created models, queries, and rou
 
 
 ## August 14th 2023
-Corn drove. Completed issue # 1 aka creating a database. 
+Corn drove. Completed issue # 1 aka creating a database.

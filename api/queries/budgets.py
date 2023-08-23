@@ -4,50 +4,75 @@ from models.budgets import BudgetIn, BudgetOut, BudgetsOut
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
+
 class BudgetQueries:
-    def get_budgets(self, id: int) -> BudgetsOut:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor() as cur:
-                    cur.execute(
-                        """
-                        SELECT *
-                        FROM budgets
-                        WHERE account_id = %s
-                        """,
-                        [id]
-                    )
-
-                    budgets = []
-                    rows = cur.fetchall()
-                    for row in rows:
-                        budget = self.budget_record_to_dict(row, cur.description)
-                        budgets.append(budget)
-                    return budgets
-        except Exception as e:
-            print(e)
-            return {"message": "Could not get that budget"}
-
-
     def get_budget(self, budget_id):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
                         """
-                        SELECT *
+                        SELECT budgets.*, expense_items.*
                         FROM budgets
-                        WHERE id = %s
+                        LEFT JOIN expense_items ON (budgets.id = expense_items.budget_id)
+                        WHERE budgets.id = %s
                         """,
                         [budget_id],
                     )
 
-                    row = cur.fetchone()
-                    return self.budget_record_to_dict(row, cur.description)
+                    rows = cur.fetchall()
+                    budget_fields = [
+                        "id",
+                        "name",
+                        "primary_budget",
+                        "complete",
+                        "monthly_income",
+                        "monthly_spending_total",
+                        "monthly_balance",
+                        "account_id",
+                    ]
+                    expense_fields = [
+                        "expense_id",
+                        "expense_name",
+                        "amount",
+                        "ordering",
+                        "budget_id",
+                    ]
+                    budget = self.record_to_dict(
+                        rows[0], cur.description, budget_fields
+                    )
+                    budget["expenses"] = []
+                    for row in rows:
+                        budget["expenses"].append(
+                            self.record_to_dict(
+                                row, cur.description, expense_fields
+                            )
+                        )
+                    return budget
         except Exception as e:
             print(e)
             return {"message": "Could not get that budget"}
 
+    def get_budgets(self, account_id: int) -> BudgetsOut:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        SELECT id
+                        FROM budgets
+                        WHERE account_id = %s
+                        """,
+                        [account_id],
+                    )
+                    budgets = []
+                    rows = cur.fetchall()
+                    for row in rows:
+                        budgets.append(self.get_budget(*row))
+                    return budgets
+        except Exception as e:
+            print(e)
+            return {"message": "Could not get that budget"}
 
     def create_budget(self, budget, account_id):
         id = None
@@ -70,7 +95,7 @@ class BudgetQueries:
                             budget.name,
                             budget.monthly_income,
                             account_id,
-                        ]
+                        ],
                     )
 
                     row = cur.fetchone()
@@ -94,35 +119,23 @@ class BudgetQueries:
                             budget.name,
                             budget.monthly_income,
                             account_id,
-                        ]
+                        ],
                     )
-                    
+
                     row = cur.fetchone()
-                    id = row[0] 
-                    
+                    id = row[0]
+
         if id is not None:
             return self.get_budget(id)
 
-
-    def budget_record_to_dict(self, row, description):
-        budget = None
+    def record_to_dict(self, row, description, fields):
+        dictionary = None
         if row is not None:
-            budget = {}
-            budget_fields = [
-                "id",
-                "name",
-                "primary_budget",
-                "complete",
-                "monthly_income",
-                "monthly_spending_total",
-                "monthly_balance",
-                "account_id",
-            ]
+            dictionary = {}
             for i, column in enumerate(description):
-                if column.name in budget_fields:
-                    budget[column.name] = row[i]
-        return budget
-
+                if column.name in fields:
+                    dictionary[column.name] = row[i]
+        return dictionary
 
     def update_budget(self, budget_id, data):
         with pool.connection() as conn:
@@ -134,7 +147,7 @@ class BudgetQueries:
                     data.monthly_income,
                     data.monthly_spending_total,
                     data.monthly_balance,
-                    budget_id
+                    budget_id,
                 ]
                 cur.execute(
                     """
@@ -164,22 +177,91 @@ class BudgetQueries:
                     record = {}
                     for i, column in enumerate(cur.description):
                         record[column.name] = row[i]
-                    print("Row is not None. Record has been updated to:", record)
+                    print(
+                        "Row is not None. Record has been updated to:", record
+                    )
                 return record
 
-
     def delete_budget(self, budget_id):
-            with pool.connection() as conn:
-                with conn.cursor() as cur:
-                    cur.execute(
-                        """
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
                         DELETE FROM budgets
                         WHERE id = %s
                         RETURNING id
                         """,
-                        [budget_id],
-                    )
-                    row = cur.fetchone()
-                    if row is not None:
-                        return True
-                    return False
+                    [budget_id],
+                )
+                row = cur.fetchone()
+                if row is not None:
+                    return True
+                return False
+
+
+# ORIGINAL get_budgets WHICH RETURNS LIST OF BUDGETS W/O EXPENSES
+# class BudgetQueries:
+#     def get_budgets(self, id: int) -> BudgetsOut:
+#         try:
+#             with pool.connection() as conn:
+#                 with conn.cursor() as cur:
+#                     cur.execute(
+#                         """
+#                         SELECT *
+#                         FROM budgets
+#                         WHERE account_id = %s
+#                         """,
+#                         [id],
+#                     )
+
+#                     budgets = []
+#                     rows = cur.fetchall()
+#                     budget_fields = [
+#                         "id",
+#                         "name",
+#                         "primary_budget",
+#                         "complete",
+#                         "monthly_income",
+#                         "monthly_spending_total",
+#                         "monthly_balance",
+#                         "account_id",
+#                     ]
+#                     for row in rows:
+#                         budget = self.record_to_dict(
+#                             row, cur.description, budget_fields
+#                         )
+#                         budgets.append(budget)
+#                     return budgets
+#         except Exception as e:
+#             print(e)
+#             return {"message": "Could not get that budget"}
+
+# ORIGINAL get_budget WHICH RETURNS BUDGET WITHOUT EXPENSES
+# def get_budget(self, budget_id):
+#     try:
+#         with pool.connection() as conn:
+#             with conn.cursor() as cur:
+#                 cur.execute(
+#                     """
+#                     SELECT *, *
+#                     FROM budgets
+#                     WHERE id = %s
+#                     """,
+#                     [budget_id],
+#                 )
+
+#                 row = cur.fetchone()
+#                 budget_fields = [
+#             "id",
+#             "name",
+#             "primary_budget",
+#             "complete",
+#             "monthly_income",
+#             "monthly_spending_total",
+#             "monthly_balance",
+#             "account_id",
+#         ]
+#                 return self.record_to_dict(row, cur.description, budget_fields)
+#     except Exception as e:
+#         print(e)
+#         return {"message": "Could not get that budget"}

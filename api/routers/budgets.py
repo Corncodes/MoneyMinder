@@ -17,14 +17,15 @@ async def get_budgets(
     queries: BudgetQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    records = queries.get_budgets(account_data.get('id'))
+    records = queries.get_budgets(account_data.get("id"))
     if records is None:
         response.status_code = 404
     else:
-        return { "budgets": records }
+        return {"budgets": records}
 
 
-@router.get("/api/budgets/{budget_id}", response_model=BudgetOut)
+# @router.get("/api/budgets/{budget_id}", response_model=BudgetOut)
+@router.get("/api/budgets/{budget_id}")
 async def get_budget(
     budget_id: int,
     response: Response,
@@ -45,7 +46,7 @@ async def create_budget(
     queries: BudgetQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    return queries.create_budget(budget, account_data.get('id'))
+    return queries.create_budget(budget, account_data.get("id"))
 
 
 @router.put("/api/budgets/{budget_id}", response_model=BudgetOut)

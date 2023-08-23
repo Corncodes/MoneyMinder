@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
+from .expenses import ExpenseOut
 
 
 class BudgetIn(BaseModel):
@@ -25,6 +26,8 @@ class BudgetOut(BaseModel):
     monthly_spending_total: Optional[int]
     monthly_balance: Optional[int]
     account_id: int
+    expenses: Optional[list[ExpenseOut]]
+
 
 class BudgetsOut(BaseModel):
     budgets: list[BudgetOut]

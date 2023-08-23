@@ -1,12 +1,34 @@
+## August 22, 2023
+Task:
+    - Build out expenses backend
+
+Completed:
+    - Create & read expenses
+
+Design:
+    - None
+
+Breakthroughs:
+    - Inner join vs outer join: I realized an inner join between budgets and expenses on budget_id would not return the budget without expenses if the budget did not have expenses. Changed it to a left join and it worked
+    - Processing a JOIN query: budget + expenses join spits out a row for each expense even though the budget columns stayed constant. We needed a way to "collapse" all the budget columns into one output, and insert all expense rows into the budget dictionary as a list of expense dictionaries.
+        - We accomplished this by refactoring the budget_record_to_dict function into a more universal record_to_dict, and then using that to convert a row of budget data into a dictionary, and then using it again to loop over the expense data to append that to the expenses list in the budget dictionary
+
+Reflections:
+I drove today, and started the day pretty confident we would finish CRUD on expenses. That didn't happen. To be fair, create_expenses was finished in like 30-45 minutes and that's after we were hung up on how to insert the budget_id among other little things. We probably could have finished it all today, but we only had 3.5 hours of project time, and we spent almost 3 hours refactoring get_budget to return a budget WITH its list of expenses attached, rather than (once we get to front-end) having to run separate queries for get_budget and get_expenses. This makes the budgets function a little more as an aggregate too, since expenses won't ever be returned detached from their budget. Overall, it was a good exercise and I'm glad we figured it out if for no other reason than to know how to process JOIN queries into usable data, but I do wonder if I sidetracked us too far off the main goal of just getting a working MVP... ¯\_(ツ)_/¯
+
+Idea:
+If we're doing global state management and only need to get all relevant data once, we could refactor get_budgets to return a list of budgets WITH expenses in the same manner that we refactored get_budget. We could simply run a query to SELECT id FROM budgets WHERE id = {account_id} and then loop over that list of IDs and run get_budget on each one while appending them all to a budgets_list.
+
+
 ## August 21, 2023
 Task:
-    - Build out budgets backend
+    - Build out budgets backend (group)
 
 Completed:
     - CRUD budgets
 
 Design:
-    - EDIT BUDGET front-end button would route user to 
+    - EDIT BUDGET front-end button would route user to
 
 Breakthroughs:
     - BudgetOut vs BudgetsOut: the BudgetsOut model inherits from Basemodel and has one field that reads budgets: list[BudgetOut]
@@ -18,7 +40,7 @@ Breakthroughs:
     account_data.id
 
 Reflections:
-Got a lot done today! CRUD on budgets doesn't seem like a lot at face value, but we were chugging along basically all day and it took a lot of small breakthroughs to put it all together. I think on Thursday, we just had a lot of mental obstacles that were keeping us from just putting our heads down and writing code, and we had some of those same mental obstacles this morning while we tried to reason out in our heads how things *should* work before ever having real practice just doing these things and seeing how they work. At this point I don't even remember the things I was hung up on this morning before we moved on to just writing code, but by this point I've basically got it all figured out, so I feel pretty good about that! Although I'm still a little confused about Depends and Response and how IDs are passed into URLs, but that's a problem for another day ¯\_(ツ)_/¯
+Will drove today, and we got a lot done! CRUD on budgets doesn't seem like a lot at face value, but we were chugging along basically all day and it took a lot of small breakthroughs to put it all together. I think on Thursday, we just had a lot of mental obstacles that were keeping us from just putting our heads down and writing code, and we had some of those same mental obstacles this morning while we tried to reason out in our heads how things *should* work before ever having real practice just doing these things and seeing how they work. At this point I don't even remember the things I was hung up on this morning before we moved on to just writing code, but by this point I've basically got it all figured out, so I feel pretty good about that! Although I'm still a little confused about Depends and Response and how IDs are passed into URLs, but that's a problem for another day ¯\_(ツ)_/¯
 
 
 ## August 17, 2023
@@ -47,7 +69,7 @@ Breakthroughs:
     - Use useEffect on states to create side-effects to changes to a state
 
 Reflection:
-Realized we have tomorrow off, so we won't be finishing our back end this week :')
+Franz drove until afternoon when Corn took over. Realized we have tomorrow off, so we won't be finishing our back end this week :')
 We didn't get all too much work done today mainly because of deliberating over those design decisions above. Franz unfortunately lost power while driving and it took us a while to get back on track after that, plus scheduled break times coming in just as we got the ball rolling on actual coding. I think I derailed our discussion onto figuring out aggregates for far too long rather than just accepting what *just works*, but at least we have the design more fleshed out now.
 
 

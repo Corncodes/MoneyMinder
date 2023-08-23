@@ -1,10 +1,23 @@
-## August 22, 2023
+## August 23, 2023
 
 *
 *
 *
 
 Template text
+
+## August 22, 2023
+
+* Refactored DB to return expenses information when budgets are queried
+* Refactored `budget_record_to_dict`into `record_to_dict` to handle the formatting of various record obtained from SQL queries
+* Started work on CREATE, UPDATE and DELETE for expense_items. We're getting expense_items with the left join when querying budgets. As of now, we don't plan on writing GETS specifically for expense_items.
+
+Amanuel "drove" today. He started off the day by confidently saying we WOULD get through all the CRUD operations for expense_items. That said, we spent the majority of the day working through the refactoring of our budgets queries page. We needed to re-work things so that the budget queries would correctly pull expense_item information (if it existed). It was good to work through that now rather than later!
+
+I tackled the refactoring of the `budget_record_to_dict` function into `record_to_dict`. I wanted to use similar functionality to `budget_record_to_dict`, but didn't want to violate DRY. Correctly refactored the code so that it worked with the new instance needing the function as well as old functions still worked (after some slight adjustments to the code).A
+
+Breakthroughs:
+1. We were trying an inner join to pull both a budget AND it's expense items, but we were running the query WHERE an id matched a certain budget id. The id that we were passing to the query was for a budget that existed, but we weren't getting any data back. I realized that, though the budget existed, there were no expenses tied to that budget. We then changed the query to check a different budget that we knew had expenses and the query worked!
 
 ## August 21, 2023
 

@@ -1,10 +1,21 @@
-# from fastapi import (
-#     Depends,
-#     HTTPException,
-#     status,
-#     Response,
-#     APIRouter,
-#     Request,
-# )
-# from models.expenses import ExpenseOut, ExpenseIn
-# from queries.expenses import ExpensesQueries
+from fastapi import (
+    Depends,
+    Response,
+    APIRouter,
+)
+from models.expenses import ExpenseOut, ExpenseIn
+from queries.expenses import ExpenseQueries
+from authenticator import authenticator
+
+
+router = APIRouter()
+
+
+@router.post("/api/expenses", response_model=bool)
+async def create_expense(
+    expense: ExpenseIn,
+    budget_id: int,
+    queries: ExpenseQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    return queries.create_expense(expense, budget_id)

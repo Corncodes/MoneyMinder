@@ -22,8 +22,8 @@ CREATE TABLE IF NOT EXISTS budgets (
 );
 
 CREATE TABLE IF NOT EXISTS expense_items (
-  id SERIAL NOT NULL PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
+  expense_id SERIAL NOT NULL PRIMARY KEY,
+  expense_name VARCHAR(100) NOT NULL,
   amount INTEGER NOT NULL,
   ordering SMALLINT,
   budget_id INTEGER NOT NULL REFERENCES budgets(id)

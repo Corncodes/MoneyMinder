@@ -1,16 +1,15 @@
-# from pydantic import BaseModel
+from pydantic import BaseModel
+from typing import Optional
 
 
-# class ExpenseOut(BaseModel):
-#     id: str
-#     name: str
-#     amount: int
-#     budget_id: int
+class ExpenseOut(BaseModel):
+    expense_id: Optional[str]
+    expense_name: Optional[str]
+    amount: Optional[int]
+    ordering: Optional[int]
+    budget_id: Optional[int]
 
-#add priority/order to ExpenseOut and maybe to ExpenseIn too
 
-# class ExpenseIn(BaseModel):
-#     id: str
-#     name: str
-#     amount: int
-#     budget_id: int #is this needed in the ExpenseIn?
+class ExpenseIn(BaseModel):
+    expense_name: str
+    amount: int
