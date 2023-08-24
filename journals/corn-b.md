@@ -1,4 +1,8 @@
-## August 23 2023 
+## August 24 2023
+Today, I pulled up in a Lotus eclipse as we tackled Front-End authentication. Def a lot of hiccups throughout the day but like did not get far as we have in the past days. BUT I believe it is one of those days where it was needed & every day after this will be attacked efficiently because of the hiccups we face initially.
+ah-ha: The fellas explained some functionality for components that blew my mind. Thankful for them being patient with any & all of my ?'s
+
+## August 23 2023
 Today, Franz put on cruise control in his Audi Prestige
 TFSI quattro. There was a lot of time today to work on CRUD for expenses continuing off from yesterday. Amanuel came in clutch with introducing a line of code that he even surprised himself that worked! Rainy day here in Cle, kinda hope VB gets cancelled @8:45 but ya know, we'll see
 ah-ha: The code Amanuel wrote sent my brain to Jupiter but Will brought me back down to Earth with a really good breakdown of what each line of code did, while Franz shared his screen to point at the things Will further explained

@@ -11,7 +11,7 @@ services:
       WAIT_HOSTS: db:5432
       WAIT_BEFORE: 5
       WAIT_TIMEOUT: 60
-      SIGNING_KEY: PLACEHOLDER
+      SIGNING_KEY: 94adf71a8a30eecb1f5848f6808795dfe6f308be3582a2a37bc45b8c2db37a6d
     build:
       context: api
       dockerfile: Dockerfile.dev
@@ -32,7 +32,7 @@ services:
       HOST_OS: ${OS}
       NODE_ENV: development
       HOST: "0.0.0.0"
-      PUBLIC_URL: http://localhost:3000
+      PUBLIC_URL: ${PUBLIC_URL}
       REACT_APP_API_HOST: ${REACT_APP_API_HOST}
 
   db:

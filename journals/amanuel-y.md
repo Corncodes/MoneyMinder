@@ -1,5 +1,35 @@
 ## August 23, 2023
 Task:
+    - Work on front-end (group)
+
+Completed:
+    - Implement JWTdown authentication in front-end
+
+Design:
+    - Components would be organized into folders: logged_in & logged_out; logged in further broken down into budgets & expenses?
+
+Breakthroughs:
+    - env provides global variables unique to the client. When deploying to a server we have to define the env variables, and they're git-ignored so they won't be uploaded. This is where we typically save the base-url so that it's not hardcoded in and it'll survive deployment because the functions only call the env variable instead of the hard-coded url. The code below is how the vite config looked after inputting the define: process.env thing
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    watch: {
+      usePolling: true,
+    },
+    host: true,
+    strictPort: true,
+    port: 3000,
+  },
+  define: {
+    "process.env": process.env
+  }
+
+Reflections:
+Corn drove. We didn't get all too much done, we spent most of the day chasing down bugs that, as it turns out, would have been resolved by just figuring authentication, which was giving us trouble because of Vite and the way it handles env variables. Tomorrow we'll work on front-end functionality and get that settled before styling, but I might try and see how to figure out styling regardless.
+
+## August 23, 2023
+Task:
     - Build out expenses backend (group)
     - Set up Vite
 
