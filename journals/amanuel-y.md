@@ -20,7 +20,7 @@ Breakthroughs:
         - Also had to rewrite the expense field of the model to be expenses: List[ExpenseOut] = [] (although I'm not 100% sure we need this?)
 
 Reflections:
-Franz drove. Easy day today, no big obstacles, no pacing issues for the most part. During morning lecture I refactored get_budgets according to the idea from yesterday, and it was pretty easy to set up. There was one bug that it caused issues pulling the expense name and expense id because we renamed them in the query, so we solved that by just renaming it everywhere as expense_name and expense_id instead of name and id.
+Franz drove. Easy day today, no big obstacles, no pacing issues for the most part. During morning lecture I refactored get_budgets according to the idea from yesterday, and it was pretty easy to set up. There was one bug that it caused issues pulling the expense name and expense id because we renamed them in the query, so we solved that by just renaming it everywhere as expense_name and expense_id instead of name and id. Phil hopped in and helped us set up Vite, and that was pretty easy too! Tomorrow we'll get started with FRONT-END!!!!!!!!! >:)
 
 
 ## August 22, 2023
