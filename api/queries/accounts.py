@@ -60,10 +60,3 @@ class AccountQueries:
             last_name=record[3],
             hashed_password=record[4],
         )
-
-
-# class Queries:
-#     @property
-#     def collection(self):
-#         db = client[self.DB_NAME]
-#         return db[self.COLLECTION]
