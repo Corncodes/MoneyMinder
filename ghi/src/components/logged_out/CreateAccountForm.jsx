@@ -1,17 +1,17 @@
 import { useState } from 'react';
+import { FetchWrapper } from '../../fetch-wrapper';
 
-function SignUpForm() {
 
-
-const [first_name, setFirstName] = useState('');
-const [last_name, setLastName] = useState('');
+const CreateAccountForm = ({ baseUrl }) => {
+const [firstName, setFirstName] = useState('');
+const [lastName, setLastName] = useState('');
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
-
 
 const [submitted, setSubmitted] = useState(false);
 const [error, setError] = useState(false);
 
+const FastAPI = new FetchWrapper(baseUrl)
 
 const handleFirstName = (e) => {
     setFirstName(e.target.value);
@@ -33,14 +33,27 @@ const handlePassword = (e) => {
     setSubmitted(false);
     };
 
-const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
-    if (first_name === '' || last_name === '' || email === '' || password === '') {
+    if (firstName === '' || lastName === '' || email === '' || password === '') {
     setError(true);
     } else {
     setSubmitted(true);
     setError(false);
     }
+
+    const body = {}
+    body.email = email
+    body.password = password
+    body.first_name = firstName
+    body.last_name = lastName
+
+    const data = await FastAPI.post('/api/accounts', body)
+    console.log(data)
+    setEmail('')
+    setPassword('')
+    setFirstName('')
+    setLastName('')
 };
 
 const successMessage = () => {
@@ -50,7 +63,7 @@ const successMessage = () => {
     style={{
     display: submitted ? '' : 'none',
     }}>
-    <h1>User {first_name} {last_name} successfully registered!!</h1>
+    <h1>User {firstName} {lastName} successfully registered!!</h1>
     </div>
     );
 };
@@ -73,7 +86,7 @@ return (
       <h1>User Registration</h1>
     </div>
 
-    <div className="messages">
+    <div>
       {errorMessage()}
       {successMessage()}
     </div>
@@ -81,11 +94,11 @@ return (
     <form>
       <label className="label">First Name</label>
       <input onChange={handleFirstName} className="input"
-        value={first_name} type="text" />
+        value={firstName} type="text" />
 
       <label className="label">Last Name</label>
       <input onChange={handleLastName} className="input"
-        value={last_name} type="text" />
+        value={lastName} type="text" />
 
       <label className="label">Email</label>
       <input onChange={handleEmail} className="input"
@@ -103,4 +116,4 @@ return (
 );
 }
 
-export default SignUpForm;
+export default CreateAccountForm;

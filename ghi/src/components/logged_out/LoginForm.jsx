@@ -1,10 +1,14 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useStore } from "../../ContextStore";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const store = useStore()
 
+//   testFunction("is this printing?")
 
   const { login } = useToken();
 
@@ -39,6 +43,8 @@ const LoginForm = () => {
             <input type="submit" value="Login" />
           </div>
         </form>
+        <p>Don't have an account? Create one!</p>
+        <NavLink to="/sign-up">Sign Up</NavLink>
       </div>
     </div>
   );

@@ -1,10 +1,24 @@
-## August 25, 2023
+## August 29, 2023
 
 *
 *
 *
 
 Template text
+
+## August 25, 2023
+
+* Set up a browser router for our React app
+* Created a Nav.jsx file to handle the routing with NavLink
+* Finished the CreateAccountForm component
+* Imported MUI, Roboto, and MUI Icons
+* Added my FetchWrapper class to the project for easier fetching
+* Built the functionality for a CreateAccountForm component
+* Built a BudgetList component to test the functionality of showing content to only logged in users
+
+Implemented a browser router in the App component so that we could more easily click between and test out our components. In conjunction with this we created a Nav.jsx file that will send the user to a specified front end URL so that the router knows which component to show. Once that was done we built out the CreateAccountForm, LoginForm, and BudgetList components.
+
+We made the decision to first implement the functionality of our site's front end (interacting with our backend database). Once that is done, we'll go back through with styling and MUI to make things visually appealing.
 
 ## August 24, 2023
 

@@ -1,4 +1,22 @@
-## August 23, 2023
+## August 25, 2023
+Task:
+    - Build out front-end (group)
+
+Completed:
+    - Working authentication (with a slight bug)
+
+Design:
+    - Decided on Material D:
+    - Will be dividing workload next week between functional & aesthetic
+
+Breakthroughs:
+    - Understanding ContextAPI more
+
+Reflections:
+Will drove. We made some steady progress, but I didn't contribute all too much because React is still a little confusing for me beyond the concepts. I started to set up a page for me to test on, which I think I should have done from the start this morning, because it wasn't until I was writing code that things began to make more sense. Also liberally interrogating chatGPT in between writing code. A big hurdle slowing me down is that I was never extremely comfortable with JavaScript, but now I'm even less so after having not touched it for the past 3? 4? weeks since project Beta. Being able to sight-read JavaScript in a React context is still something I'm working on, but it's coming together. 1 more day and I'll probably be back to project-Beta level of understanding, maybe a couple more after that and I'll be pretty solid.
+
+
+## August 24, 2023
 Task:
     - Work on front-end (group)
 
