@@ -1,3 +1,7 @@
+## August 24th 2023
+Corn drove. Fooled around with Vite. Bugs galore. Reverted back to previous commit after SEIR Chris helped. Completed LoginForm.jsx
+
+
 ## August 23rd 2023
 Franz drove. UD in CRUD for expenses/expense items completed.
 

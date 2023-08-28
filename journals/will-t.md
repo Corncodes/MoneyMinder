@@ -1,10 +1,33 @@
-## August 24, 2023
+## August 29, 2023
 
-* 
-* 
-* 
+*
+*
+*
 
 Template text
+
+## August 25, 2023
+
+* Set up a browser router for our React app
+* Created a Nav.jsx file to handle the routing with NavLink
+* Finished the CreateAccountForm component
+* Imported MUI, Roboto, and MUI Icons
+* Added my FetchWrapper class to the project for easier fetching
+* Built the functionality for a CreateAccountForm component
+* Built a BudgetList component to test the functionality of showing content to only logged in users
+
+Implemented a browser router in the App component so that we could more easily click between and test out our components. In conjunction with this we created a Nav.jsx file that will send the user to a specified front end URL so that the router knows which component to show. Once that was done we built out the CreateAccountForm, LoginForm, and BudgetList components.
+
+We made the decision to first implement the functionality of our site's front end (interacting with our backend database). Once that is done, we'll go back through with styling and MUI to make things visually appealing.
+
+## August 24, 2023
+
+* Set up the basic login functionality for the front end
+
+Today was pretty rough. We're working with the JWTdown for react library that was set up by Hack Reactor. When implementing it, there was a myriad of issues/bugs that popped up (related to that tool and other aspects of our code). We spent a crazy amount of time trying to work through some issues that popped up, and debugging was near impossible. Being that the JWTdown module was "locked" in the package lock, we were unable to add our own print statements to figure out issues. Things took far to long to figure out. That said, I think we're in a good place to hit the ground running tomorrow.
+
+Breakthroughs:
+- One breakthrough was realizing that "process" was unavailable to us. The documentation we had said that we needed to access environment variables through process.env, but we had gotten set up on Vite the day prior (instead of the default React app that was provided to us through the forked repo). We didn't realize this, but Vite didn't give us access to "process.env". Phil jumped in our room and helped us figure out how to make Vite recognize "process" through the vite.config.js file.
 
 ## August 23, 2023
 
