@@ -1,3 +1,6 @@
+## August 28 2023
+Today, Franz whipped in his Audi "". Our issue of seeing a form in the midst of loading the budget list from Friday lingered through the weekend & through majority of our day. Stumped our professors & do not even get me started on how lost I was in terms of going about solutions. It is also a minor thing afaik, so it will be added to our stretchgoals & most likely tinkered with over the coming days/weeks. 
+ah-ha: did a little research on bearer token, useEffect helped clarify some things that we had done
 ## August 25 2023
 
 Today, Will had a lot of room & distance with the Model X today. He used his homemade fetch-wrapper to simplify our lives for the GGPPD/CRUD directions. With the time granted today we made the best of it.

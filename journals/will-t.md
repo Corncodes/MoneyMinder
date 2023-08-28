@@ -6,6 +6,14 @@
 
 Template text
 
+## August 28, 2023
+
+* Spent time trying to figure out how 
+* 
+* 
+
+Template text
+
 ## August 25, 2023
 
 * Set up a browser router for our React app

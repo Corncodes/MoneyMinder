@@ -11,6 +11,7 @@ import CreateAccountForm from "./components/logged_out/CreateAccountForm";
 
 // Logged In Components
 import BudgetList from "./components/logged_in/BudgetList";
+import CreateBudgetForm from "./components/logged_in/CreateBudgetForm";
 
 function App() {
   const baseUrl = process.env.REACT_APP_API_HOST;
@@ -27,7 +28,8 @@ function App() {
               element={<CreateAccountForm baseUrl={baseUrl} />}
             />
             <Route path="/budgets">
-              <Route index element={<BudgetList />} />
+              <Route index element={<BudgetList baseUrl={baseUrl} />} />
+              <Route path="new" element={<CreateBudgetForm baseUrl={baseUrl} />} />
             </Route>
             <Route path="/test" element={<TestPage />} />
           </Routes>
