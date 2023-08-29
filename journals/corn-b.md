@@ -1,10 +1,13 @@
+## August 29 2023
+Today, I drove in a heavy duty vehicle that moved quite slow took a lot of fuel & time, however produced some questions that led to some huge breakthroughs.
+ah-ha: ..., =>, async those 3 helped. Ty fellas
 ## August 28 2023
-Today, Franz whipped in his Audi "". Our issue of seeing a form in the midst of loading the budget list from Friday lingered through the weekend & through majority of our day. Stumped our professors & do not even get me started on how lost I was in terms of going about solutions. It is also a minor thing afaik, so it will be added to our stretchgoals & most likely tinkered with over the coming days/weeks. 
+Today, Franz whipped in his Audi "". Our issue of seeing a form in the midst of loading the budget list from Friday lingered through the weekend & through majority of our day. Stumped our professors & do not even get me started on how lost I was in terms of going about solutions. It is also a minor thing afaik, so it will be added to our stretch-goals & most likely tinkered with over the coming days/weeks.
 ah-ha: did a little research on bearer token, useEffect helped clarify some things that we had done
 ## August 25 2023
 
 Today, Will had a lot of room & distance with the Model X today. He used his homemade fetch-wrapper to simplify our lives for the GGPPD/CRUD directions. With the time granted today we made the best of it.
-ah-ha: We figured out to use MaterialUI & that involved me researching into an example project on their site and one thing led to another which helped me understand why it will become beneficial in the long run to use. Also, Will described the fetch-wrapper, mind = blown. Probably going to ask for explanation again once weekend is over lol sorry Will. 
+ah-ha: We figured out to use MaterialUI & that involved me researching into an example project on their site and one thing led to another which helped me understand why it will become beneficial in the long run to use. Also, Will described the fetch-wrapper, mind = blown. Probably going to ask for explanation again once weekend is over lol sorry Will.
 
 ## August 24 2023
 

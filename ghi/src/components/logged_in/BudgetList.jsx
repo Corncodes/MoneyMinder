@@ -2,7 +2,7 @@
 // border-radius: 57%;
 // box-shadow: 13.81px 13.81px 63px #ABADB0, -13.81px -13.81px 63px #FFFFFF;
 import { NavLink } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import LoginForm from "../logged_out/LoginForm";
 import CreateBudgetForm from "../logged_in/CreateBudgetForm";
 import { useStore } from "../../ContextStore";
@@ -11,33 +11,47 @@ import { FetchWrapper } from '../../fetch-wrapper';
 
 
 const BudgetList = ({ baseUrl }) => {
-  console.log(document.cookie);
-  const store = useStore();
 	const FastAPI = new FetchWrapper(baseUrl)
 	const { token } = useAuthContext()
-	//   const data = FastAPI.get('/api/budgets', token)
+	const { budgetsData, setBudgetsData } = useStore()
+
 	const getData = async () => {
 		const data = await FastAPI.get('/api/budgets', token)
-		console.log(data)
+		setBudgetsData(data.budgets)
+	}
+
+	useEffect(() => {
+		token && getData()
+	}, [token])
+
+	const deleteBudget = async (id) => {
+		setBudgetsData([...budgetsData].filter(budget => budget.id !== id))
+		const data = await FastAPI.delete(`/api/budgets/${id}`, token)
 	}
 
 
-  if (1) {
+  if (token) {
 		return (
 		<>
 			<div>
 				<p>This will be the page where someone can perform CRUD operations on any/all of their budgets.</p>
-				{/* <p> ${data} </p> */}
-        <NavLink to="/budgets/new">Create Budget</NavLink>
+				{budgetsData.map(budget => {
+					return (
+						<div key={budget.id}>
+							<p>{budget.name}</p>
+							<button onClick={() => deleteBudget(budget.id)}>Delete Budget</button>
+						</div>
+					)
+				})}
+        	<NavLink to="/budgets/new">Create Budget</NavLink>
 			</div>
-			<button onClick={getData}>get da data</button>
 		</>
 		);
 
 	} else {
 		return (
 			<LoginForm />
-		)	
+		)
 	}
 }
 

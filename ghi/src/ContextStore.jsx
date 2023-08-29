@@ -5,10 +5,15 @@ const ContextStore = createContext(null);
 
 
 export default function ContextProvider ({ children }) {
-    const store = {}
+    const [someState, setSomeState] = useState('Hello')
+	const [budgetsData, setBudgetsData] = useState([])
 
-    store.test = `hello world`
-    store.testfunction = 'blah'
+    const store = {
+        budgetsData: budgetsData,
+        someState: someState,
+        setSomeState: setSomeState,
+        setBudgetsData: setBudgetsData,
+    }
 
     return (
         <ContextStore.Provider value={store}>

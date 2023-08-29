@@ -38,18 +38,18 @@ export class FetchWrapper {
   }
 
   async put(endpoint, body, token=null) {
-    return this._send("PUT", endpoint, body, token);
+    return this._send("PUT", endpoint, token, body);
   }
 
   async post(endpoint, body, token=null) {
-    return this._send("POST", endpoint, body, token);
+    return this._send("POST", endpoint, token, body);
   }
 
-  async delete(endpoint, body, token=null) {
-    return this._send("DELETE", endpoint, body, token);
+  async delete(endpoint, token=null) {
+    return this._send("DELETE", endpoint, token);
   }
 
-  async _send(method, endpoint, body, token) {
+  async _send(method, endpoint, token, body) {
     if (token) {
       try {
         const response = await fetch(this.baseURL + endpoint, {
