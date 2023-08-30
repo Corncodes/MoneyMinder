@@ -14,11 +14,10 @@ router = APIRouter()
 @router.post("/api/expenses", response_model=bool)
 async def create_expense(
     expense: ExpenseIn,
-    budget_id: int,
     queries: ExpenseQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    return queries.create_expense(expense, budget_id)
+    return queries.create_expense(expense)
 
 
 @router.put("/api/expenses/{expense_id}", response_model=ExpenseOut)

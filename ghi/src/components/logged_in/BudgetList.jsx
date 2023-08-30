@@ -25,7 +25,7 @@ const BudgetList = ({ baseUrl }) => {
 	}, [token])
 
 	const deleteBudget = async (id) => {
-		setBudgetsData([...budgetsData].filter(budget => budget.id !== id))
+		setBudgetsData(budgetsData.filter(budget => budget.id !== id))
 		const data = await FastAPI.delete(`/api/budgets/${id}`, token)
 	}
 

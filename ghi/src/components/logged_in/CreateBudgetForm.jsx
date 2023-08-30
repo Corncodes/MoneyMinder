@@ -66,9 +66,7 @@ const CreateBudgetForm = ({ baseUrl }) => {
 	else {
 		return (
 			<ConfigureBudget
-				budgetName={createdBudget.name}
-				monthlyIncome={createdBudget.monthly_income}
-				budgetId={createdBudget.id}
+				createdBudget={createdBudget}
 				baseUrl={baseUrl}
 			/>
 		);
