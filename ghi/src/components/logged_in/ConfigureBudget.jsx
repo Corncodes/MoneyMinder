@@ -113,7 +113,7 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
 				)
 			})}
 				<button onClick={(e) => handleSubmit(e)}>Submit</button>
-				<button onClick={(e) => handleSave(e)}>Submit</button>
+				<button onClick={(e) => handleSave(e)}>Save and Exit</button>
 			<button onClick={() => addExpense()}>Add Expense</button>
 		</div>
 		);

@@ -1,3 +1,27 @@
+## September 5, 2023
+
+*
+*
+*
+
+Template text
+
+## August 31, 2023
+
+* Rebuilt page styling with Material UI
+
+Been a couple days since journaling...
+
+Today was all about Material UI. Thankfully we had laid the groundwork for Material UI back on the 25th of this month. With that work out of the way, we were able to hit the ground running today with MUI. We incorporated various elements from MUI to build out the visuals for the majority of our pages, and then we worked through the steps needed to hook up said pages with the functionality we had already built into our existing pages.
+
+## August 30, 2023
+
+*
+*
+*
+
+Template text
+
 ## August 29, 2023
 
 *

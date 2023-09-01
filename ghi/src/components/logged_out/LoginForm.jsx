@@ -2,54 +2,99 @@ import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useStore } from "../../ContextStore";
+import { useNavigate } from "react-router-dom";
+
+// Material Imports
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import WalletOutlinedIcon from '@mui/icons-material/WalletOutlined';
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Copyright from "../ui/Copyright";
+
+// const defaultTheme = createTheme();
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const store = useStore()
+    const store = useStore()
+    const { login } = useToken();
 
-//   testFunction("is this printing?")
+    const navigate = useNavigate()
+    
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        login(data.get('email'), data.get('password'));
+        navigate('/budgets')
+        e.target.reset()
+    };
 
-  const { login } = useToken();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    login(email, password);
-    e.target.reset();
-  };
-
-  return (
-    <div>
-      <h5>Login:</h5>
-      <div>
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div>
-            <label>Email:</label>
-            <input
-              name="email"
-              type="email"
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label>Password:</label>
-            <input
-              name="password"
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <input type="submit" value="Login" />
-          </div>
-        </form>
-        <p>Don't have an account? Create one!</p>
-        <NavLink to="/sign-up">Sign Up</NavLink>
-      </div>
-    </div>
-  );
-};
-
+      return (
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: '#242424' }}>
+              <WalletOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign In
+            </Typography>
+            <Box component="form" onSubmit={(e) => handleSubmit(e)} sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                size="large"
+                sx={{ mt: 3, mb: 2, backgroundColor: "#242424" }}
+              >
+                Sign In
+              </Button>
+              <Grid container justifyContent="center">
+                <Grid item>
+                  <Link href="/sign-up" variant="body2">
+                    {"Don't have an account? Sign Up!"}
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+          <Copyright sx={{ mt: 8, mb: 4 }} />
+        </Container>
+    //   </ThemeProvider>
+    );
+}
 export default LoginForm;
