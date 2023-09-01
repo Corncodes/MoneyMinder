@@ -13,6 +13,7 @@ class ExpenseOut(BaseModel):
 class ExpenseIn(BaseModel):
     expense_name: str
     amount: int
+    budget_id: int
 
 
 class UpdateExpense(ExpenseIn):

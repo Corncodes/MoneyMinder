@@ -1,3 +1,22 @@
+## August 31st 2023
+Will drove. Started on "Materializing" MoneyMinder. Login, sign-up, and create a budget pages are completed.
+
+
+## August 29th 2023
+Corn drove.
+
+## August 28th 2023
+Franz drove. Will tried fixing a flickering issue that showed the log-in page briefly after being redirected to the budgets page after logging in. Create budget completed.
+
+
+## August 25th 2023
+Will drove. Then I lost power. sadface
+
+
+## August 24th 2023
+Corn drove. Fooled around with Vite. Bugs galore. Reverted back to previous commit after SEIR Chris helped. Completed LoginForm.jsx
+
+
 ## August 23rd 2023
 Franz drove. UD in CRUD for expenses/expense items completed.
 

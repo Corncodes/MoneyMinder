@@ -1,0 +1,114 @@
+import { useState } from 'react';
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
+import { FetchWrapper } from '../../fetch-wrapper';
+import { useNavigate } from 'react-router-dom';
+import ConfigureBudget from './ConfigureBudget.jsx'
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Copyright from '../ui/Copyright';
+
+const CreateBudgetForm = ({ baseUrl }) => {
+	const [budgetName, setBudgetName] = useState('');
+	const [monthlyIncome, setMonthlyIncome] = useState('');
+	const [budgetCreated, setBudgetCreated] = useState(false)
+	const [createdBudget, setCreatedBudget] = useState({})
+	const [input, setInput] = useState('');
+    const { token } = useAuthContext()
+
+	const FastAPI = new FetchWrapper(baseUrl)
+
+
+	const handleBudgetNameChange = (e) => {
+		setBudgetName(e.target.value);
+	};
+
+	const handleMonthlyIncomeChange = (e) => {
+		setMonthlyIncome(e.target.value);
+	};
+
+	const handleFirstSubmit = async (e) => {
+		e.preventDefault();
+
+
+		const body = {}
+		body.name = budgetName
+		body.monthly_income = monthlyIncome
+		const data = await FastAPI.post('/api/budgets', body, token)
+		setCreatedBudget(data)
+		setBudgetCreated(true)
+	};
+	if (!budgetCreated) {
+      return (
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Typography component="h1" variant="h5">
+              Create a Budget
+            </Typography>
+            <Box component="form" onSubmit={(e) => handleFirstSubmit(e)} sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="budgetName"
+                label="Budget Name"
+                name="Budget Name"
+                onChange={handleBudgetNameChange}
+                value={budgetName}
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="Monthly Income"
+                label="Monthly Income"
+                type="number"
+                id="monthlyIncome"
+                onChange={handleMonthlyIncomeChange}
+                value={monthlyIncome}
+                InputProps={{
+                  inputProps: {
+                    min: 0
+                  }
+                }}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2, backgroundColor: "#242424" }}
+              >
+                Add Expenses
+              </Button>
+            </Box>
+          </Box>
+          <Copyright sx={{ mt: 8, mb: 4 }} />
+        </Container>
+    );
+
+	}
+	else {
+		return (
+			<ConfigureBudget
+				createdBudget={createdBudget}
+				baseUrl={baseUrl}
+			/>
+		);
+	}
+}
+
+export default CreateBudgetForm;
