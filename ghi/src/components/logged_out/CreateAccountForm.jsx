@@ -14,6 +14,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import WalletOutlinedIcon from '@mui/icons-material/WalletOutlined';
 import Typography from "@mui/material/Typography";
+import { CssBaseline } from '@mui/material';
 import Container from "@mui/material/Container";
 import Copyright from '../ui/Copyright';
 
@@ -149,7 +150,7 @@ const handleSubmit = async (e) => {
               </Button>
               <Grid container justifyContent="center">
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/" variant="body2">
                     Already have an account? Sign in
                   </Link>
                 </Grid>

@@ -1,3 +1,5 @@
+## September 5 2023 
+Today, was our first time going into groups & working on Back & Front-End. Franz whipped in an Audi
 ## August 29 2023
 Today, I drove in a heavy duty vehicle that moved quite slow took a lot of fuel & time, however produced some questions that led to some huge breakthroughs.
 ah-ha: ..., =>, async those 3 helped. Ty fellas
