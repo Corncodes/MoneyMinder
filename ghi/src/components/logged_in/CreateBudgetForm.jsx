@@ -12,6 +12,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Copyright from '../ui/Copyright';
+import Avatar from "@mui/material/Avatar";
+import WalletOutlinedIcon from '@mui/icons-material/WalletOutlined';
+
 
 const CreateBudgetForm = ({ baseUrl }) => {
 	const [budgetName, setBudgetName] = useState('');
@@ -19,7 +22,7 @@ const CreateBudgetForm = ({ baseUrl }) => {
 	const [budgetCreated, setBudgetCreated] = useState(false)
 	const [createdBudget, setCreatedBudget] = useState({})
 	const [input, setInput] = useState('');
-    const { token } = useAuthContext()
+  const { token } = useAuthContext();
 
 	const FastAPI = new FetchWrapper(baseUrl)
 
@@ -49,15 +52,19 @@ const CreateBudgetForm = ({ baseUrl }) => {
           <CssBaseline />
           <Box
             sx={{
-              marginTop: 8,
+              mt: 1,
+              mb: 5,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
-          >
+          >        <Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
+            <WalletOutlinedIcon />
+        </Avatar>
             <Typography component="h1" variant="h5">
               Create a Budget
             </Typography>
+          </Box>
             <Box component="form" onSubmit={(e) => handleFirstSubmit(e)} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
@@ -95,7 +102,7 @@ const CreateBudgetForm = ({ baseUrl }) => {
                 Add Expenses
               </Button>
             </Box>
-          </Box>
+
           <Copyright sx={{ mt: 8, mb: 4 }} />
         </Container>
     );

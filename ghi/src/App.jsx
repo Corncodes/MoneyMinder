@@ -24,6 +24,7 @@ function App() {
   const baseUrl = process.env.REACT_APP_API_HOST;
 
   return (
+    
     <AuthProvider baseUrl={baseUrl}>
         <ThemeProvider theme={defaultTheme}>
             <ContextProvider>
