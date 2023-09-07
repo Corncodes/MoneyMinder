@@ -25,14 +25,14 @@ const LoginForm = () => {
     const { login } = useToken();
 
     const navigate = useNavigate()
-    
-    
+
+
     const handleSubmit = (e) => {
-        e.preventDefault();
-        const data = new FormData(e.currentTarget);
-        login(data.get('email'), data.get('password'));
-        navigate('/budgets')
-        e.target.reset()
+      e.preventDefault();
+      const data = new FormData(e.currentTarget);
+      login(data.get('email'), data.get('password'));
+      navigate('/budgets')
+      e.target.reset()
     };
 
 

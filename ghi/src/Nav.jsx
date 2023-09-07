@@ -51,8 +51,8 @@ function DrawerAppBar(props) {
           url: "/budgets",
         },
         {
-          name: "Edit Account",
-          url: "/account/edit",
+          name: "Account",
+          url: "/account",
         },
       ]
     : [

@@ -4,7 +4,6 @@
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import LoginForm from "../logged_out/LoginForm";
-import CreateBudgetForm from "../logged_in/CreateBudgetForm";
 import { useStore } from "../../ContextStore";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import { FetchWrapper } from '../../fetch-wrapper';
@@ -14,14 +13,38 @@ const BudgetList = ({ baseUrl }) => {
 	const FastAPI = new FetchWrapper(baseUrl)
 	const { token } = useAuthContext()
 	const { budgetsData, setBudgetsData } = useStore()
+	const [isLoading, setIsLoading] = useState(true)
+
+	const loadingChecker = () => {
+		if (token && isLoading) {return true}
+		else if (token && !isLoading) {return true}
+		else if (!token && isLoading) {return true}
+		else {return false}
+	}
+
+	// console.log('THIS IS TOKEN', token)
+	// console.log('THIS IS isLoading', isLoading)
+	// console.log('token && isLoading', token && isLoading)
+	// console.log('token && !isLoading', token && !isLoading)
+	// console.log('!token && isLoading', !token && isLoading)
+	// console.log(' ELSE i.e. !token && !isLoading', !token && !isLoading)
+	// console.log('THIS IS loadingChecker:', loadingChecker())
+
+	useEffect(() => {
+		setTimeout(() => {setIsLoading(false)}, 500)
+	}, [])
 
 	const getData = async () => {
 		const data = await FastAPI.get('/api/budgets', token)
 		setBudgetsData(data.budgets)
 	}
 
+	// useEffect(() => {
+	// 	token && getData()
+	// }, [token])
+
 	useEffect(() => {
-		token && getData()
+		if (token) {getData()}
 	}, [token])
 
 	const deleteBudget = async (id) => {
@@ -30,7 +53,7 @@ const BudgetList = ({ baseUrl }) => {
 	}
 
 
-  if (token) {
+  if (loadingChecker()) {
 		return (
 		<>
 			<div>

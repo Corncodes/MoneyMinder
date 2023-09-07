@@ -72,14 +72,14 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
 	}
 
 	const handleSubmit = async (e) => {
-		handleSubmitOrSave(e, true)
+		await handleSubmitOrSave(e, true)
 		const data = await FastAPI.get(`/api/budgets`, token)
 		setBudgetsData(data.budgets)
 		navigate(`/budgets/${createdBudget.id}`)
 	}
 
-	const handleSave = (e) => {
-		handleSubmitOrSave(e, false)
+	const handleSave = async (e) => {
+		await handleSubmitOrSave(e, false)
 		navigate("/budgets")
 	}
 
