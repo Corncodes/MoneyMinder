@@ -47,10 +47,10 @@ const BudgetView = ({ baseUrl }) => {
     }, [token])
 
     const data = [
-  { id: 0, value: 10, label: 'series A' },
-  { id: 1, value: 15, label: 'series B' },
-  { id: 2, value: 20, label: 'series C' },
-];
+        { id: 0, value: 10 },
+        { id: 1, value: 15 },
+        { id: 2, value: 20 },
+        ];
 
 	if (budget.length === 0) {
         return (
@@ -92,6 +92,7 @@ const BudgetView = ({ baseUrl }) => {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
@@ -189,7 +190,7 @@ const BudgetView = ({ baseUrl }) => {
                             color="warning" 
                             sx={{ mt: 2, mb: 2 }}
                             startIcon={<EditIcon/>}onClick={() => navigate(`/budgets/${id}/edit`)}>
-                                Edit Budget
+                                View Budget
                             </Button>
 
                             <Button 

@@ -142,23 +142,24 @@ const ReconfigureBudget = ({ updatedBudget, baseUrl, setBudgetCreated}) => {
 			{updatedBudget.name}
 			</Typography>
 			<Typography 
-			variant="overline">
-			Available Spend
-			</Typography>
-			<Typography 
-			variant="h4" 
-			sx={{ fontWeight: "bold" }}>
-				{(updatedBudget.monthly_income - totalSpending).toLocaleString("en-US", {style:"currency", currency:"USD"})}
-			</Typography>
-			<Typography 
 			variant="overline"
-			>Total Spend
+			>Total Spending
 			</Typography>
 			<Typography 
 			variant="h4" 
 			sx={{ fontWeight: "bold" }}>
 				{totalSpending?.toLocaleString("en-US", {style:"currency", currency:"USD"})}
 			</Typography>
+			<Typography 
+			variant="overline">
+			Remaining
+			</Typography>
+			<Typography 
+			variant="h4" 
+			sx={{ fontWeight: "bold" }}>
+				{(updatedBudget.monthly_income - totalSpending).toLocaleString("en-US", {style:"currency", currency:"USD"})}
+			</Typography>
+
 
 		</Grid>
 		{expenseItems.length === 0 ? (

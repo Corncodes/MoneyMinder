@@ -5,6 +5,18 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { FetchWrapper } from '../../fetch-wrapper';
 import { CircularProgress } from "@mui/material";
 
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Grid from "@mui/material/Grid";
+import EditIcon from '@mui/icons-material/Edit';
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
 
 
 const AccountView = ({ baseUrl }) => {
@@ -48,10 +60,39 @@ const AccountView = ({ baseUrl }) => {
 if (Object.keys(accountData).length) {
 		return (
 			<>
-				<h1>Howdy, {accountData.first_name}</h1>
-				<h3>First name: {accountData.first_name}</h3>
-				<h3>Last name: {accountData.last_name}</h3>
-				<h3>Email: {accountData.email}</h3>
+        <Container component="main" maxWidth="sm">
+          <Box
+            sx={{
+              mt: 1,
+			  mb: 5,
+			  fontSize: 'large',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
+                <AccountCircleIcon />
+            </Avatar>
+		    <Typography variant="h6">
+              Account Info
+            </Typography>
+			</Box>
+			<Grid container direction="column">
+				<Grid item xs={4}>
+					<Typography variant='h3'>Howdy, {accountData.first_name}</Typography>
+				</Grid>
+				<Grid item xs={4}>
+					<Typography>First name: {accountData.first_name}</Typography>
+				</Grid>
+				<Grid item xs={4}>
+					<Typography>Last name: {accountData.last_name}</Typography>
+				</Grid>
+				<Grid item xs={4}>
+					<Typography>Email: {accountData.email}</Typography>
+				</Grid>
+			</Grid>
+			</Container>
 			</>
 		);
 	} else {

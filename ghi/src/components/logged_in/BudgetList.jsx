@@ -21,7 +21,7 @@ import WalletOutlinedIcon from '@mui/icons-material/WalletOutlined';
 import Grid from "@mui/material/Grid";
 import { IconButton } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Divider } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -105,7 +105,7 @@ const BudgetList = ({ baseUrl }) => {
         <Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
             <WalletOutlinedIcon />
         </Avatar>
-		    <Typography variant="overline">
+		    <Typography variant="h6">
               Budgets
             </Typography>
 		</Box>
@@ -124,7 +124,7 @@ const BudgetList = ({ baseUrl }) => {
 			id={`card${budget.id}-header`}
 			sx={{ backgroundColor: '#B4D3B2'}}
 			>
-            <Typography variant="overline">{budget.name}</Typography>
+            <Typography variant="body1">{budget.name}</Typography>
           </AccordionSummary>
 		  			<Grid item>
 						<Button onClick={handlePrimary}>{isPrimaryBudget ? <Star /> : <StarBorder /> }</Button>
@@ -137,14 +137,15 @@ const BudgetList = ({ baseUrl }) => {
 				alignItems='center'
 				sx={{ mt: 4 }}>
 					<Grid item xs={4}>
-						<Typography variant="overline" noWrap>Monthly Income</Typography>
+						<Grid container direction="column" justifyContent="left" alignItems="left">
+						<Typography variant="body1" noWrap>Monthly Income</Typography>
 						<Typography variant="body1" sx={{fontWeight: "bold" }}>
 						{budget.monthly_income?.toLocaleString("en-US", {
 							style: "currency",
 							currency: "USD",
 						})}
 						</Typography>
-
+					</Grid>
 					</Grid>
 					<Grid item xs={4}>
 						<Typography variant="overline" noWrap>Total Spent</Typography>
@@ -155,7 +156,8 @@ const BudgetList = ({ baseUrl }) => {
 						})}
 						</Typography>
 					</Grid>
-					<Grid item xs={2.5}>
+					<Grid item xs={4}>
+						
 						<Typography variant="overline" noWrap>Remaining</Typography>
 						<Typography variant="body1" sx={{ fontWeight: "bold" }}>
 						{budget.monthly_balance?.toLocaleString("en-US", {
@@ -171,7 +173,7 @@ const BudgetList = ({ baseUrl }) => {
 				justifyContent="center"
 				sx={{ mt: 2, mb: 3 }}>
 				<Grid item>
-					<Button variant="contained" color="warning" size="small" startIcon={<EditIcon/>}onClick={() => editBudget(budget.id)}>Edit Budget</Button>
+					<Button variant="contained" color="warning" size="small" startIcon={<VisibilityIcon />}onClick={() => editBudget(budget.id)}>View Budget</Button>
 				</Grid>
 				<Grid item>
 					<Button variant="contained" color="error" size="small" startIcon={<DeleteForeverIcon/>}onClick={() => deleteBudget(budget.id)}>Delete Budget</Button>

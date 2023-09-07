@@ -59,15 +59,17 @@ const LoginForm = () => {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Email"
                 name="email"
                 autoComplete="email"
+                variant='standard'
                 autoFocus
               />
               <TextField
                 margin="normal"
                 required
                 fullWidth
+                variant="standard"
                 name="password"
                 label="Password"
                 type="password"
