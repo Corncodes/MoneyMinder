@@ -136,7 +136,7 @@ const BudgetList = ({ baseUrl }) => {
 				justifyContent="center"
 				alignItems='center'
 				sx={{ mt: 4 }}>
-					<Grid item xs={4}>
+					<Grid item xs={2}>
 						<Grid container direction="column" justifyContent="left" alignItems="left">
 						<Typography variant="body1" noWrap>Monthly Income</Typography>
 						<Typography variant="body1" sx={{fontWeight: "bold" }}>
