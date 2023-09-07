@@ -4,7 +4,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import LoginForm from "../logged_out/LoginForm";
-import CreateBudgetForm from "../logged_in/CreateBudgetForm";
 import { useStore } from "../../ContextStore";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import { FetchWrapper } from '../../fetch-wrapper';
@@ -67,8 +66,12 @@ const BudgetList = ({ baseUrl }) => {
 		setBudgetsData(data.budgets)
 	}
 
+	// useEffect(() => {
+	// 	token && getData()
+	// }, [token])
+
 	useEffect(() => {
-		token && getData()
+		if (token) {getData()}
 	}, [token])
 
 	const deleteBudget = async (id) => {
@@ -78,8 +81,8 @@ const BudgetList = ({ baseUrl }) => {
 
 	const editBudget = async (id) => {
 		setBudgetsData(budgetsData.filter(budget => budget.id !== id))
-		const data = await FastAPI.put(`/api/budgets/${id}`, token)
-		window.location.href = `/api/budgets/${id}`;
+		const data = await FastAPI.put(`/budgets/${id}`, token)
+		window.location.href = `/budgets/${id}`;
 	}	
 
 
@@ -102,11 +105,11 @@ const BudgetList = ({ baseUrl }) => {
         <Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
             <WalletOutlinedIcon />
         </Avatar>
-		    <Typography component="h1" variant="h5">
+		    <Typography variant="overline">
               Budgets
             </Typography>
 		</Box>
-    <div style={{ marginBottom: "20px"}}>
+    	<div style={{ marginBottom: "20px"}}>
 		{budgetsData.map((budget) => (
 			<Accordion
 			sx={{ mt: 2, mb: 2 }}
@@ -121,7 +124,7 @@ const BudgetList = ({ baseUrl }) => {
 			id={`card${budget.id}-header`}
 			sx={{ backgroundColor: '#B4D3B2'}}
 			>
-            <Typography variant="h6">{budget.name}</Typography>
+            <Typography variant="overline">{budget.name}</Typography>
           </AccordionSummary>
 		  			<Grid item>
 						<Button onClick={handlePrimary}>{isPrimaryBudget ? <Star /> : <StarBorder /> }</Button>

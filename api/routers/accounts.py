@@ -81,6 +81,9 @@ async def get_account(
     account_email: str,
     response: Response,
     queries: AccountQueries = Depends(),
+    account: AccountOut = Depends(
+        authenticator.try_get_current_account_data
+    ),  # Will added this
 ):
     record = queries.get_account(account_email)
     if record is None:

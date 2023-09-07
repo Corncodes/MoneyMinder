@@ -26,6 +26,9 @@ async def update_expense(
     expense_in: UpdateExpense,
     response: Response,
     queries: ExpenseQueries = Depends(),
+    account_data: dict = Depends(
+        authenticator.get_current_account_data
+    ),  # Added this
 ):
     record = queries.update_expense(expense_id, expense_in)
     if record is None:
@@ -38,5 +41,8 @@ async def update_expense(
 async def delete_expense(
     expense_id: int,
     queries: ExpenseQueries = Depends(),
+    account_data: dict = Depends(
+        authenticator.get_current_account_data
+    ),  # Added this
 ):
     return queries.delete_expense(expense_id)

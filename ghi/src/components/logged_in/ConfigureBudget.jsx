@@ -89,10 +89,10 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
     navigate(`/budgets/${createdBudget.id}`);
   };
 
-  const handleSave = (e) => {
-    handleSubmitOrSave(e, false);
-    navigate('/budgets');
-  };
+	const handleSave = async (e) => {
+		await handleSubmitOrSave(e, false)
+		navigate("/budgets")
+	}
 
   return (
 		<Container component="main" maxWidth="sm">

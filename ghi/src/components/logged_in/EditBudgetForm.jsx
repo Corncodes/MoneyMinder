@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import { FetchWrapper } from '../../fetch-wrapper';
-import { useNavigate } from 'react-router-dom';
-import ConfigureBudget from './ConfigureBudget.jsx'
+import { useNavigate, useParams } from 'react-router-dom';
+import { useStore } from "../../ContextStore";
+import ReconfigureBudget from './ReconfigureBudget.jsx'
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -14,43 +15,51 @@ import Container from "@mui/material/Container";
 import Copyright from '../ui/Copyright';
 import Avatar from "@mui/material/Avatar";
 import WalletOutlinedIcon from '@mui/icons-material/WalletOutlined';
-import CancelIcon from '@mui/icons-material/Cancel';
 
 
-const CreateBudgetForm = ({ baseUrl }) => {
+const EditBudgetForm = ({ baseUrl }) => {
+  const { id } = useParams()
 	const [budgetName, setBudgetName] = useState('');
 	const [monthlyIncome, setMonthlyIncome] = useState('');
 	const [budgetCreated, setBudgetCreated] = useState(false)
-	const [createdBudget, setCreatedBudget] = useState({})
+  const [budget, setBudget] = useState({name: '', monthly_income: 0})
 	const [input, setInput] = useState('');
-  const { token } = useAuthContext();
+  const { token } = useAuthContext()
+	const { budgetsData, setBudgetsData } = useStore()
   const navigate = useNavigate()
-
 	const FastAPI = new FetchWrapper(baseUrl)
 
+  const getBudgetData = async () => {
+    const data = await FastAPI.get(`/api/budgets/${id}`, token)
+    setBudget(data);
+  }
+
+  useEffect(() => {
+    if (budgetsData.length == 0 && token) {
+      getBudgetData()
+    } else if (budgetsData.length > 0) {
+      setBudget([...budgetsData].filter( b => b.id == id)[0])
+      }
+    }, [token])
 
 	const handleBudgetNameChange = (e) => {
-		setBudgetName(e.target.value);
+    let updatedBudget = {...budget, name: e.target.value}
+	  setBudget(updatedBudget);
 	};
 
 	const handleMonthlyIncomeChange = (e) => {
-		setMonthlyIncome(e.target.value);
+    let updatedBudget = {...budget, monthly_income: e.target.value}
+	  setBudget(updatedBudget);
 	};
-
-	const handleCancel = async (e) => {
-		navigate(`/budgets/`)
-	}
 
 	const handleFirstSubmit = async (e) => {
 		e.preventDefault();
 
-		const body = {}
-		body.name = budgetName
-		body.monthly_income = monthlyIncome
-		const data = await FastAPI.post('/api/budgets', body, token)
-		setCreatedBudget(data)
+    const {account_id, expenses, id, ...body} = budget
+		await FastAPI.put(`/api/budgets/${id}`, body, token)
 		setBudgetCreated(true)
 	};
+
 	if (!budgetCreated) {
       return (
         <Container component="main" maxWidth="xs">
@@ -59,18 +68,18 @@ const CreateBudgetForm = ({ baseUrl }) => {
             sx={{
               mt: 1,
               mb: 5,
+              fontSize: 'large',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
-          >        
+          >
         <Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
             <WalletOutlinedIcon />
         </Avatar>
-            <Typography variant="overline">
-              Create a Budget
+            <Typography component="h1" variant="h5">
+              Edit Budget
             </Typography>
-          </Box>
             <Box component="form" onSubmit={(e) => handleFirstSubmit(e)} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
@@ -80,7 +89,7 @@ const CreateBudgetForm = ({ baseUrl }) => {
                 label="Budget Name"
                 name="Budget Name"
                 onChange={handleBudgetNameChange}
-                value={budgetName}
+                value={budget.name}
                 autoFocus
               />
               <TextField
@@ -92,7 +101,7 @@ const CreateBudgetForm = ({ baseUrl }) => {
                 type="number"
                 id="monthlyIncome"
                 onChange={handleMonthlyIncomeChange}
-                value={monthlyIncome}
+                value={budget.monthly_income}
                 InputProps={{
                   inputProps: {
                     min: 0
@@ -105,32 +114,34 @@ const CreateBudgetForm = ({ baseUrl }) => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2, backgroundColor: "#242424" }}
               >
-                Add Expenses
+                Save and Continue
+              </Button>
+              <Button
+                fullWidth
+                variant="contained"
+                color="error"
+                sx={{ mt: 1, mb: 2 }}
+                onClick={() => navigate(`/budgets/${id}`)}
+              >
+                Cancel
               </Button>
             </Box>
-				<Button
-				variant="text" 
-				color="error" 
-				fullWidth
-				sx={{ mt: 2, mb: 2}}
-				startIcon={<CancelIcon/>}
-				onClick={(e) => handleCancel(e)}>
-				Cancel
-				</Button>
+          </Box>
           <Copyright sx={{ mt: 8, mb: 4 }} />
         </Container>
-        
     );
 
 	}
 	else {
 		return (
-			<ConfigureBudget
-				createdBudget={createdBudget}
+			<ReconfigureBudget
+				updatedBudget={budget}
 				baseUrl={baseUrl}
+        budgetCreated={budgetCreated}
+        setBudgetCreated={setBudgetCreated}
 			/>
 		);
 	}
 }
 
-export default CreateBudgetForm;
+export default EditBudgetForm;
