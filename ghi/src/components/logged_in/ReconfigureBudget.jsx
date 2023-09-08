@@ -148,7 +148,7 @@ const ReconfigureBudget = ({ updatedBudget, baseUrl, setBudgetCreated}) => {
 			<Typography 
 			variant="h4" 
 			sx={{ fontWeight: "bold" }}>
-				{totalSpending?.toLocaleString("en-US", {style:"currency", currency:"USD"})}
+				{totalSpending?.toLocaleString("en-US", {style:"currency", currency:"USD", minimumFractionDigits: 0, maximumFractionDigits: 0})}
 			</Typography>
 			<Typography 
 			variant="overline">
@@ -157,7 +157,7 @@ const ReconfigureBudget = ({ updatedBudget, baseUrl, setBudgetCreated}) => {
 			<Typography 
 			variant="h4" 
 			sx={{ fontWeight: "bold" }}>
-				{(updatedBudget.monthly_income - totalSpending).toLocaleString("en-US", {style:"currency", currency:"USD"})}
+				{(updatedBudget.monthly_income - totalSpending).toLocaleString("en-US", {style:"currency", currency:"USD", minimumFractionDigits: 0, maximumFractionDigits: 0})}
 			</Typography>
 
 

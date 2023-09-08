@@ -135,6 +135,8 @@ const BudgetList = ({ baseUrl }) => {
 						{budget.monthly_income?.toLocaleString("en-US", {
 							style: "currency",
 							currency: "USD",
+							minimumFractionDigits: 0,
+    						maximumFractionDigits: 0,
 						})}
 						</Typography>
 					</Grid>
@@ -154,6 +156,8 @@ const BudgetList = ({ baseUrl }) => {
 						{budget.monthly_spending_total?.toLocaleString("en-US", {
 							style: "currency",
 							currency: "USD",
+							minimumFractionDigits: 0,
+    						maximumFractionDigits: 0,
 						})}
 						</Typography>
 					</Grid>
@@ -164,6 +168,8 @@ const BudgetList = ({ baseUrl }) => {
 						{budget.monthly_balance?.toLocaleString("en-US", {
 							style: "currency",
 							currency: "USD",
+							minimumFractionDigits: 0,
+    						maximumFractionDigits: 0,
 						})}
 						</Typography>
 					</Grid>

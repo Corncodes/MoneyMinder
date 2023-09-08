@@ -121,7 +121,7 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
 			<Typography 
 			variant="h4" 
 			sx={{ fontWeight: "bold" }}>
-				{totalSpending?.toLocaleString("en-US", {style:"currency", currency:"USD"})}
+				{totalSpending?.toLocaleString("en-US", {style:"currency", currency:"USD", minimumFractionDigits: 0, maximumFractionDigits: 0 })}
 			</Typography>
 			<Typography 
 			variant="overline">
@@ -130,7 +130,7 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
 			<Typography 
 			variant="h4" 
 			sx={{ fontWeight: "bold" }}>
-				{(availableSpend - totalSpending).toLocaleString("en-US", {style:"currency", currency:"USD"})}
+				{(availableSpend - totalSpending).toLocaleString("en-US", {style:"currency", currency:"USD", minimumFractionDigits: 0, maximumFractionDigits: 0,})}
 			</Typography>
 
 
@@ -161,7 +161,7 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
 				onChange={(e) => handleExpenseAmountChange(e, index)}
 				value={expenseItems[index].expenseAmount}
 				type="number"
-				inputProps={{ min: '0' }}
+				inputProps={{ min: '0', maxLength: 1 }}
 				required
 				/>
 				<Box textAlign="center">
