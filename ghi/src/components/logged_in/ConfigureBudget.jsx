@@ -146,7 +146,6 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
 				label="Expense Name"
 				variant="outlined"
 				fullWidth
-				alignItems="flex-end"
 				inputProps={{ maxLength: 20 }}
 				onChange={(e) => handleExpenseNameChange(e, index)}
 				value={expenseItems[index].expenseName}

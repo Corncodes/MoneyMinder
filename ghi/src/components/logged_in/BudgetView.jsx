@@ -265,7 +265,7 @@ const BudgetView = ({ baseUrl }) => {
                     style: "currency",
                     currency: "USD",
                     minimumFractionDigits: 0,
-    						    maximumFractionDigits: 0,
+                    maximumFractionDigits: 0,
                   })}
                 </Typography>
               </Grid>
@@ -281,7 +281,7 @@ const BudgetView = ({ baseUrl }) => {
                     style: "currency",
                     currency: "USD",
                     minimumFractionDigits: 0,
-    						    maximumFractionDigits: 0,
+                    maximumFractionDigits: 0,
                   })}
                 </Typography>
               </Grid>
@@ -297,7 +297,7 @@ const BudgetView = ({ baseUrl }) => {
                     style: "currency",
                     currency: "USD",
                     minimumFractionDigits: 0,
-    						    maximumFractionDigits: 0,
+                    maximumFractionDigits: 0,
                   })}
                 </Typography>
               </Grid>
@@ -308,6 +308,30 @@ const BudgetView = ({ baseUrl }) => {
           <Typography variant="h5" align="center" sx={{ fontWeight: "bold" }}>
             Expense List
           </Typography>
+          <Box
+            sx={{
+              p: 2,
+              margin: "auto",
+              maxWidth: 500,
+              flexGrow: 1,
+              backgroundColor: "#ffffff",
+              marginBottom: "10px",
+              borderBottom: '1px solid #ddd'
+            }}
+          >
+            <Grid container spacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+              <Grid item xs={6}>
+                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                  Name
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                  Amount
+                </Typography>
+              </Grid>
+            </Grid>
+          </Box>
 
           {budget.expenses.map((expense) => {
             return (
@@ -338,7 +362,7 @@ const BudgetView = ({ baseUrl }) => {
                         style: "currency",
                         currency: "USD",
                         minimumFractionDigits: 0,
-    						        maximumFractionDigits: 0,
+                        maximumFractionDigits: 0,
                       })}
                     </Typography>
                   </Grid>

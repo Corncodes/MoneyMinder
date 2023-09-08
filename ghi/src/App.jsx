@@ -75,6 +75,7 @@ function App() {
                 <Nav baseUrl={baseUrl}/>
                 <Routes>
                   <Route element={<UnprotectedRoute />}>
+                    <Route path="/sign-up" element={<CreateAccountForm baseUrl={baseUrl} />} />
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/" element={<LoginForm />} />
                   </Route>
@@ -91,7 +92,6 @@ function App() {
                   </Route>
 
                   <Route path="/test" element={<TestPage />} />
-                  <Route path="/sign-up" element={<CreateAccountForm baseUrl={baseUrl} />} />
                   <Route path="/account">
                     <Route index element={<AccountView baseUrl={baseUrl} />} />
                   </Route>
