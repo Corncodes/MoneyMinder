@@ -98,7 +98,7 @@ const BudgetView = ({ baseUrl }) => {
             <Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
                 <WalletOutlinedIcon />
             </Avatar>
-		    <Typography variant="h5">
+		    <Typography variant="h6">
               {budget.name}
             </Typography>
                 <PieChart
@@ -190,7 +190,7 @@ const BudgetView = ({ baseUrl }) => {
                             color="warning" 
                             sx={{ mt: 2, mb: 2 }}
                             startIcon={<EditIcon/>}onClick={() => navigate(`/budgets/${id}/edit`)}>
-                                View Budget
+                                Edit Budget
                             </Button>
 
                             <Button 

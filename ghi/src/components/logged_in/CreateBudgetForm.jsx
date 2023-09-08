@@ -67,7 +67,7 @@ const CreateBudgetForm = ({ baseUrl }) => {
         <Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
             <WalletOutlinedIcon />
         </Avatar>
-            <Typography variant="overline">
+            <Typography variant="h6">
               Create a Budget
             </Typography>
           </Box>
@@ -79,6 +79,7 @@ const CreateBudgetForm = ({ baseUrl }) => {
                 id="budgetName"
                 label="Budget Name"
                 name="Budget Name"
+                inputProps={{ maxLength: 20 }}
                 onChange={handleBudgetNameChange}
                 value={budgetName}
                 autoFocus

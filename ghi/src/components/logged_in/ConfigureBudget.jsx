@@ -110,7 +110,7 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
         </Avatar>
 		<Grid container direction='column' alignItems='center' justify='center'>
 			<Typography 
-			variant="h5" 
+			variant="h6" 
 			sx={{ fontWeight: "bold" }}> 
 			{createdBudget.name}
 			</Typography>
@@ -146,7 +146,8 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
 				label="Expense Name"
 				variant="outlined"
 				fullWidth
-				alignItems="right"
+				alignItems="flex-end"
+				inputProps={{ maxLength: 20 }}
 				onChange={(e) => handleExpenseNameChange(e, index)}
 				value={expenseItems[index].expenseName}
 				type="text"

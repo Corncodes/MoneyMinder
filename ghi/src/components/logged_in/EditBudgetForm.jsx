@@ -88,6 +88,7 @@ const EditBudgetForm = ({ baseUrl }) => {
                 id="budgetName"
                 label="Budget Name"
                 name="Budget Name"
+                inputProps={{ maxLength: 20 }}
                 onChange={handleBudgetNameChange}
                 value={budget.name}
                 autoFocus

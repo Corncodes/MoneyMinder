@@ -11,7 +11,6 @@ import { FetchWrapper } from '../../fetch-wrapper';
 
 import * as React from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
@@ -22,15 +21,14 @@ import Grid from "@mui/material/Grid";
 import { IconButton } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Divider } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
+import { Divider } from "@mui/material";
 
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
-import { styled } from "@mui/material/styles";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -66,10 +64,6 @@ const BudgetList = ({ baseUrl }) => {
 		setBudgetsData(data.budgets)
 	}
 
-	// useEffect(() => {
-	// 	token && getData()
-	// }, [token])
-
 	useEffect(() => {
 		if (token) {getData()}
 	}, [token])
@@ -91,7 +85,7 @@ const BudgetList = ({ baseUrl }) => {
   if (token) {
   return (
     <>
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="xs">
           <Box
             sx={{
               mt: 1,
@@ -102,7 +96,7 @@ const BudgetList = ({ baseUrl }) => {
               alignItems: 'center',
             }}
           >
-        <Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
+        <Avatar sx={{ m: 1, bgcolor: '#242424'}}>
             <WalletOutlinedIcon />
         </Avatar>
 		    <Typography variant="h6">
@@ -125,19 +119,21 @@ const BudgetList = ({ baseUrl }) => {
 			sx={{ backgroundColor: '#B4D3B2'}}
 			>
             <Typography variant="body1">{budget.name}</Typography>
+
           </AccordionSummary>
-		  			<Grid item>
-						<Button onClick={handlePrimary}>{isPrimaryBudget ? <Star /> : <StarBorder /> }</Button>
-					</Grid>
+
 			<AccordionDetails>
 				<Grid 
-				container 
+				container
 				direction="row"
-				justifyContent="center"
-				alignItems='center'
-				sx={{ mt: 4 }}>
-					<Grid item xs={2}>
-						<Grid container direction="column" justifyContent="left" alignItems="left">
+				justifyContent="flex-start"
+				alignItems="center"
+				sx={{ mt: 2}}
+				>
+		  			<Grid item align="center" xs={4}>
+						<Button onClick={handlePrimary}>{isPrimaryBudget ? <Star /> : <StarBorder /> }</Button>
+					</Grid>
+					<Grid item align="center">
 						<Typography variant="body1" noWrap>Monthly Income</Typography>
 						<Typography variant="body1" sx={{fontWeight: "bold" }}>
 						{budget.monthly_income?.toLocaleString("en-US", {
@@ -147,8 +143,17 @@ const BudgetList = ({ baseUrl }) => {
 						</Typography>
 					</Grid>
 					</Grid>
-					<Grid item xs={4}>
-						<Typography variant="overline" noWrap>Total Spent</Typography>
+					<Grid>
+						<Divider sx={{ mt: 2}}/>
+					</Grid>
+				<Grid 
+				container 
+				direction="row"
+				justifyContent="space-evenly"
+				align="center"
+				sx={{ mt: 2 }}>
+					<Grid item>
+						<Typography variant="body1" noWrap>Total Spent</Typography>
 						<Typography variant="body1" sx={{ fontWeight: "bold" }}>
 						{budget.monthly_spending_total?.toLocaleString("en-US", {
 							style: "currency",
@@ -156,9 +161,9 @@ const BudgetList = ({ baseUrl }) => {
 						})}
 						</Typography>
 					</Grid>
-					<Grid item xs={4}>
-						
-						<Typography variant="overline" noWrap>Remaining</Typography>
+					<Divider orientation="vertical" flexItem  />
+					<Grid item >
+						<Typography variant="body1">Remaining</Typography>
 						<Typography variant="body1" sx={{ fontWeight: "bold" }}>
 						{budget.monthly_balance?.toLocaleString("en-US", {
 							style: "currency",
@@ -166,19 +171,24 @@ const BudgetList = ({ baseUrl }) => {
 						})}
 						</Typography>
 					</Grid>
-				</Grid>
+					</Grid>
+
 				
 			<Grid 
-				container spacing={5} 
-				justifyContent="center"
-				sx={{ mt: 2, mb: 3 }}>
+				container
+				direction="row"
+				justifyContent="space-between"
+				align="center"
+				sx={{ mt: 4, mb: 2 }}>
 				<Grid item>
-					<Button variant="contained" color="warning" size="small" startIcon={<VisibilityIcon />}onClick={() => editBudget(budget.id)}>View Budget</Button>
+					<Button variant="contained" color="error" size="medium" startIcon={<DeleteForeverIcon/>}onClick={() => deleteBudget(budget.id)}>Delete Budget</Button>
 				</Grid>
 				<Grid item>
-					<Button variant="contained" color="error" size="small" startIcon={<DeleteForeverIcon/>}onClick={() => deleteBudget(budget.id)}>Delete Budget</Button>
+					<Button variant="contained" color="warning" size="medium" startIcon={<VisibilityIcon />}onClick={() => editBudget(budget.id)}>View Budget</Button>
 				</Grid>
+
 			</Grid>
+
           </AccordionDetails>
 			</Accordion>
 		))}
@@ -192,10 +202,10 @@ const BudgetList = ({ baseUrl }) => {
 			},
         }}>
         <CardContent>
-          <Grid container justifyContent="center" alignItems="center" direction="column">
-          <IconButton onClick={handleClick} aria-label="create" size="large">
+          <Grid container align="center" direction="column" sx={{mt: 2}}>
+			<Grid>
 			<AddIcon fontSize='large' />
-          </IconButton>
+			</Grid>
           <Typography variant="overline" sx={{ fontWeight: 'bold'}}>Create A Budget</Typography>
           </Grid>
         </CardContent>
