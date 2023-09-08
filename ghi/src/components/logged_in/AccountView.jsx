@@ -3,28 +3,26 @@ import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import { useStore } from "../../ContextStore";
 import { useNavigate, useParams } from 'react-router-dom';
 import { FetchWrapper } from '../../fetch-wrapper';
-import { CircularProgress } from "@mui/material";
 
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Grid from "@mui/material/Grid";
-import EditIcon from '@mui/icons-material/Edit';
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { Divider } from "@mui/material";
+import Paper from '@mui/material/Paper';
+import Button from "@mui/material/Button";
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 
 
 const AccountView = ({ baseUrl }) => {
 	const { token } = useAuthContext()
-  	const { id } = useParams()
-	const { budgetsData } = useStore()
 	const FastAPI = new FetchWrapper(baseUrl)
-  	const [budget, setBudget] = useState([])
 	const navigate = useNavigate()
   	const [decodedToken, setDecodedToken] = useState('')
 	const [accountData, setAccountData] = useState({})
@@ -78,28 +76,57 @@ if (Object.keys(accountData).length) {
               Account Info
             </Typography>
 			</Box>
-			<Grid container direction="column">
-				<Grid item xs={4}>
-					<Typography variant='h3'>Howdy, {accountData.first_name}</Typography>
+
+				<Grid 
+				container 
+				sx={{ 
+					mt: 4, 
+					mb: 4,
+					justifyContent: 'center',
+					alignItems: 'center'}}>
+					<Typography variant='h4'>Howdy, {accountData.first_name}!</Typography>
 				</Grid>
-				<Grid item xs={4}>
-					<Typography>First name: {accountData.first_name}</Typography>
+				<Paper elevation={4}>
+				<Grid 
+				container 
+				direction="column">
+
+					<Grid item sx={{ mt: 4, mb: 4, ml: 4}}>
+						<Typography variant='overline'>First Name: </Typography>
+
+						<Typography variant='h6'>{accountData.first_name}</Typography>
+					</Grid>
+					<Divider />
+					<Grid item sx={{ mt: 4, mb: 4, ml: 4}}>
+						<Typography variant='overline'>Last Name: </Typography>
+
+						<Typography variant='h6'>{accountData.last_name}</Typography>
+					</Grid>
+					<Divider />
+					<Grid item sx={{ mt: 4, mb: 4, ml: 4}}>
+						<Typography variant='overline'>Email: </Typography>
+
+						<Typography variant='h6'>{accountData.email}</Typography>
+					</Grid>
 				</Grid>
-				<Grid item xs={4}>
-					<Typography>Last name: {accountData.last_name}</Typography>
-				</Grid>
-				<Grid item xs={4}>
-					<Typography>Email: {accountData.email}</Typography>
-				</Grid>
+			</Paper>
+			<Grid 
+			container
+			sx={{mt: 8, mb: 8, justifyContent: 'center', alignItems: 'center'}}>
+				<Button 
+				variant="contained" 
+				color="warning"
+				size="large"
+				sx={{ mt: 2, mb: 2 }}
+				startIcon={<KeyboardReturnIcon />} 
+				onClick={() => navigate(`/budgets/`)}>
+				Return
+				</Button>
 			</Grid>
 			</Container>
 			</>
 		);
-	} else {
-		return (
-			<p>Loading.............</p>
-		)
-	}
+	} 
 }
 
 	export default AccountView;
