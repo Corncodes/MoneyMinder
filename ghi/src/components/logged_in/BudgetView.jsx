@@ -226,7 +226,7 @@ const BudgetView = ({ baseUrl }) => {
                       // cy: 150,
                     },
                   ]}
-                  sx={{
+                  sx={{ 
                     [`& .${pieArcClasses.faded}`]: {
                       fill: "gray",
                     },
@@ -249,7 +249,7 @@ const BudgetView = ({ baseUrl }) => {
                 </Typography>
               </Grid>
               <Grid item xs={6}>
-                <Typography variant="overline" noWrap>
+                <Typography variant="h6" noWrap>
                   Monthly Income
                 </Typography>
                 <Typography
@@ -263,7 +263,7 @@ const BudgetView = ({ baseUrl }) => {
                 </Typography>
               </Grid>
               <Grid item xs={6}>
-                <Typography variant="overline" noWrap>
+                <Typography variant="h6" noWrap>
                   Total Spend
                 </Typography>
                 <Typography
@@ -277,7 +277,7 @@ const BudgetView = ({ baseUrl }) => {
                 </Typography>
               </Grid>
               <Grid item xs={6}>
-                <Typography variant="overline" noWrap>
+                <Typography variant="h6" noWrap>
                   Remaining
                 </Typography>
                 <Typography
