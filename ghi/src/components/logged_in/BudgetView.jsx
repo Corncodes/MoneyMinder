@@ -9,6 +9,8 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import Star from "@mui/icons-material/Star";
+import StarBorder from "@mui/icons-material/StarBorder";
 import Button from "@mui/material/Button";
 import WalletOutlinedIcon from "@mui/icons-material/WalletOutlined";
 import Grid from "@mui/material/Grid";
@@ -25,16 +27,28 @@ import Container from "@mui/material/Container";
 const BudgetView = ({ baseUrl }) => {
   const { token } = useAuthContext();
   const { id } = useParams();
-  const { budgetsData } = useStore();
+  const { budgetsData, setBudgetsData } = useStore();
   const FastAPI = new FetchWrapper(baseUrl);
   const [budget, setBudget] = useState([]);
   const [pieDataLoaded, setPieDataLoaded] = useState(false);
-	const [data, setData] = useState([])
+  const [data, setData] = useState([]);
   const navigate = useNavigate();
+	const [isPrimaryBudget, setIsPrimaryBudget] = useState(false);
+  const [primaryBudgetId, setPrimaryBudgetId] = useState(undefined)
 
   const getBudgetData = async () => {
     const data = await FastAPI.get(`/api/budgets/${id}`, token);
+    const budgets = await FastAPI.get(`/api/budgets`, token)
     setBudget(data);
+    if (data.primary_budget) {
+      setIsPrimaryBudget(true)
+    }
+    for (const budget of budgets.budgets) {
+      if (budget.primary_budget) {
+        setPrimaryBudgetId(budget.id)
+      }
+    }
+    setBudgetsData(budgets.budgets)
   };
 
   useEffect(() => {
@@ -42,40 +56,74 @@ const BudgetView = ({ baseUrl }) => {
       getBudgetData();
     } else if (budgetsData.length > 0) {
       setBudget([...budgetsData].filter((b) => b.id == id)[0]);
+      for (const budget of budgetsData) {
+        if (budget.primary_budget) {
+          setPrimaryBudgetId(budget.id);
+        }
+      }
     }
   }, [token]);
 
-	const storage = []
+  const storage = [];
 
   useEffect(() => {
     if (budget.expenses) {
-			console.log(budget);
       for (const expense of budget.expenses) {
-        console.log(expense);
         storage.push({
           // id: expense.expense_id,
           value: expense.amount,
           label: expense.expense_name,
         });
-				if (
+        if (
           budget.monthly_balance &&
           storage.length === budget.expenses.length
-					) {
+        ) {
           storage.push({
             value: budget.monthly_balance,
             label: "Remaining",
             color: "grey",
           });
         }
-				setData(storage)
-				setPieDataLoaded(true)
+        setData(storage);
+        setPieDataLoaded(true);
       }
-		}
+    }
   }, [budget]);
 
   const size = {
     width: 330,
     height: 250,
+  };
+
+  const handlePrimary = async (id) => {
+    for (let budget of budgetsData) {
+      if (budget.id === primaryBudgetId) {
+        let body = {}
+        body.name = budget.name
+        body.monthly_income = budget.monthly_income
+        body.primary_budget = false
+        body.complete = budget.complete
+        body.monthly_spending_total = budget.monthly_spending_total
+        body.monthly_balance = budget.monthly_balance
+        await FastAPI.put(`/api/budgets/${budget.id}`, body, token)
+        break
+      }
+    }
+    let body = {};
+    body.name = budget.name;
+    body.monthly_income = budget.monthly_income;
+    body.primary_budget = undefined;
+    body.complete = budget.complete;
+    body.monthly_spending_total = budget.monthly_spending_total;
+    body.monthly_balance = budget.monthly_balance;
+    if (isPrimaryBudget) {
+      body.primary_budget = false
+      await FastAPI.put(`/api/budgets/${budget.id}`, body, token);
+    } else {
+      body.primary_budget = true
+      await FastAPI.put(`/api/budgets/${budget.id}`, body, token);
+    }
+    setIsPrimaryBudget(!isPrimaryBudget);
   };
 
   if (budget.length === 0) {
@@ -97,7 +145,7 @@ const BudgetView = ({ baseUrl }) => {
           <Grid
             container
             direction="column"
-            sx={{ mt: 4, mb: 6, display: 'flex', placeContent: 'center' }}
+            sx={{ mt: 4, mb: 6, display: "flex", placeContent: "center" }}
           >
             <CircularProgress
               sx={{ justifyContent: "center", alignItems: "center" }}
@@ -116,18 +164,31 @@ const BudgetView = ({ baseUrl }) => {
               mb: 4,
               fontSize: "large",
               display: "flex",
-              flexDirection: "column",
+              flexDirection: "row",
               alignItems: "left",
               justifyContent: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "#242424", justifyContent: "center" }}>
-              <WalletOutlinedIcon />
-            </Avatar>
-            <Typography variant="h4" sx={{ fontWeight: "bold", marginTop: 3 }}>
-              Budget Overview:
-            </Typography>
-            <Typography variant="h4">{budget.name}</Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={1}>
+                <Button onClick={handlePrimary}>
+                  {isPrimaryBudget ? (
+                    <Star fontSize="large" />
+                  ) : (
+                    <StarBorder fontSize="large" />
+                  )}
+                </Button>
+              </Grid>
+              <Grid item xs={10}>
+                <Typography
+                  variant="h4"
+                  sx={{ fontWeight: "bold", textAlign: "center" }}
+                >
+                  {budget.name}
+                </Typography>
+              </Grid>
+              <Grid item xs={1}></Grid>
+            </Grid>
           </Box>
           <Box
             sx={{
