@@ -38,13 +38,11 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 
 
 const BudgetList = ({ baseUrl }) => {
-	const FastAPI = new FetchWrapper(baseUrl)
-	const { token } = useAuthContext()
-	const { budgetsData, setBudgetsData } = useStore()
-	const navigate = useNavigate()
-	const [isPrimaryBudget, setIsPrimaryBudget] = useState(false)
-
-
+	const FastAPI = new FetchWrapper(baseUrl);
+	const { token } = useAuthContext();
+	const { budgetsData, setBudgetsData } = useStore();
+	const navigate = useNavigate();
+	const [isPrimaryBudget, setIsPrimaryBudget] = useState(false);
 	const [expanded, setExpanded] = React.useState("");
 
     const handleChange = (card) => (event, newExpanded) => {
@@ -83,11 +81,11 @@ const BudgetList = ({ baseUrl }) => {
 		setBudgetsData(budgetsData.filter(budget => budget.id !== id))
 		const data = await FastAPI.put(`/budgets/${id}`, token)
 		window.location.href = `/budgets/${id}`;
-	}	
+	}
 
 
 
-	
+
   if (token) {
   return (
     <>
@@ -117,10 +115,10 @@ const BudgetList = ({ baseUrl }) => {
 			expanded={expanded === `card${budget.id}`}
 			onChange={handleChange(`card${budget.id}`)}
 			>
-			
-			<AccordionSummary 
-			expandIcon={<ArrowDropDownIcon />} 
-			aria-controls={`card${budget.id}-content`} 
+
+			<AccordionSummary
+			expandIcon={<ArrowDropDownIcon />}
+			aria-controls={`card${budget.id}-content`}
 			id={`card${budget.id}-header`}
 			sx={{ backgroundColor: '#B4D3B2'}}
 			>
@@ -130,8 +128,8 @@ const BudgetList = ({ baseUrl }) => {
 						<Button onClick={handlePrimary}>{isPrimaryBudget ? <Star /> : <StarBorder /> }</Button>
 					</Grid>
 			<AccordionDetails>
-				<Grid 
-				container 
+				<Grid
+				container
 				direction="row"
 				justifyContent="center"
 				alignItems='center'
@@ -165,9 +163,9 @@ const BudgetList = ({ baseUrl }) => {
 						</Typography>
 					</Grid>
 				</Grid>
-				
-			<Grid 
-				container spacing={5} 
+
+			<Grid
+				container spacing={5}
 				justifyContent="center"
 				sx={{ mt: 2, mb: 3 }}>
 				<Grid item>
@@ -183,7 +181,7 @@ const BudgetList = ({ baseUrl }) => {
 
     </div>
       <Card onClick={handleClick} variant="outlined" sx={{ borderRadius: '20px', border: '1px solid #242424', mb: 6, mt: 8,
-          
+
           ':hover': {
               boxShadow: 5,
               cursor: 'pointer',
