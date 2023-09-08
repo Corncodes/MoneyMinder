@@ -96,7 +96,7 @@ const CreateBudgetForm = ({ baseUrl }) => {
                 value={monthlyIncome}
                 InputProps={{
                   inputProps: {
-                    min: 0
+                    min: 0,
                   }
                 }}
               />
