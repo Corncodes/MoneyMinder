@@ -41,15 +41,6 @@ const BudgetList = ({ baseUrl }) => {
 	const [isPrimaryBudget, setIsPrimaryBudget] = useState(false);
 	const [expanded, setExpanded] = React.useState("");
 
-  const handleChange = (card) => (event, newExpanded) => {
-      setExpanded(newExpanded ? card : false);
-  };
-
-
-	const handleClick = () => {
-		navigate('/budgets/new')
-	}
-
 	const getData = async () => {
 		const data = await FastAPI.get('/api/budgets', token)
     let sortedBudgetsData = [];
@@ -69,14 +60,22 @@ const BudgetList = ({ baseUrl }) => {
 
 	const deleteBudget = async (id) => {
 		setBudgetsData(budgetsData.filter(budget => budget.id !== id))
-		const data = await FastAPI.delete(`/api/budgets/${id}`, token)
+		await FastAPI.delete(`/api/budgets/${id}`, token)
 	}
 
 	const viewBudget = (id) => {
     navigate(`/budgets/${id}`)
 	}
 
-  if (token) {
+	const handleClick = () => {
+		navigate('/budgets/new')
+	}
+
+    const handleChange = (card) => (event, newExpanded) => {
+        setExpanded(newExpanded ? card : false);
+    }
+
+
   return (
     <>
     <Container component="main" maxWidth="xs">
@@ -110,7 +109,6 @@ const BudgetList = ({ baseUrl }) => {
             expandIcon={<ArrowDropDownIcon />}
             aria-controls={`card${budget.id}-content`}
             id={`card${budget.id}-header`}
-            sx={{ backgroundColor: '#B4D3B2'}}
             >
               <Typography variant="body1">{budget.name}</Typography>
             </AccordionSummary>
@@ -200,12 +198,6 @@ const BudgetList = ({ baseUrl }) => {
     </Container>
     </>
   );
-
-	} else {
-		return (
-			<LoginForm />
-		)
-	}
 }
 
 export default BudgetList;

@@ -80,7 +80,7 @@ const BudgetView = ({ baseUrl }) => {
           storage.push({
             value: budget.monthly_balance,
             label: "Remaining",
-            color: "grey",
+            color: "green",
           });
         }
         setData(storage);
