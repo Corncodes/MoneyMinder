@@ -33,13 +33,20 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
+import useToken from "@galvanize-inc/jwtdown-for-react";
+import { FetchWrapper } from './fetch-wrapper';
+
 
 const drawerWidth = 240;
 
 function DrawerAppBar(props) {
-  const { window } = props;
+  const { window, baseUrl } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { token } = useAuthContext();
+	const FastAPI = new FetchWrapper(baseUrl);
+  const { logout } = useToken();
+
+
   let navItems = token
     ? [
         {
@@ -81,6 +88,7 @@ function DrawerAppBar(props) {
       </Typography>
       <Divider />
       <List>
+
         {navItems.map((item) => (
           <ListItem key={item.name} disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
@@ -90,12 +98,27 @@ function DrawerAppBar(props) {
               >
                 <ListItemText
                   primary={item.name}
-                  style={{ color: "#424242", textDecoration: "none" }}
                 />
               </Link>
             </ListItemButton>
           </ListItem>
         ))}
+        {token &&(
+          <ListItem disablePadding>
+            <ListItemButton sx={{ textAlign: "center" }}>
+              <Link
+                to={'/'}
+                style={{ color: "#424242", textDecoration: "none" }}
+                onClick={() => logout()}
+              >
+                <ListItemText
+                  primary={'Sign out'}
+                />
+              </Link>
+            </ListItemButton>
+          </ListItem>
+        )}
+
       </List>
     </Box>
   );
@@ -135,6 +158,19 @@ function DrawerAppBar(props) {
                 </Link>
               </Button>
             ))}
+
+          {token && (
+            <Button sx={{ color: "#fff" }}>
+              <Link
+                to={'/'}
+                style={{ color: "#ffffff", textDecoration: "none" }}
+                onClick={() => logout()}
+              >
+                {'Sign Out'}
+              </Link>
+            </Button>
+          )}
+
           </Box>
         </Toolbar>
       </AppBar>

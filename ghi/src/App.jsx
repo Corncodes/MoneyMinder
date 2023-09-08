@@ -18,21 +18,31 @@ import EditBudgetForm from "./components/logged_in/EditBudgetForm";
 import AccountView from "./components/logged_in/AccountView";
 
 // MUI Imports
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider, colors } from "@mui/material";
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+  // palette: {
+  //   primary: {
+  //     main:
+  //   },
+  //   secondary: {
+  //     main:
+
+  //   }
+  // }
+});
 
 
 function App() {
   const baseUrl = process.env.REACT_APP_API_HOST;
 
   return (
-    
+
     <AuthProvider baseUrl={baseUrl}>
         <ThemeProvider theme={defaultTheme}>
             <ContextProvider>
                 <BrowserRouter>
-                <Nav />
+                <Nav baseUrl={baseUrl}/>
                 <Routes>
                   <Route path="/" element={<LoginForm />} />
                   <Route path="/test" element={<TestPage />} />
