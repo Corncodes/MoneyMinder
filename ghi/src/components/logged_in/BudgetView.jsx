@@ -117,7 +117,7 @@ const BudgetView = ({ baseUrl }) => {
               fontSize: "large",
               display: "flex",
               flexDirection: "column",
-              alignItems: "left",
+              alignItems: "center",
               justifyContent: "center",
             }}
           >
@@ -125,7 +125,7 @@ const BudgetView = ({ baseUrl }) => {
               <WalletOutlinedIcon />
             </Avatar>
             <Typography variant="h4" sx={{ fontWeight: "bold", marginTop: 3 }}>
-              Budget Overview:
+              Budget Overview
             </Typography>
             <Typography variant="h4">{budget.name}</Typography>
           </Box>
@@ -165,7 +165,7 @@ const BudgetView = ({ baseUrl }) => {
                       // cy: 150,
                     },
                   ]}
-                  sx={{
+                  sx={{ 
                     [`& .${pieArcClasses.faded}`]: {
                       fill: "gray",
                     },
@@ -188,7 +188,7 @@ const BudgetView = ({ baseUrl }) => {
                 </Typography>
               </Grid>
               <Grid item xs={6}>
-                <Typography variant="overline" noWrap>
+                <Typography variant="h6" noWrap>
                   Monthly Income
                 </Typography>
                 <Typography
@@ -202,7 +202,7 @@ const BudgetView = ({ baseUrl }) => {
                 </Typography>
               </Grid>
               <Grid item xs={6}>
-                <Typography variant="overline" noWrap>
+                <Typography variant="h6" noWrap>
                   Total Spend
                 </Typography>
                 <Typography
@@ -216,7 +216,7 @@ const BudgetView = ({ baseUrl }) => {
                 </Typography>
               </Grid>
               <Grid item xs={6}>
-                <Typography variant="overline" noWrap>
+                <Typography variant="h6" noWrap>
                   Remaining
                 </Typography>
                 <Typography

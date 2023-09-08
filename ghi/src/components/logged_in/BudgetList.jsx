@@ -24,6 +24,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import { Divider } from "@mui/material";
+import Paper from '@mui/material/Paper';
 
 
 import Typography from "@mui/material/Typography";
@@ -101,25 +102,26 @@ const BudgetList = ({ baseUrl }) => {
               Budgets
             </Typography>
 		</Box>
+
     	<div style={{ marginBottom: "20px"}}>
 		{budgetsData.map((budget) => (
+
 			<Accordion
 			sx={{ mt: 2, mb: 2 }}
 			key={budget.id}
 			expanded={expanded === `card${budget.id}`}
 			onChange={handleChange(`card${budget.id}`)}
 			>
-
+			<Paper elevation={4}>
 			<AccordionSummary
 			expandIcon={<ArrowDropDownIcon />}
 			aria-controls={`card${budget.id}-content`}
 			id={`card${budget.id}-header`}
-			sx={{ backgroundColor: '#B4D3B2'}}
 			>
             <Typography variant="body1">{budget.name}</Typography>
 
           </AccordionSummary>
-
+			</Paper>
 			<AccordionDetails>
 				<Grid 
 				container
@@ -189,9 +191,11 @@ const BudgetList = ({ baseUrl }) => {
 
           </AccordionDetails>
 			</Accordion>
+			
 		))}
 
     </div>
+
       <Card onClick={handleClick} variant="outlined" sx={{ borderRadius: '20px', border: '1px solid #242424', mb: 6, mt: 8,
 
           ':hover': {
