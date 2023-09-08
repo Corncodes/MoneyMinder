@@ -83,7 +83,7 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
   };
 
   const handleSubmit = async (e) => {
-    handleSubmitOrSave(e, true);
+    await handleSubmitOrSave(e, true);
     const data = await FastAPI.get(`/api/budgets`, token);
     setBudgetsData(data.budgets);
     navigate(`/budgets/${createdBudget.id}`);
@@ -108,30 +108,31 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
 		<Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
             <WalletOutlinedIcon />
         </Avatar>
-		<Grid container direction='column' alignItems='center' justify='center'>
+		<Grid container direction='column' sx={{ alignItems:'center', justify:'center', display: 'flex' }}>
 			<Typography 
 			variant="h5" 
 			sx={{ fontWeight: "bold" }}> 
 			{createdBudget.name}
 			</Typography>
 			<Typography 
-			variant="overline">
-			Available Spend
-			</Typography>
-			<Typography 
-			variant="h4" 
-			sx={{ fontWeight: "bold" }}>
-				{(availableSpend - totalSpending).toLocaleString("en-US", {style:"currency", currency:"USD"})}
-			</Typography>
-			<Typography 
 			variant="overline"
-			>Total Spend
+			>Total Spending
 			</Typography>
 			<Typography 
 			variant="h4" 
 			sx={{ fontWeight: "bold" }}>
 				{totalSpending?.toLocaleString("en-US", {style:"currency", currency:"USD"})}
 			</Typography>
+			<Typography 
+			variant="overline">
+			Remaining
+			</Typography>
+			<Typography 
+			variant="h4" 
+			sx={{ fontWeight: "bold" }}>
+				{(availableSpend - totalSpending).toLocaleString("en-US", {style:"currency", currency:"USD"})}
+			</Typography>
+
 
 		</Grid>
 		{expenseItems.length === 0 ? (
@@ -145,7 +146,6 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
 				label="Expense Name"
 				variant="outlined"
 				fullWidth
-				alignItems="right"
 				onChange={(e) => handleExpenseNameChange(e, index)}
 				value={expenseItems[index].expenseName}
 				type="text"
@@ -180,7 +180,6 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
 			))
 		)}
 
-
 			<Card sx={{ mt: 2, border: "none", boxShadow: "none"}}>
 				<Button 
 				variant="outlined"
@@ -209,15 +208,8 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
 				Submit
 				</Button>
 			</Card>
-
-
-
-				
 			</Box>
 		</Container>
-
-
-
   );
 };
 

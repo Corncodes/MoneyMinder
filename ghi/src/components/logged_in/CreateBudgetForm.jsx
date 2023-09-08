@@ -105,11 +105,11 @@ const CreateBudgetForm = ({ baseUrl }) => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2, backgroundColor: "#242424" }}
               >
-                Add Expenses
+                Continue
               </Button>
             </Box>
 				<Button
-				variant="text" 
+				variant="contained" 
 				color="error" 
 				fullWidth
 				sx={{ mt: 2, mb: 2}}
