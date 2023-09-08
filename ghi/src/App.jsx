@@ -1,6 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation } from "react-router-dom";
 import "./App.css";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import ContextProvider from "./ContextStore";
 // Components
 import Nav from './Nav.jsx'
@@ -32,6 +34,34 @@ const defaultTheme = createTheme({
   // }
 });
 
+const ProtectedRoute = () => {
+  const { token } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {setIsLoading(false)}, 650)
+  }, [])
+
+  if (!token && !isLoading) {
+    return <LoginForm />;}
+  else {return <Outlet />;}
+}
+
+const UnprotectedRoute = () => {
+  const location = useLocation()
+  const { token } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {setIsLoading(false)}, 650)
+  }, [])
+
+  if (token && !isLoading) {
+    return <Navigate to="/budgets" replace state={{ from: location }} />;
+  }
+  return <Outlet />
+}
+
 
 function App() {
   const baseUrl = process.env.REACT_APP_API_HOST;
@@ -44,19 +74,24 @@ function App() {
                 <BrowserRouter>
                 <Nav baseUrl={baseUrl}/>
                 <Routes>
-                  <Route path="/" element={<LoginForm />} />
-                  <Route path="/test" element={<TestPage />} />
-                  <Route path="/sign-up" element={<CreateAccountForm baseUrl={baseUrl} />} />
+                  <Route element={<UnprotectedRoute />}>
+                    <Route path="/login" element={<LoginForm />} />
+                    <Route path="/" element={<LoginForm />} />
+                  </Route>
 
-                  <Route path="/budgets">
-                    <Route index element={<BudgetList baseUrl={baseUrl} />} />
-                    <Route path="new" element={<CreateBudgetForm baseUrl={baseUrl} />} />
-                    <Route path="add-expenses" element={<ConfigureBudget baseUrl={baseUrl} />} />
-                    <Route path=":id" >
-                      <Route index element={<BudgetView baseUrl={baseUrl} />} />
-                      <Route path="edit" element={<EditBudgetForm baseUrl={baseUrl} />} />
+                  <Route element={<ProtectedRoute />}>
+                    <Route path="/budgets">
+                      <Route index element={<BudgetList baseUrl={baseUrl} />} />
+                      <Route path="new" element={<CreateBudgetForm baseUrl={baseUrl} />} />
+                      <Route path=":id" >
+                        <Route index element={<BudgetView baseUrl={baseUrl} />} />
+                        <Route path="edit" element={<EditBudgetForm baseUrl={baseUrl} />} />
+                      </Route>
                     </Route>
                   </Route>
+
+                  <Route path="/test" element={<TestPage />} />
+                  <Route path="/sign-up" element={<CreateAccountForm baseUrl={baseUrl} />} />
                   <Route path="/account">
                     <Route index element={<AccountView baseUrl={baseUrl} />} />
                   </Route>

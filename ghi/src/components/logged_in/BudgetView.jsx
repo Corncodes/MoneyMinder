@@ -49,9 +49,7 @@ const BudgetView = ({ baseUrl }) => {
 
   useEffect(() => {
     if (budget.expenses) {
-			console.log(budget);
       for (const expense of budget.expenses) {
-        console.log(expense);
         storage.push({
           // id: expense.expense_id,
           value: expense.amount,
@@ -64,7 +62,7 @@ const BudgetView = ({ baseUrl }) => {
           storage.push({
             value: budget.monthly_balance,
             label: "Remaining",
-            color: "grey",
+            color: "green",
           });
         }
 				setData(storage)

@@ -43,20 +43,6 @@ const BudgetList = ({ baseUrl }) => {
 	const [isPrimaryBudget, setIsPrimaryBudget] = useState(false);
 	const [expanded, setExpanded] = React.useState("");
 
-    const handleChange = (card) => (event, newExpanded) => {
-        setExpanded(newExpanded ? card : false);
-    };
-
-
-	const handleClick = () => {
-		navigate('/budgets/new')
-	}
-
-	const handlePrimary = (id) => {
-		FastAPI.put(`/api/budgets/${id}`, token)
-		setIsPrimaryBudget(!isPrimaryBudget);
-	};
-
 	const getData = async () => {
 		const data = await FastAPI.get('/api/budgets', token)
 		setBudgetsData(data.budgets)
@@ -68,19 +54,29 @@ const BudgetList = ({ baseUrl }) => {
 
 	const deleteBudget = async (id) => {
 		setBudgetsData(budgetsData.filter(budget => budget.id !== id))
-		const data = await FastAPI.delete(`/api/budgets/${id}`, token)
+		await FastAPI.delete(`/api/budgets/${id}`, token)
 	}
 
 	const editBudget = async (id) => {
 		setBudgetsData(budgetsData.filter(budget => budget.id !== id))
-		const data = await FastAPI.put(`/budgets/${id}`, token)
+		await FastAPI.put(`/budgets/${id}`, token)
 		window.location.href = `/budgets/${id}`;
 	}
 
+	const handleClick = () => {
+		navigate('/budgets/new')
+	}
+
+	const handlePrimary = (id) => {
+		FastAPI.put(`/api/budgets/${id}`, token)
+		setIsPrimaryBudget(!isPrimaryBudget);
+	}
+
+    const handleChange = (card) => (event, newExpanded) => {
+        setExpanded(newExpanded ? card : false);
+    }
 
 
-
-  if (token) {
   return (
     <>
     <Container component="main" maxWidth="xs">
@@ -121,7 +117,7 @@ const BudgetList = ({ baseUrl }) => {
           </AccordionSummary>
 
 			<AccordionDetails>
-				<Grid 
+				<Grid
 				container
 				direction="row"
 				justifyContent="flex-start"
@@ -144,8 +140,8 @@ const BudgetList = ({ baseUrl }) => {
 					<Grid>
 						<Divider sx={{ mt: 2}}/>
 					</Grid>
-				<Grid 
-				container 
+				<Grid
+				container
 				direction="row"
 				justifyContent="space-evenly"
 				align="center"
@@ -171,8 +167,8 @@ const BudgetList = ({ baseUrl }) => {
 					</Grid>
 					</Grid>
 
-				
-			<Grid 
+
+			<Grid
 				container
 				direction="row"
 				justifyContent="space-between"
@@ -211,12 +207,6 @@ const BudgetList = ({ baseUrl }) => {
     </Container>
     </>
   );
-
-	} else {
-		return (
-			<LoginForm />
-		)
-	}
 }
 
 export default BudgetList;
