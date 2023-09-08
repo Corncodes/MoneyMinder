@@ -119,7 +119,7 @@ const BudgetList = ({ baseUrl }) => {
             <Grid 
             container
             direction="row"
-            justifyContent="flex-start"
+            justifyContent="center"
             alignItems="center"
             sx={{ mt: 2}}
             >

@@ -33,22 +33,22 @@ const BudgetView = ({ baseUrl }) => {
   const [pieDataLoaded, setPieDataLoaded] = useState(false);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
-	const [isPrimaryBudget, setIsPrimaryBudget] = useState(false);
-  const [primaryBudgetId, setPrimaryBudgetId] = useState(undefined)
+  const [isPrimaryBudget, setIsPrimaryBudget] = useState(false);
+  const [primaryBudgetId, setPrimaryBudgetId] = useState(undefined);
 
   const getBudgetData = async () => {
     const data = await FastAPI.get(`/api/budgets/${id}`, token);
-    const budgets = await FastAPI.get(`/api/budgets`, token)
+    const budgets = await FastAPI.get(`/api/budgets`, token);
     setBudget(data);
     if (data.primary_budget) {
-      setIsPrimaryBudget(true)
+      setIsPrimaryBudget(true);
     }
     for (const budget of budgets.budgets) {
       if (budget.primary_budget) {
-        setPrimaryBudgetId(budget.id)
+        setPrimaryBudgetId(budget.id);
       }
     }
-    setBudgetsData(budgets.budgets)
+    setBudgetsData(budgets.budgets);
   };
 
   useEffect(() => {
@@ -56,9 +56,9 @@ const BudgetView = ({ baseUrl }) => {
       getBudgetData();
     } else if (budgetsData.length > 0) {
       setBudget([...budgetsData].filter((b) => b.id == id)[0]);
-      for (const budget of budgetsData) {
-        if (budget.primary_budget) {
-          setPrimaryBudgetId(budget.id);
+      for (const b of budgetsData) {
+        if (b.primary_budget) {
+          setPrimaryBudgetId(b.id);
         }
       }
     }
@@ -70,7 +70,6 @@ const BudgetView = ({ baseUrl }) => {
     if (budget.expenses) {
       for (const expense of budget.expenses) {
         storage.push({
-          // id: expense.expense_id,
           value: expense.amount,
           label: expense.expense_name,
         });
@@ -95,18 +94,18 @@ const BudgetView = ({ baseUrl }) => {
     height: 250,
   };
 
-  const handlePrimary = async (id) => {
+  const handlePrimary = async () => {
     for (let budget of budgetsData) {
       if (budget.id === primaryBudgetId) {
-        let body = {}
-        body.name = budget.name
-        body.monthly_income = budget.monthly_income
-        body.primary_budget = false
-        body.complete = budget.complete
-        body.monthly_spending_total = budget.monthly_spending_total
-        body.monthly_balance = budget.monthly_balance
-        await FastAPI.put(`/api/budgets/${budget.id}`, body, token)
-        break
+        let body = {};
+        body.name = budget.name;
+        body.monthly_income = budget.monthly_income;
+        body.primary_budget = false;
+        body.complete = budget.complete;
+        body.monthly_spending_total = budget.monthly_spending_total;
+        body.monthly_balance = budget.monthly_balance;
+        await FastAPI.put(`/api/budgets/${budget.id}`, body, token);
+        break;
       }
     }
     let body = {};
@@ -117,14 +116,20 @@ const BudgetView = ({ baseUrl }) => {
     body.monthly_spending_total = budget.monthly_spending_total;
     body.monthly_balance = budget.monthly_balance;
     if (isPrimaryBudget) {
-      body.primary_budget = false
+      body.primary_budget = false;
       await FastAPI.put(`/api/budgets/${budget.id}`, body, token);
     } else {
-      body.primary_budget = true
+      body.primary_budget = true;
       await FastAPI.put(`/api/budgets/${budget.id}`, body, token);
     }
     setIsPrimaryBudget(!isPrimaryBudget);
   };
+
+  useEffect(() => {
+    if (budget.primary_budget) {
+      setIsPrimaryBudget(true);
+    }
+  }, [budget]);
 
   if (budget.length === 0) {
     return (
@@ -226,7 +231,7 @@ const BudgetView = ({ baseUrl }) => {
                       // cy: 150,
                     },
                   ]}
-                  sx={{ 
+                  sx={{
                     [`& .${pieArcClasses.faded}`]: {
                       fill: "gray",
                     },
