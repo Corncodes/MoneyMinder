@@ -17,20 +17,7 @@ import CreateBudgetForm from "./components/logged_in/CreateBudgetForm";
 import BudgetView from "./components/logged_in/BudgetView";
 import EditBudgetForm from "./components/logged_in/EditBudgetForm";
 import AccountView from "./components/logged_in/AccountView";
-// MUI Imports
-import { createTheme, ThemeProvider, colors } from "@mui/material";
 
-const defaultTheme = createTheme({
-  // palette: {
-  //   primary: {
-  //     main:
-  //   },
-  //   secondary: {
-  //     main:
-
-  //   }
-  // }
-});
 
 const ProtectedRoute = () => {
   const { token } = useAuthContext();
@@ -64,7 +51,6 @@ function App() {
 
   return (
     <AuthProvider baseUrl={baseUrl}>
-      <ThemeProvider theme={defaultTheme}>
         <ContextProvider>
           <BrowserRouter>
           <Nav baseUrl={baseUrl}/>
@@ -86,11 +72,10 @@ function App() {
                 <Route index element={<AccountView baseUrl={baseUrl} />} />
               </Route>
             </Route>
-              <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<HomePage />} />
           </Routes>
           </BrowserRouter>
         </ContextProvider>
-      </ThemeProvider>
     </AuthProvider>
   );
 }

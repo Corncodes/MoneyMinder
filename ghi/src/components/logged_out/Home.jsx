@@ -2,7 +2,7 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { Container } from "@mui/material";
+import { Container, Divider } from "@mui/material";
 import Copyright from "../ui/Copyright";
 import { PieChart } from "@mui/x-charts/PieChart";
 import Paper from "@mui/material/Paper";
@@ -27,7 +27,7 @@ class HomePage extends React.Component {
                 <Typography variant="body1">Budgeting. Made simple.</Typography>
             </Box>
 
-                <Paper elevation={4}>
+                <Paper elevation={4} sx={{ borderRadius: "5%"}}>
                     <Grid
                     container 
                     direction="column"
@@ -58,6 +58,61 @@ class HomePage extends React.Component {
                                 width={350}
                                 height={200}/>
                     </Grid>
+          <Box>
+            <Grid
+              container
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+              sx={{ mt: 2 }}
+            >
+              <Grid item align="center">
+                <Typography
+                  variant="h5"
+                  sx={{ fontWeight: "bold", padding: "0px 10px" }}
+                >
+                  Monthly Income
+                </Typography>
+                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                  $7,500
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid>
+              <Divider sx={{ mt: 2 }} />
+            </Grid>
+            <Grid
+              container
+              direction="row"
+              justifyContent="space-evenly"
+              align="center"
+              sx={{ mt: 2}}
+            >
+              <Grid item>
+                <Typography
+                  variant="h5"
+                  sx={{ fontWeight: "bold", padding: "0px 10px" }}
+                >
+                  Total Spent
+                </Typography>
+                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                  $3,275
+                </Typography>
+              </Grid>
+              <Divider orientation="vertical" flexItem />
+              <Grid item sx={{ mb: 3}}>
+                <Typography
+                  variant="h5"
+                  sx={{ fontWeight: "bold", padding: "0px 10px" }}
+                >
+                  Remaining
+                </Typography>
+                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                  $4,225
+                </Typography>
+              </Grid>
+            </Grid>
+          </Box>
                 </Paper>
             
 
