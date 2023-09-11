@@ -72,7 +72,6 @@ function App() {
             <Route element={<UnprotectedRoute />}>
               <Route path="/sign-up" element={<CreateAccountForm baseUrl={baseUrl} />} />
               <Route path="/login" element={<LoginForm />} />
-              <Route path="/" element={<HomePage />} />
             </Route>
             <Route element={<ProtectedRoute />}>
               <Route path="/budgets">
@@ -83,11 +82,11 @@ function App() {
                   <Route path="edit" element={<EditBudgetForm baseUrl={baseUrl} />} />
                 </Route>
               </Route>
+              <Route path="/account">
+                <Route index element={<AccountView baseUrl={baseUrl} />} />
+              </Route>
             </Route>
-            <Route path="/test" element={<TestPage />} />
-            <Route path="/account">
-              <Route index element={<AccountView baseUrl={baseUrl} />} />
-            </Route>
+              <Route path="/" element={<HomePage />} />
           </Routes>
           </BrowserRouter>
         </ContextProvider>
