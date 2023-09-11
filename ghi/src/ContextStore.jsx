@@ -1,11 +1,9 @@
 import { useState, useEffect, useContext, createContext } from 'react'
 
-
 const ContextStore = createContext(null);
 
-
 export default function ContextProvider ({ children }) {
-    const [someState, setSomeState] = useState('Hello')
+  const [someState, setSomeState] = useState('Hello')
 	const [budgetsData, setBudgetsData] = useState([])
 
     const store = {

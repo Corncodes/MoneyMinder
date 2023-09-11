@@ -24,7 +24,6 @@ async def get_budgets(
         return {"budgets": records}
 
 
-# @router.get("/api/budgets/{budget_id}", response_model=BudgetOut)
 @router.get("/api/budgets/{budget_id}")
 async def get_budget(
     budget_id: int,

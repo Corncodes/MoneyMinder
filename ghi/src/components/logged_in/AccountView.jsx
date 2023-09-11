@@ -20,22 +20,21 @@ const AccountView = ({ baseUrl }) => {
 	const { token } = useAuthContext()
 	const FastAPI = new FetchWrapper(baseUrl)
 	const navigate = useNavigate()
-  	const [decodedToken, setDecodedToken] = useState('')
+  const [decodedToken, setDecodedToken] = useState('')
 	const [accountData, setAccountData] = useState({})
 
   const parseJwt = (token) => {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
-
     return JSON.parse(jsonPayload);
   }
 
 	const getAccountData = async (email) => {
-			const data = await FastAPI.get(`/api/accounts/${email}`, token)
-			setAccountData(data)
+		const data = await FastAPI.get(`/api/accounts/${email}`, token)
+		setAccountData(data)
 	}
 
   useEffect(() => {
@@ -58,71 +57,83 @@ if (Object.keys(accountData).length) {
           <Box
             sx={{
               mt: 1,
-			  mb: 5,
-			  fontSize: 'large',
+              mb: 5,
+              fontSize: 'large',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
-                <AccountCircleIcon />
+              <AccountCircleIcon />
             </Avatar>
-		    <Typography variant="h6">
+            <Typography variant="h6">
               Account Info
             </Typography>
-			</Box>
+          </Box>
 
-				<Grid 
-				container 
-				sx={{ 
-					mt: 4, 
-					mb: 4,
-					justifyContent: 'center',
-					alignItems: 'center'}}>
-					<Typography variant='h4'>Howdy, {accountData.first_name}!</Typography>
-				</Grid>
-				<Paper elevation={4}>
-				<Grid 
-				container 
-				direction="column">
-
-					<Grid item sx={{ mt: 4, mb: 4, ml: 4}}>
-						<Typography variant='overline'>First Name: </Typography>
-
-						<Typography variant='h6'>{accountData.first_name}</Typography>
-					</Grid>
-					<Divider />
-					<Grid item sx={{ mt: 4, mb: 4, ml: 4}}>
-						<Typography variant='overline'>Last Name: </Typography>
-
-						<Typography variant='h6'>{accountData.last_name}</Typography>
-					</Grid>
-					<Divider />
-					<Grid item sx={{ mt: 4, mb: 4, ml: 4}}>
-						<Typography variant='overline'>Email: </Typography>
-
-						<Typography variant='h6'>{accountData.email}</Typography>
-					</Grid>
-				</Grid>
-			</Paper>
-			<Grid 
-			container
-			sx={{mt: 8, mb: 8, justifyContent: 'center', alignItems: 'center'}}>
-				<Button 
-				variant="contained" 
-				color="warning"
-				size="large"
-				sx={{ mt: 2, mb: 2 }}
-				startIcon={<KeyboardReturnIcon />} 
-				onClick={() => navigate(`/budgets/`)}>
-				Return
-				</Button>
-			</Grid>
-			</Container>
+          <Grid 
+            container 
+            sx={{ 
+            mt: 4, 
+            mb: 4,
+            justifyContent: 'center',
+            alignItems: 'center'}}
+          >
+            <Typography variant='h4'>
+              Howdy, {accountData.first_name}!
+            </Typography>
+          </Grid>
+          <Paper elevation={4}>
+            <Grid 
+              container 
+              direction="column"
+            >
+              <Grid item sx={{ mt: 4, mb: 4, ml: 4}}>
+                <Typography variant='overline'>
+                  First Name:
+                </Typography>
+                <Typography variant='h6'>
+                  {accountData.first_name}
+                </Typography>
+              </Grid>
+              <Divider />
+              <Grid item sx={{ mt: 4, mb: 4, ml: 4}}>
+                <Typography variant='overline'>
+                  Last Name:
+                </Typography>
+                <Typography variant='h6'>
+                  {accountData.last_name}
+                </Typography>
+              </Grid>
+              <Divider />
+              <Grid item sx={{ mt: 4, mb: 4, ml: 4}}>
+                <Typography variant='overline'>
+                  Email:
+                </Typography>
+                <Typography variant='h6'>
+                  {accountData.email}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Paper>
+          <Grid 
+          container
+          sx={{mt: 8, mb: 8, justifyContent: 'center', alignItems: 'center'}}>
+            <Button 
+            variant="contained" 
+            color="warning"
+            size="large"
+            sx={{ mt: 2, mb: 2 }}
+            startIcon={<KeyboardReturnIcon />} 
+            onClick={() => navigate(`/budgets/`)}>
+            Return
+            </Button>
+          </Grid>
+        </Container>
 			</>
 		);
 	} 
 }
 
-	export default AccountView;
+export default AccountView;

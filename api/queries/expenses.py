@@ -1,15 +1,11 @@
 import os
 from psycopg_pool import ConnectionPool
 
-# from models.expenses import ExpenseOut
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
 
 class ExpenseQueries:
-    def get_expenses(self, id: int):
-        pass
-
     def create_expense(self, expense):
         id = None
         with pool.connection() as conn:
@@ -35,6 +31,7 @@ class ExpenseQueries:
                 if id is not None:
                     return True
 
+
     def update_expense(self, expense_id, data):
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -59,7 +56,6 @@ class ExpenseQueries:
                     """,
                     params,
                 )
-
                 record = None
                 row = cur.fetchone()
                 if row is not None:
@@ -71,6 +67,7 @@ class ExpenseQueries:
                             record,
                         )
                     return record
+
 
     def delete_expense(self, expense_id):
         with pool.connection() as conn:

@@ -2,6 +2,7 @@ import os
 from psycopg_pool import ConnectionPool
 from models.budgets import BudgetsOut
 
+
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
 
@@ -57,6 +58,7 @@ class BudgetQueries:
             print(e)
             return {"message": "Could not get that budget"}
 
+
     def get_budgets(self, account_id: int) -> BudgetsOut:
         try:
             with pool.connection() as conn:
@@ -77,6 +79,7 @@ class BudgetQueries:
         except Exception as e:
             print(e)
             return {"message": "Could not get that budget"}
+
 
     def create_budget(self, budget, account_id):
         id = None
@@ -104,7 +107,6 @@ class BudgetQueries:
 
                     row = cur.fetchone()
                     id = row[0]
-
         else:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
@@ -125,12 +127,11 @@ class BudgetQueries:
                             account_id,
                         ],
                     )
-
                     row = cur.fetchone()
                     id = row[0]
-
         if id is not None:
             return self.get_budget(id)
+
 
     def record_to_dict(self, row, description, fields):
         dictionary = None
@@ -140,6 +141,7 @@ class BudgetQueries:
                 if column.name in fields:
                     dictionary[column.name] = row[i]
         return dictionary
+
 
     def update_budget(self, budget_id, data):
         with pool.connection() as conn:
@@ -186,6 +188,7 @@ class BudgetQueries:
                     )
                 return record
 
+
     def delete_budget(self, budget_id):
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -201,71 +204,3 @@ class BudgetQueries:
                 if row is not None:
                     return True
                 return False
-
-
-# ORIGINAL get_budgets WHICH RETURNS LIST OF BUDGETS W/O EXPENSES
-# class BudgetQueries:
-#     def get_budgets(self, id: int) -> BudgetsOut:
-#         try:
-#             with pool.connection() as conn:
-#                 with conn.cursor() as cur:
-#                     cur.execute(
-#                         """
-#                         SELECT *
-#                         FROM budgets
-#                         WHERE account_id = %s
-#                         """,
-#                         [id],
-#                     )
-
-#                     budgets = []
-#                     rows = cur.fetchall()
-#                     budget_fields = [
-#                         "id",
-#                         "name",
-#                         "primary_budget",
-#                         "complete",
-#                         "monthly_income",
-#                         "monthly_spending_total",
-#                         "monthly_balance",
-#                         "account_id",
-#                     ]
-#                     for row in rows:
-#                         budget = self.record_to_dict(
-#                             row, cur.description, budget_fields
-#                         )
-#                         budgets.append(budget)
-#                     return budgets
-#         except Exception as e:
-#             print(e)
-#             return {"message": "Could not get that budget"}
-
-# ORIGINAL get_budget WHICH RETURNS BUDGET WITHOUT EXPENSES
-# def get_budget(self, budget_id):
-#     try:
-#         with pool.connection() as conn:
-#             with conn.cursor() as cur:
-#                 cur.execute(
-#                     """
-#                     SELECT *, *
-#                     FROM budgets
-#                     WHERE id = %s
-#                     """,
-#                     [budget_id],
-#                 )
-
-#                 row = cur.fetchone()
-#                 budget_fields = [
-#             "id",
-#             "name",
-#             "primary_budget",
-#             "complete",
-#             "monthly_income",
-#             "monthly_spending_total",
-#             "monthly_balance",
-#             "account_id",
-#         ]
-#                 return self.record_to_dict(row, cur.description, budget_fields) # noqa
-#     except Exception as e:
-#         print(e)
-#         return {"message": "Could not get that budget"}

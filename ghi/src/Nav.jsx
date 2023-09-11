@@ -1,20 +1,3 @@
-// import React from "react";
-// import { NavLink } from 'react-router-dom';
-
-// function Nav() {
-// 	return (
-//     <nav>
-//       <div>
-//         <NavLink to="/">Login Form </NavLink>
-//         <NavLink to="/sign-up">Sign Up </NavLink>
-//         <NavLink to="/budgets">Budgets List </NavLink>
-//         <NavLink to="/test">Test Page</NavLink>
-//       </div>
-//     </nav>
-//   );
-// }
-
-// export default Nav;
 import * as React from "react";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
@@ -198,10 +181,6 @@ function DrawerAppBar(props) {
 }
 
 DrawerAppBar.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window: PropTypes.func,
 };
 

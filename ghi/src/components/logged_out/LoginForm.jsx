@@ -1,7 +1,6 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useStore } from "../../ContextStore";
 import { useNavigate } from "react-router-dom";
-
 // Material Imports
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
@@ -16,85 +15,79 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Copyright from "../ui/Copyright";
 
-// const defaultTheme = createTheme();
-
 const LoginForm = () => {
-    const store = useStore()
-    const { login } = useToken();
+  const store = useStore()
+  const { login } = useToken();
+  const navigate = useNavigate()
 
-    const navigate = useNavigate()
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    login(data.get('email'), data.get('password'));
+    navigate('/budgets')
+    e.target.reset()
+  };
 
-
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      const data = new FormData(e.currentTarget);
-      login(data.get('email'), data.get('password'));
-      navigate('/budgets')
-      e.target.reset()
-    };
-
-
-      return (
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: '#242424' }}>
+          <WalletOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign In
+        </Typography>
+        <Box component="form" onSubmit={(e) => handleSubmit(e)} sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email"
+            name="email"
+            autoComplete="email"
+            variant='standard'
+            autoFocus
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            variant="standard"
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            size="large"
+            sx={{ mt: 3, mb: 2, backgroundColor: "#242424" }}
           >
-            <Avatar sx={{ m: 1, bgcolor: '#242424' }}>
-              <WalletOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign In
-            </Typography>
-            <Box component="form" onSubmit={(e) => handleSubmit(e)} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email"
-                name="email"
-                autoComplete="email"
-                variant='standard'
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                variant="standard"
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                size="large"
-                sx={{ mt: 3, mb: 2, backgroundColor: "#242424" }}
-              >
-                Sign In
-              </Button>
-              <Grid container justifyContent="center">
-                <Grid item>
-                  <Link href="/sign-up" variant="body2">
-                    {"Don't have an account? Sign Up!"}
-                  </Link>
-                </Grid>
-              </Grid>
-            </Box>
-          </Box>
-          <Copyright sx={{ mt: 8, mb: 4 }} />
-        </Container>
-    //   </ThemeProvider>
+            Sign In
+          </Button>
+          <Grid container justifyContent="center">
+            <Grid item>
+              <Link href="/sign-up" variant="body2">
+                {"Don't have an account? Sign Up!"}
+              </Link>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+      <Copyright sx={{ mt: 8, mb: 4 }} />
+    </Container>
     );
 }
 export default LoginForm;
