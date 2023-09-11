@@ -3,8 +3,7 @@ import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import { useStore } from "../../ContextStore";
 import { useNavigate, useParams } from "react-router-dom";
 import { FetchWrapper } from "../../fetch-wrapper";
-import { CircularProgress } from "@mui/material";
-
+import { CircularProgress, Divider } from "@mui/material";
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -13,6 +12,8 @@ import Star from "@mui/icons-material/Star";
 import StarBorder from "@mui/icons-material/StarBorder";
 import Button from "@mui/material/Button";
 import WalletOutlinedIcon from "@mui/icons-material/WalletOutlined";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import Grid from "@mui/material/Grid";
 import EditIcon from "@mui/icons-material/Edit";
 import Avatar from "@mui/material/Avatar";
@@ -20,7 +21,6 @@ import Box from "@mui/material/Box";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import { PieChart, pieArcClasses } from "@mui/x-charts/PieChart";
 import Paper from "@mui/material/Paper";
-
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
@@ -35,6 +35,7 @@ const BudgetView = ({ baseUrl }) => {
   const navigate = useNavigate();
   const [isPrimaryBudget, setIsPrimaryBudget] = useState(false);
   const [primaryBudgetId, setPrimaryBudgetId] = useState(undefined);
+  const storage = [];
 
   const getBudgetData = async () => {
     const data = await FastAPI.get(`/api/budgets/${id}`, token);
@@ -63,8 +64,6 @@ const BudgetView = ({ baseUrl }) => {
       }
     }
   }, [token]);
-
-  const storage = [];
 
   useEffect(() => {
     if (budget.expenses) {
@@ -241,26 +240,22 @@ const BudgetView = ({ baseUrl }) => {
               </>
             )}
           </Box>
-
           <Box>
-            <Grid container spacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-              <Grid item xs={6}>
+            <Grid
+              container
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+              sx={{ mt: 2 }}
+            >
+              <Grid item align="center">
                 <Typography
                   variant="h5"
                   sx={{ fontWeight: "bold", padding: "0px 10px" }}
                 >
-                  Big <br />
-                  Picture
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h6" noWrap>
                   Monthly Income
                 </Typography>
-                <Typography
-                  variant="h5"
-                  sx={{ fontWeight: "bold", padding: "0px 10px" }}
-                >
+                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                   {budget.monthly_income?.toLocaleString("en-US", {
                     style: "currency",
                     currency: "USD",
@@ -269,14 +264,25 @@ const BudgetView = ({ baseUrl }) => {
                   })}
                 </Typography>
               </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h6" noWrap>
-                  Total Spend
-                </Typography>
+            </Grid>
+            <Grid>
+              <Divider sx={{ mt: 2 }} />
+            </Grid>
+            <Grid
+              container
+              direction="row"
+              justifyContent="space-evenly"
+              align="center"
+              sx={{ mt: 2 }}
+            >
+              <Grid item>
                 <Typography
                   variant="h5"
                   sx={{ fontWeight: "bold", padding: "0px 10px" }}
                 >
+                  Total Spent
+                </Typography>
+                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                   {budget.monthly_spending_total?.toLocaleString("en-US", {
                     style: "currency",
                     currency: "USD",
@@ -285,14 +291,15 @@ const BudgetView = ({ baseUrl }) => {
                   })}
                 </Typography>
               </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h6" noWrap>
-                  Remaining
-                </Typography>
+              <Divider orientation="vertical" flexItem />
+              <Grid item>
                 <Typography
                   variant="h5"
                   sx={{ fontWeight: "bold", padding: "0px 10px" }}
                 >
+                  Remaining
+                </Typography>
+                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                   {budget.monthly_balance?.toLocaleString("en-US", {
                     style: "currency",
                     currency: "USD",
@@ -303,7 +310,6 @@ const BudgetView = ({ baseUrl }) => {
               </Grid>
             </Grid>
           </Box>
-
           <div style={{ marginBottom: "60px" }}></div>
           <Typography variant="h5" align="center" sx={{ fontWeight: "bold" }}>
             Expense List
@@ -316,7 +322,7 @@ const BudgetView = ({ baseUrl }) => {
               flexGrow: 1,
               backgroundColor: "#ffffff",
               marginBottom: "10px",
-              borderBottom: '1px solid #ddd'
+              borderBottom: "1px solid #ddd",
             }}
           >
             <Grid container spacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -332,7 +338,6 @@ const BudgetView = ({ baseUrl }) => {
               </Grid>
             </Grid>
           </Box>
-
           {budget.expenses.map((expense) => {
             return (
               <Paper
@@ -370,7 +375,6 @@ const BudgetView = ({ baseUrl }) => {
               </Paper>
             );
           })}
-
           <Card sx={{ mt: 2, border: "none", boxShadow: "none" }}>
             <Button
               variant="contained"
@@ -382,7 +386,6 @@ const BudgetView = ({ baseUrl }) => {
             >
               Edit Budget
             </Button>
-
             <Button
               variant="contained"
               fullWidth

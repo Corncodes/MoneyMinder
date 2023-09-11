@@ -2,6 +2,7 @@ import os
 from psycopg_pool import ConnectionPool
 from models.accounts import AccountIn, AccountOutWithPassword
 
+
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
 
@@ -31,6 +32,7 @@ class AccountQueries:
             print(e)
             return {"message": "Could not get that account"}
 
+
     def create_account(
         self, account: AccountIn, hashed_password: str
     ) -> AccountOutWithPassword:
@@ -51,6 +53,7 @@ class AccountQueries:
                     ],
                 )
         return self.get_account(account.email)
+
 
     def record_to_account_out(self, record):
         return AccountOutWithPassword(

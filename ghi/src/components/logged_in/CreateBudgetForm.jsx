@@ -25,9 +25,7 @@ const CreateBudgetForm = ({ baseUrl }) => {
 	const [input, setInput] = useState('');
   const { token } = useAuthContext();
   const navigate = useNavigate()
-
 	const FastAPI = new FetchWrapper(baseUrl)
-
 
 	const handleBudgetNameChange = (e) => {
 		setBudgetName(e.target.value);
@@ -52,9 +50,9 @@ const CreateBudgetForm = ({ baseUrl }) => {
 		setBudgetCreated(true)
 	};
 	if (!budgetCreated) {
-      return (
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
+    return (
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
           <Box
             sx={{
               mt: 1,
@@ -64,65 +62,64 @@ const CreateBudgetForm = ({ baseUrl }) => {
               alignItems: 'center',
             }}
           >        
-        <Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
-            <WalletOutlinedIcon />
-        </Avatar>
+            <Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
+              <WalletOutlinedIcon />
+            </Avatar>
             <Typography variant="h6">
               Create a Budget
             </Typography>
           </Box>
-            <Box component="form" onSubmit={(e) => handleFirstSubmit(e)} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="budgetName"
-                label="Budget Name"
-                name="Budget Name"
-                inputProps={{ maxLength: 20 }}
-                onChange={handleBudgetNameChange}
-                value={budgetName}
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="Monthly Income"
-                label="Monthly Income"
-                type="number"
-                id="monthlyIncome"
-                onChange={handleMonthlyIncomeChange}
-                value={monthlyIncome}
-                InputProps={{
-                  inputProps: {
-                    min: 0,
-                  }
-                }}
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2, backgroundColor: "#242424" }}
-              >
-                Continue
-              </Button>
-            </Box>
+          <Box component="form" onSubmit={(e) => handleFirstSubmit(e)} sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="budgetName"
+              label="Budget Name"
+              name="Budget Name"
+              inputProps={{ maxLength: 20 }}
+              onChange={handleBudgetNameChange}
+              value={budgetName}
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="Monthly Income"
+              label="Monthly Income"
+              type="number"
+              id="monthlyIncome"
+              onChange={handleMonthlyIncomeChange}
+              value={monthlyIncome}
+              InputProps={{
+                inputProps: {
+                  min: 0,
+                }
+              }}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2, backgroundColor: "#242424" }}
+            >
+              Continue
+            </Button>
+          </Box>
 				<Button
-				variant="contained" 
-				color="error" 
-				fullWidth
-				sx={{ mt: 2, mb: 2}}
-				startIcon={<CancelIcon/>}
-				onClick={(e) => handleCancel(e)}>
-				Cancel
+          variant="contained" 
+          color="error" 
+          fullWidth
+          sx={{ mt: 2, mb: 2}}
+          startIcon={<CancelIcon/>}
+          onClick={(e) => handleCancel(e)}
+        >
+          Cancel
 				</Button>
-          <Copyright sx={{ mt: 8, mb: 4 }} />
-        </Container>
-        
+        <Copyright sx={{ mt: 8, mb: 4 }} />
+      </Container>
     );
-
 	}
 	else {
 		return (

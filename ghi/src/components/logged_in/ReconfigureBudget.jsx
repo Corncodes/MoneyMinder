@@ -3,7 +3,6 @@ import { useStore } from "../../ContextStore";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import { FetchWrapper } from '../../fetch-wrapper';
 import { useNavigate } from 'react-router-dom';
-
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -13,7 +12,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import { Divider } from '@mui/material';
-
 import Avatar from "@mui/material/Avatar";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import DoneIcon from '@mui/icons-material/Done';
@@ -25,9 +23,8 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 
 const ReconfigureBudget = ({ updatedBudget, baseUrl, setBudgetCreated}) => {
-
-    const [expenseItems, setExpenseItems] = useState(updatedBudget.expenses)
-    const [keyCounter, setKeyCounter] = useState(0)
+  const [expenseItems, setExpenseItems] = useState(updatedBudget.expenses)
+  const [keyCounter, setKeyCounter] = useState(0)
 	const [totalSpending, setTotalSpending] = useState(updatedBudget.monthly_spending_total)
 	const [startingExpenseIds, setStartingExpenseIds] = useState(updatedBudget.expenses.map(expense => expense.expense_id))
 	const { token } = useAuthContext()
@@ -41,14 +38,14 @@ const ReconfigureBudget = ({ updatedBudget, baseUrl, setBudgetCreated}) => {
 		}
 	}, [])
 
-    const addExpense = () => {
-		setKeyCounter(keyCounter => keyCounter += 1)
-        setExpenseItems([...expenseItems, {
-			expense_name: '',
-            amount: 0,
-			expense_id: keyCounter
-        }])
-    }
+  const addExpense = () => {
+  setKeyCounter(keyCounter => keyCounter += 1)
+    setExpenseItems([...expenseItems, {
+      expense_name: '',
+      amount: 0,
+      expense_id: keyCounter
+    }])
+  }
 
 	const deleteExpense = async (id) => {
 		let updatedExpenseItems = expenseItems.filter((expense) => expense.expense_id !== id)
@@ -65,19 +62,19 @@ const ReconfigureBudget = ({ updatedBudget, baseUrl, setBudgetCreated}) => {
 
     const handleExpenseNameChange = (e, index) => {
 		let updatedExpenseItems = [...expenseItems]
-        updatedExpenseItems[index].expense_name = e.target.value
-        setExpenseItems(updatedExpenseItems)
+      updatedExpenseItems[index].expense_name = e.target.value
+      setExpenseItems(updatedExpenseItems)
     }
 
     const handleExpenseAmountChange = (e, index) => {
-        let updatedExpenseItems = [...expenseItems]
-        updatedExpenseItems[index].amount = e.target.value
-        setExpenseItems(updatedExpenseItems)
-		let spend = 0
-		for (const expense of updatedExpenseItems) {
-			spend += parseInt(expense.amount)
-		}
-		setTotalSpending(spend)
+      let updatedExpenseItems = [...expenseItems]
+      updatedExpenseItems[index].amount = e.target.value
+      setExpenseItems(updatedExpenseItems)
+      let spend = 0
+      for (const expense of updatedExpenseItems) {
+        spend += parseInt(expense.amount)
+      }
+      setTotalSpending(spend)
     }
 
 	const submit = async (e) => {
@@ -97,8 +94,6 @@ const ReconfigureBudget = ({ updatedBudget, baseUrl, setBudgetCreated}) => {
 				expenseBody.budget_id = updatedBudget.id
 				await FastAPI.post('/api/expenses', expenseBody, token)
 			}
-
-
 		}
 		let budgetBody = {}
 		budgetBody.name = updatedBudget.name
@@ -123,139 +118,137 @@ const ReconfigureBudget = ({ updatedBudget, baseUrl, setBudgetCreated}) => {
 
   return (
 		<Container component="main" maxWidth="sm">
-		<CssBaseline />
-          <Box
-            sx={{
-              mt: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center'
-            }}>
-		
-		<Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
-            <WalletOutlinedIcon />
+      <CssBaseline />
+      <Box
+        sx={{
+          mt: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
+          <WalletOutlinedIcon />
         </Avatar>
-		<Grid container direction='column' alignItems='center' justify='center'>
-			<Typography 
-			variant="h6" 
-			sx={{ fontWeight: "bold" }}> 
-			{updatedBudget.name}
-			</Typography>
-			<Typography 
-			variant="overline"
-			>Total Spending
-			</Typography>
-			<Typography 
-			variant="h4" 
-			sx={{ fontWeight: "bold" }}>
-				{totalSpending?.toLocaleString("en-US", {style:"currency", currency:"USD", minimumFractionDigits: 0, maximumFractionDigits: 0})}
-			</Typography>
-			<Typography 
-			variant="overline">
-			Remaining
-			</Typography>
-			<Typography 
-			variant="h4" 
-			sx={{ fontWeight: "bold" }}>
-				{(updatedBudget.monthly_income - totalSpending).toLocaleString("en-US", {style:"currency", currency:"USD", minimumFractionDigits: 0, maximumFractionDigits: 0})}
-			</Typography>
-
-
-		</Grid>
-		{expenseItems.length === 0 ? (
-			<Typography variant="overline">Get Started Below!</Typography>
-		) : (
-			expenseItems.map((expense, index) => (
-			<div key={index}>
-				<Box component="form" sx={{ mt: 1 , alignItems: 'center'}}>
-				<TextField
-				margin="normal"
-				label="Expense Name"
-				variant="outlined"
-				fullWidth
-				inputProps={{ maxLength: 20 }}
-				onChange={(e) => handleExpenseNameChange(e, index)}
-				value={expenseItems[index].expense_name}
-				type="text"
-				required
-				/>
-				<TextField
-				margin="normal"
-				label="Expense Amount"
-				variant="outlined"
-				fullWidth
-				onChange={(e) => handleExpenseAmountChange(e, index)}
-				value={expenseItems[index].amount}
-				type="number"
-				inputProps={{ min: '0' }}
-				required
-				/>
-				<Box textAlign="center">
-					<Button
-					variant="contained"
-					startIcon={<DeleteForeverIcon/>}
-					color="error"
-					size="small"
-					sx={{ mt: 2, mb: 3 }}
-					onClick={() => deleteExpense(expense.expense_id)}
-					>
-					Delete Expense
-					</Button>
-				</Box>
-			</Box>
-			<Divider />
-			</div>
-			))
-		)}
-
-
-			<Card sx={{ mt: 2, border: "none", boxShadow: "none"}}>
-				<Button 
-				variant="outlined"
-				startIcon={<AddIcon/>} 
-				fullWidth
-				sx={{ mt: 2, mb: 2 }}
-				onClick={() => addExpense()}>
-					Expense
-				</Button>
-				<Button 
-				variant="outlined" 
-				color="warning"
-				fullWidth
-				sx={{ mt: 2, mb: 2 }}
-				startIcon={<KeyboardReturnIcon />} 
-				onClick={() => setBudgetCreated(false)}>
-				Return
-				</Button>
-				<Button
-				variant="contained" 
-				color="success" 
-				fullWidth
-				sx={{ mt: 2, mb: 2, backgroundColor: "#242424" }}
-				startIcon={<DoneIcon/>}
-				onClick={(e) => handleSubmit(e)}>
-				Submit
-				</Button>
-				<Button
-				variant="text" 
-				color="error" 
-				fullWidth
-				sx={{ mt: 2, mb: 8}}
-				startIcon={<CancelIcon/>}
-				onClick={(e) => handleCancel(e)}>
-				Cancel
-				</Button>
-			</Card>
-
-
-
-				
-			</Box>
+        <Grid container direction='column' alignItems='center' justify='center'>
+          <Typography 
+            variant="h6" 
+            sx={{ fontWeight: "bold" }}
+          >
+            {updatedBudget.name}
+          </Typography>
+          <Typography 
+          variant="overline"
+          >
+            Total Spending
+          </Typography>
+          <Typography 
+          variant="h4" 
+          sx={{ fontWeight: "bold" }}
+          >
+            {totalSpending?.toLocaleString("en-US", {style:"currency", currency:"USD", minimumFractionDigits: 0, maximumFractionDigits: 0})}
+          </Typography>
+          <Typography 
+          variant="overline"
+          >
+            Remaining
+          </Typography>
+          <Typography 
+          variant="h4" 
+          sx={{ fontWeight: "bold" }}
+          >
+            {(updatedBudget.monthly_income - totalSpending).toLocaleString("en-US", {style:"currency", currency:"USD", minimumFractionDigits: 0, maximumFractionDigits: 0})}
+          </Typography>
+        </Grid>
+        {expenseItems.length === 0 ? (
+        <Typography variant="overline">Get Started Below!</Typography>
+        ) : (
+          expenseItems.map((expense, index) => (
+          <div key={index}>
+            <Box component="form" sx={{ mt: 1 , alignItems: 'center'}}>
+              <TextField
+              margin="normal"
+              label="Expense Name"
+              variant="outlined"
+              fullWidth
+              inputProps={{ maxLength: 20 }}
+              onChange={(e) => handleExpenseNameChange(e, index)}
+              value={expenseItems[index].expense_name}
+              type="text"
+              required
+              />
+              <TextField
+              margin="normal"
+              label="Expense Amount"
+              variant="outlined"
+              fullWidth
+              onChange={(e) => handleExpenseAmountChange(e, index)}
+              value={expenseItems[index].amount}
+              type="number"
+              inputProps={{ min: '0' }}
+              required
+              />
+              <Box textAlign="center">
+                <Button
+                variant="contained"
+                startIcon={<DeleteForeverIcon/>}
+                color="error"
+                size="small"
+                sx={{ mt: 2, mb: 3 }}
+                onClick={() => deleteExpense(expense.expense_id)}
+                >
+                  Delete Expense
+                </Button>
+              </Box>
+            </Box>
+            <Divider />
+          </div>
+          ))
+        )}
+        <Card sx={{ mt: 2, border: "none", boxShadow: "none"}}>
+          <Button 
+          variant="outlined"
+          startIcon={<AddIcon/>} 
+          fullWidth
+          sx={{ mt: 2, mb: 2 }}
+          onClick={() => addExpense()}
+          >
+            Expense
+          </Button>
+          <Button 
+          variant="outlined" 
+          color="warning"
+          fullWidth
+          sx={{ mt: 2, mb: 2 }}
+          startIcon={<KeyboardReturnIcon />} 
+          onClick={() => setBudgetCreated(false)}
+          >
+            Return
+          </Button>
+          <Button
+          variant="contained" 
+          color="success" 
+          fullWidth
+          sx={{ mt: 2, mb: 2, backgroundColor: "#242424" }}
+          startIcon={<DoneIcon/>}
+          onClick={(e) => handleSubmit(e)}
+          >
+            Submit
+          </Button>
+          <Button
+          variant="text" 
+          color="error" 
+          fullWidth
+          sx={{ mt: 2, mb: 8}}
+          startIcon={<CancelIcon/>}
+          onClick={(e) => handleCancel(e)}
+          >
+            Cancel
+          </Button>
+        </Card>
+      </Box>
 		</Container>
-
-
-
   );
-	}
+}
 
-	export default ReconfigureBudget;
+export default ReconfigureBudget;
