@@ -48,7 +48,7 @@ def test_get_all_budgets():
     assert response.json() == {"budgets": []}
 
     # Teardown
-    app.dependancy_overrides = {}
+    app.dependency_overrides = {}
 
 
 def test_create_budget():
@@ -80,5 +80,5 @@ def test_create_budget():
     assert response.json() == expected
 
     # Teardown
-    app.dependancy_overrides = {}
+    app.dependency_overrides = {}
 # END Will's GET and POST budget unit tests
