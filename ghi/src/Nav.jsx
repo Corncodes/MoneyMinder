@@ -50,10 +50,6 @@ function DrawerAppBar(props) {
   let navItems = token
     ? [
         {
-          name: "Test",
-          url: "/test",
-        },
-        {
           name: "Budgets",
           url: "/budgets",
         },
@@ -69,7 +65,7 @@ function DrawerAppBar(props) {
         },
         {
           name: "Log In",
-          url: "/",
+          url: "/login",
         },
         {
           name: "Sign Up",

@@ -1,6 +1,4 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
 import { useStore } from "../../ContextStore";
 import { useNavigate } from "react-router-dom";
 

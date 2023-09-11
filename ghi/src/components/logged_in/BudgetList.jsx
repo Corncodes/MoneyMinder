@@ -1,6 +1,5 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import LoginForm from "../logged_out/LoginForm";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useStore } from "../../ContextStore";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import { FetchWrapper } from '../../fetch-wrapper';
@@ -11,11 +10,8 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
-import Star from "@mui/icons-material/Star";
-import StarBorder from "@mui/icons-material/StarBorder";
 import WalletOutlinedIcon from '@mui/icons-material/WalletOutlined';
 import Grid from "@mui/material/Grid";
-import { IconButton } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Avatar from "@mui/material/Avatar";
@@ -38,7 +34,6 @@ const BudgetList = ({ baseUrl }) => {
 	const { token } = useAuthContext();
 	const { budgetsData, setBudgetsData } = useStore();
 	const navigate = useNavigate();
-	const [isPrimaryBudget, setIsPrimaryBudget] = useState(false);
 	const [expanded, setExpanded] = React.useState("");
 
 	const getData = async () => {

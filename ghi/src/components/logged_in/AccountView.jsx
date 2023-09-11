@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
-import { useStore } from "../../ContextStore";
 import { useNavigate, useParams } from 'react-router-dom';
 import { FetchWrapper } from '../../fetch-wrapper';
 
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";

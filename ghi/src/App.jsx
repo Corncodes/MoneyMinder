@@ -6,18 +6,18 @@ import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import ContextProvider from "./ContextStore";
 // Components
 import Nav from './Nav.jsx'
-import TestPage from "./components/logged_in/TestPage";
 // Logged Out Components
 import LoginForm from "./components/logged_out/LoginForm.jsx";
 import CreateAccountForm from "./components/logged_out/CreateAccountForm";
+import HomePage from "./components/logged_out/Home";
 
 // Logged In Components
 import BudgetList from "./components/logged_in/BudgetList";
 import CreateBudgetForm from "./components/logged_in/CreateBudgetForm";
-import ConfigureBudget from "./components/logged_in/ConfigureBudget";
 import BudgetView from "./components/logged_in/BudgetView";
 import EditBudgetForm from "./components/logged_in/EditBudgetForm";
 import AccountView from "./components/logged_in/AccountView";
+
 
 // MUI Imports
 import { createTheme, ThemeProvider, colors } from "@mui/material";
@@ -77,7 +77,7 @@ function App() {
                   <Route element={<UnprotectedRoute />}>
                     <Route path="/sign-up" element={<CreateAccountForm baseUrl={baseUrl} />} />
                     <Route path="/login" element={<LoginForm />} />
-                    <Route path="/" element={<LoginForm />} />
+                    <Route path="/" element={<HomePage />} />
                   </Route>
 
                   <Route element={<ProtectedRoute />}>
@@ -91,7 +91,6 @@ function App() {
                     </Route>
                   </Route>
 
-                  <Route path="/test" element={<TestPage />} />
                   <Route path="/account">
                     <Route index element={<AccountView baseUrl={baseUrl} />} />
                   </Route>

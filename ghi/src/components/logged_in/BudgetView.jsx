@@ -7,8 +7,6 @@ import { CircularProgress } from "@mui/material";
 
 import * as React from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import Star from "@mui/icons-material/Star";
 import StarBorder from "@mui/icons-material/StarBorder";
 import Button from "@mui/material/Button";
