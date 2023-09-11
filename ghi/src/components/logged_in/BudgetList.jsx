@@ -96,10 +96,10 @@ const BudgetList = ({ baseUrl }) => {
           >
             <Paper elevation={4}>
               <AccordionSummary
-              expandIcon={<ArrowDropDownIcon />}
+              expandIcon={<ArrowDropDownIcon sx={{ color: "white" }} />}
               aria-controls={`card${budget.id}-content`}
-              id={`card${budget.id}-header`}
-              >
+              sx={{color: "white", bgcolor: "#242424"}}
+              id={`card${budget.id}-header`}>
                 <Typography variant="body1">{budget.name}</Typography>
               </AccordionSummary>
             </Paper>
@@ -167,9 +167,9 @@ const BudgetList = ({ baseUrl }) => {
                 <Grid item>
                   <Button
                     variant="contained"
-                    color="error"
                     size="medium"
                     startIcon={<DeleteForeverIcon/>}
+                    sx={{ bgcolor: "#808080 "}}
                     onClick={() => deleteBudget(budget.id)}
                   >
                     Delete Budget
@@ -178,8 +178,8 @@ const BudgetList = ({ baseUrl }) => {
                 <Grid item>
                   <Button
                     variant="contained"
-                    color="warning"
                     size="medium"
+                    color="success"
                     startIcon={<VisibilityIcon />}
                     onClick={() => viewBudget(budget.id)}
                     >
