@@ -1,4 +1,4 @@
-# Begin Will's budget unit tests
+# BEGIN Will's GET and POST budget unit tests
 from fastapi.testclient import TestClient
 from main import app
 from queries.budgets import BudgetQueries
@@ -81,27 +81,4 @@ def test_create_budget():
 
     # Teardown
     app.dependancy_overrides = {}
-
-
-# {
-#           "id": 1,
-#           "name": "Unit Test",
-#           "primary_budget": True,
-#           "complete": False,
-#           "monthly_income": 10000,
-#           "monthly_spending_total": null,
-#           "monthly_balance": null,
-#           "account_id": 1,
-#           "expenses": [
-#             {
-#               "expense_id": 34,
-#               "expense_name": "Unit 1",
-#               "amount": 500,
-#               "ordering": null,
-#               "budget_id": 11
-#             }
-#           ]
-#         }
-
-
-# python -m pytest
+# END Will's GET and POST budget unit tests
