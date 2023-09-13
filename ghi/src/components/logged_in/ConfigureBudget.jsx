@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -18,6 +18,10 @@ import { useStore } from '../../ContextStore';
 import { useAuthContext } from '@galvanize-inc/jwtdown-for-react';
 import { FetchWrapper } from '../../fetch-wrapper';
 import { useNavigate } from 'react-router-dom';
+import AnimatedNumbers from 'react-animated-numbers';
+
+
+
 
 const ConfigureBudget = ({ createdBudget, baseUrl }) => {
   const [expenseItems, setExpenseItems] = useState([]);
@@ -27,6 +31,10 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
   const { setBudgetsData } = useStore();
   const availableSpend = createdBudget.monthly_income;
   const FastAPI = new FetchWrapper(baseUrl);
+
+
+
+
   const navigate = useNavigate();
 
   const addExpense = () => {
@@ -56,8 +64,9 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
     setExpenseItems(updatedExpenseItems);
     let spend = 0;
     for (const expense of updatedExpenseItems) {
-      spend += parseInt(expense.expenseAmount);
-    }
+      if (expense.expenseAmount.trim() !== '') {
+        spend += parseInt(expense.expenseAmount);
+    }}
     setTotalSpending(spend);
   };
 
@@ -117,23 +126,47 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
             {createdBudget.name}
           </Typography>
           <Typography variant="overline">Total Spending</Typography>
-          <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-            {totalSpending?.toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD",
-              minimumFractionDigits: 0,
-              maximumFractionDigits: 0,
-            })}
+          <Grid container direction="row" justifyContent="center" alignItems="center">
+            <Typography variant="h6">$</Typography>
+            <Typography variant='h5'>
+              <AnimatedNumbers 
+                animateToNumber={totalSpending}
+                includeComma
+                locale="en-us"
+                configs={[
+                  { mass: 1, tension: 220, friction: 100 },
+                  { mass: 1, tension: 180, friction: 130 },
+                  { mass: 1, tension: 280, friction: 90 },
+                  { mass: 1, tension: 180, friction: 135 },
+                  { mass: 1, tension: 260, friction: 100 },
+                  { mass: 1, tension: 210, friction: 180 },
+                ]}
+              />
+            </Typography>
+          </Grid>
+          <Typography 
+          variant="overline"
+          >
+            Remaining
           </Typography>
-          <Typography variant="overline">Remaining</Typography>
-          <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-            {(availableSpend - totalSpending).toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD",
-              minimumFractionDigits: 0,
-              maximumFractionDigits: 0,
-            })}
+          <Grid container direction="row" justifyContent="center" alignItems="center">
+            <Typography variant="h6">$ </Typography>
+            <Typography variant='h5'>
+              <AnimatedNumbers 
+                animateToNumber={availableSpend - totalSpending}
+                locale="en-US"
+                includeComma
+                configs={[
+                  { mass: 1, tension: 220, friction: 100 },
+                  { mass: 1, tension: 180, friction: 130 },
+                  { mass: 1, tension: 280, friction: 90 },
+                  { mass: 1, tension: 180, friction: 135 },
+                  { mass: 1, tension: 260, friction: 100 },
+                  { mass: 1, tension: 210, friction: 180 },
+                ]}
+              />
           </Typography>
+          </Grid>
         </Grid>
         {expenseItems.length === 0 ? (
           <Typography variant="overline">Get Started Below!</Typography>
