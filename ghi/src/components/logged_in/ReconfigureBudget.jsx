@@ -72,8 +72,9 @@ const ReconfigureBudget = ({ updatedBudget, baseUrl, setBudgetCreated}) => {
       setExpenseItems(updatedExpenseItems)
       let spend = 0
       for (const expense of updatedExpenseItems) {
-        spend += parseInt(expense.amount)
-      }
+        if (expense.amount.trim() !== '') {
+          spend += parseInt(expense.amount)
+      }}
       setTotalSpending(spend)
     }
 

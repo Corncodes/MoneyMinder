@@ -64,8 +64,9 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
     setExpenseItems(updatedExpenseItems);
     let spend = 0;
     for (const expense of updatedExpenseItems) {
-      spend += parseInt(expense.expenseAmount);
-    }
+      if (expense.expenseAmount.trim() !== '') {
+        spend += parseInt(expense.expenseAmount);
+    }}
     setTotalSpending(spend);
   };
 
