@@ -51,70 +51,75 @@ const CreateBudgetForm = ({ baseUrl }) => {
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-          <Box
-            sx={{
-              mt: 1,
-              mb: 5,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+        <Box
+          sx={{
+            mt: 1,
+            mb: 5,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar
+            sx={{ m: 1, bgcolor: "primary.main", justifyContent: "center" }}
+          >
+            <WalletOutlinedIcon />
+          </Avatar>
+          <Typography variant="h6">Create a Budget</Typography>
+        </Box>
+        <Box
+          component="form"
+          onSubmit={(e) => handleFirstSubmit(e)}
+          sx={{ mt: 1 }}
+        >
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="budgetName"
+            label="Budget Name"
+            name="Budget Name"
+            inputProps={{ maxLength: 20 }}
+            onChange={handleBudgetNameChange}
+            value={budgetName}
+            autoFocus
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="Monthly Income"
+            label="Monthly Income"
+            type="number"
+            id="monthlyIncome"
+            onChange={handleMonthlyIncomeChange}
+            value={monthlyIncome}
+            InputProps={{
+              inputProps: {
+                min: 0,
+              },
             }}
-          >        
-            <Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
-              <WalletOutlinedIcon />
-            </Avatar>
-            <Typography variant="h6">
-              Create a Budget
-            </Typography>
-          </Box>
-          <Box component="form" onSubmit={(e) => handleFirstSubmit(e)} sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="budgetName"
-              label="Budget Name"
-              name="Budget Name"
-              inputProps={{ maxLength: 20 }}
-              onChange={handleBudgetNameChange}
-              value={budgetName}
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="Monthly Income"
-              label="Monthly Income"
-              type="number"
-              id="monthlyIncome"
-              onChange={handleMonthlyIncomeChange}
-              value={monthlyIncome}
-              InputProps={{
-                inputProps: {
-                  min: 0,
-                }
-              }}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2, backgroundColor: "#242424" }}
-            >
-              Continue
-            </Button>
-          </Box>
-				<Button
-          variant="contained" 
-          color="error" 
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Continue
+          </Button>
+        </Box>
+        <Button
+          variant="contained"
+          color="warning"
           fullWidth
-          sx={{ mt: 2, mb: 2}}
-          startIcon={<CancelIcon/>}
+          sx={{ mt: 2, mb: 2 }}
+          startIcon={<CancelIcon />}
           onClick={(e) => handleCancel(e)}
         >
           Cancel
-				</Button>
+        </Button>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     );

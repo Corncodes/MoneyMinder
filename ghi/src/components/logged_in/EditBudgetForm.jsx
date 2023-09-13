@@ -71,7 +71,7 @@ const EditBudgetForm = ({ baseUrl }) => {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main', justifyContent: 'center' }}>
               <WalletOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -110,14 +110,15 @@ const EditBudgetForm = ({ baseUrl }) => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, backgroundColor: "#242424" }}
+              color="primary"
+              sx={{ mt: 3, mb: 2 }}
             >
               Save and Continue
             </Button>
             <Button
               fullWidth
               variant="contained"
-              color="error"
+              color="warning"
               sx={{ mt: 1, mb: 2 }}
               onClick={() => navigate(`/budgets/${id}`)}
             >

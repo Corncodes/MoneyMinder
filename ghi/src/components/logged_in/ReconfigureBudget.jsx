@@ -126,7 +126,7 @@ const ReconfigureBudget = ({ updatedBudget, baseUrl, setBudgetCreated}) => {
           alignItems: 'center'
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
+        <Avatar sx={{ m: 1, bgcolor: 'primary.main', justifyContent: 'center' }}>
           <WalletOutlinedIcon />
         </Avatar>
         <Grid container direction='column' alignItems='center' justify='center'>
@@ -191,7 +191,7 @@ const ReconfigureBudget = ({ updatedBudget, baseUrl, setBudgetCreated}) => {
                 <Button
                 variant="contained"
                 startIcon={<DeleteForeverIcon/>}
-                color="error"
+                color="warning"
                 size="small"
                 sx={{ mt: 2, mb: 3 }}
                 onClick={() => deleteExpense(expense.expense_id)}
@@ -204,9 +204,10 @@ const ReconfigureBudget = ({ updatedBudget, baseUrl, setBudgetCreated}) => {
           </div>
           ))
         )}
-        <Card sx={{ mt: 2, border: "none", boxShadow: "none"}}>
+        <Card sx={{ mt: 2, border: "none", boxShadow: "none", bgcolor: "background.default"}}>
           <Button 
-          variant="outlined"
+          variant="contained"
+          color="secondary"
           startIcon={<AddIcon/>} 
           fullWidth
           sx={{ mt: 2, mb: 2 }}
@@ -226,9 +227,9 @@ const ReconfigureBudget = ({ updatedBudget, baseUrl, setBudgetCreated}) => {
           </Button>
           <Button
           variant="contained" 
-          color="success" 
+          color="primary" 
           fullWidth
-          sx={{ mt: 2, mb: 2, backgroundColor: "#242424" }}
+          sx={{ mt: 2, mb: 2 }}
           startIcon={<DoneIcon/>}
           onClick={(e) => handleSubmit(e)}
           >
@@ -236,7 +237,7 @@ const ReconfigureBudget = ({ updatedBudget, baseUrl, setBudgetCreated}) => {
           </Button>
           <Button
           variant="text" 
-          color="error" 
+          color="warning" 
           fullWidth
           sx={{ mt: 2, mb: 8}}
           startIcon={<CancelIcon/>}

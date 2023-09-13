@@ -93,120 +93,124 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
 	}
 
   return (
-		<Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="sm">
       <CssBaseline />
       <Box
         sx={{
           mt: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center'
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: '#242424', justifyContent: 'center' }}>
+        <Avatar
+          sx={{ m: 1, bgcolor: "primary.main", justifyContent: "center" }}
+        >
           <WalletOutlinedIcon />
         </Avatar>
-        <Grid container direction='column' sx={{ alignItems:'center', justify:'center', display: 'flex' }}>
-          <Typography 
-          variant="h6" 
-          sx={{ fontWeight: "bold" }}
-          > 
+        <Grid
+          container
+          direction="column"
+          sx={{ alignItems: "center", justify: "center", display: "flex" }}
+        >
+          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
             {createdBudget.name}
           </Typography>
-          <Typography 
-          variant="overline"
-          >
-            Total Spending
+          <Typography variant="overline">Total Spending</Typography>
+          <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+            {totalSpending?.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            })}
           </Typography>
-          <Typography 
-          variant="h4" 
-          sx={{ fontWeight: "bold" }}
-          >
-            {totalSpending?.toLocaleString("en-US", {style:"currency", currency:"USD", minimumFractionDigits: 0, maximumFractionDigits: 0 })}
-          </Typography>
-          <Typography 
-          variant="overline"
-          >
-            Remaining
-          </Typography>
-          <Typography 
-          variant="h4" 
-          sx={{ fontWeight: "bold" }}>
-            {(availableSpend - totalSpending).toLocaleString("en-US", {style:"currency", currency:"USD", minimumFractionDigits: 0, maximumFractionDigits: 0,})}
+          <Typography variant="overline">Remaining</Typography>
+          <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+            {(availableSpend - totalSpending).toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            })}
           </Typography>
         </Grid>
         {expenseItems.length === 0 ? (
-        <Typography variant="overline">Get Started Below!</Typography>
+          <Typography variant="overline">Get Started Below!</Typography>
         ) : (
           expenseItems.map((expense, index) => (
-          <div key={index}>
-            <Box component="form" sx={{ mt: 1 , alignItems: 'center'}}>
-              <TextField
-                margin="normal"
-                label="Expense Name"
-                variant="outlined"
-                fullWidth
-                inputProps={{ maxLength: 20 }}
-                onChange={(e) => handleExpenseNameChange(e, index)}
-                value={expenseItems[index].expenseName}
-                type="text"
-                required
-              />
-              <TextField
-                margin="normal"
-                label="Expense Amount"
-                variant="outlined"
-                fullWidth
-                onChange={(e) => handleExpenseAmountChange(e, index)}
-                value={expenseItems[index].expenseAmount}
-                type="number"
-                inputProps={{ min: '0', maxLength: 1 }}
-                required
-              />
-              <Box textAlign="center">
-                <Button
-                variant="contained"
-                startIcon={<DeleteForeverIcon/>}
-                color="error"
-                size="small"
-                sx={{ mt: 2, mb: 3 }}
-                onClick={() => deleteExpense(expense.key)}
-                >
-                Delete Expense
-                </Button>
+            <div key={index}>
+              <Box component="form" sx={{ mt: 1, alignItems: "center" }}>
+                <TextField
+                  margin="normal"
+                  label="Expense Name"
+                  variant="outlined"
+                  fullWidth
+                  inputProps={{ maxLength: 20 }}
+                  onChange={(e) => handleExpenseNameChange(e, index)}
+                  value={expenseItems[index].expenseName}
+                  type="text"
+                  required
+                />
+                <TextField
+                  margin="normal"
+                  label="Expense Amount"
+                  variant="outlined"
+                  fullWidth
+                  onChange={(e) => handleExpenseAmountChange(e, index)}
+                  value={expenseItems[index].expenseAmount}
+                  type="number"
+                  inputProps={{ min: "0", maxLength: 1 }}
+                  required
+                />
+                <Box textAlign="center">
+                  <Button
+                    variant="contained"
+                    startIcon={<DeleteForeverIcon />}
+                    color="warning"
+                    size="small"
+                    sx={{ mt: 2, mb: 3 }}
+                    onClick={() => deleteExpense(expense.key)}
+                  >
+                    Delete Expense
+                  </Button>
+                </Box>
               </Box>
-            </Box>
-            <Divider />
-          </div>
+              <Divider />
+            </div>
           ))
         )}
 
-        <Card sx={{ mt: 2, border: "none", boxShadow: "none"}}>
-          <Button 
-          variant="outlined"
-          startIcon={<AddIcon/>} 
-          fullWidth
-          sx={{ mt: 2, mb: 2 }}
-          onClick={() => addExpense()}>
+        <Card sx={{ mt: 2, border: "none", boxShadow: "none", bgcolor: "background.default" }}>
+          <Button
+            variant="contained"
+            color="secondary"
+            startIcon={<AddIcon />}
+            fullWidth
+            sx={{ mt: 2, mb: 2 }}
+            onClick={() => addExpense()}
+          >
             Expense
           </Button>
-          <Button 
-          variant="outlined" 
-          color="warning"
-          fullWidth
-          sx={{ mt: 2, mb: 2 }}
-          startIcon={<SaveIcon/>} 
-          onClick={(e) => handleSave(e)}>
+          <Button
+            variant="outlined"
+            color="primary"
+            fullWidth
+            sx={{ mt: 2, mb: 2 }}
+            startIcon={<SaveIcon />}
+            onClick={(e) => handleSave(e)}
+          >
             Save & Exit
           </Button>
           <Button
-          variant="contained" 
-          color="success" 
-          fullWidth
-          sx={{ mt: 2, mb: 2, backgroundColor: "#242424" }}
-          startIcon={<DoneIcon/>}
-          onClick={(e) => handleSubmit(e)}>
-          Submit
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ mt: 2, mb: 2 }}
+            startIcon={<DoneIcon />}
+            onClick={(e) => handleSubmit(e)}
+          >
+            Submit
           </Button>
         </Card>
       </Box>

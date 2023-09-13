@@ -39,11 +39,11 @@ const LoginForm = () => {
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: '#242424' }}>
+        <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
           <WalletOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign In
+          Log In
         </Typography>
         <Box component="form" onSubmit={(e) => handleSubmit(e)} sx={{ mt: 1 }}>
           <TextField
@@ -73,7 +73,8 @@ const LoginForm = () => {
             fullWidth
             variant="contained"
             size="large"
-            sx={{ mt: 3, mb: 2, backgroundColor: "#242424" }}
+            color="primary"
+            sx={{ mt: 3, mb: 2 }}
           >
             Sign In
           </Button>

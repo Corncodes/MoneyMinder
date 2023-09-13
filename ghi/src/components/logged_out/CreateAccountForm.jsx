@@ -71,7 +71,7 @@ const handleSubmit = async (e) => {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "#242424" }}>
+        <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
           <WalletOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -138,7 +138,7 @@ const handleSubmit = async (e) => {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2, backgroundColor: "#242424" }}
+            sx={{ mt: 3, mb: 2 }}
           >
             Sign Up
           </Button>

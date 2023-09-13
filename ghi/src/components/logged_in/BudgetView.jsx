@@ -32,6 +32,14 @@ const BudgetView = ({ baseUrl }) => {
   const [isPrimaryBudget, setIsPrimaryBudget] = useState(false);
   const [primaryBudgetId, setPrimaryBudgetId] = useState(undefined);
   const storage = [];
+  const palette = [
+    "#606C38",
+    "#493829",
+    "#8f3b1b",
+    "#283618",
+    "#4e6172",
+    "#BC6C25",
+  ];
 
   const getBudgetData = async () => {
     const data = await FastAPI.get(`/api/budgets/${id}`, token);
@@ -131,7 +139,7 @@ const BudgetView = ({ baseUrl }) => {
       <div>
         <Box
           sx={{
-            mt: 1,
+                        mt: 1,
             mb: 5,
             fontSize: "large",
             display: "flex",
@@ -139,16 +147,19 @@ const BudgetView = ({ baseUrl }) => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "#242424", justifyContent: "center" }}>
+          <Avatar sx={{
+            m: 1, bgcolor: "#242424", justifyContent: "center" }}>
             <WalletOutlinedIcon />
           </Avatar>
           <Grid
             container
             direction="column"
-            sx={{ mt: 4, mb: 6, display: "flex", placeContent: "center" }}
+            sx={{
+              mt: 4, mb: 6, display: "flex", placeContent: "center" }}
           >
             <CircularProgress
-              sx={{ justifyContent: "center", alignItems: "center" }}
+              sx={{
+                justifyContent: "center", alignItems: "center" }}
             />
           </Grid>
         </Box>
@@ -182,7 +193,10 @@ const BudgetView = ({ baseUrl }) => {
               <Grid item xs={10}>
                 <Typography
                   variant="h4"
-                  sx={{ fontWeight: "bold", textAlign: "center" }}
+                  sx={{
+                    // fontWeight: "bold",
+                    textAlign: "center",
+                  }}
                 >
                   {budget.name}
                 </Typography>
@@ -193,8 +207,8 @@ const BudgetView = ({ baseUrl }) => {
           <Box
             sx={{
               mb: 5,
-              backgroundColor: "#e1ffe4",
-              borderRadius: "5px",
+              backgroundColor: "#ffd8ab",
+              borderRadius: "20px",
               fontSize: "large",
               display: "flex",
               flexDirection: "column",
@@ -206,30 +220,35 @@ const BudgetView = ({ baseUrl }) => {
               <>
                 <Typography
                   variant="h5"
-                  sx={{ fontWeight: "bold", marginTop: 3 }}
+                  sx={{
+                    // fontWeight: "bold",
+                    marginTop: 3,
+                  }}
                 >
                   Budget Breakdown
                 </Typography>
                 <PieChart
+                  colors={palette}
                   series={[
                     {
                       data,
                       highlightScope: { faded: "global", highlighted: "item" },
                       faded: { innerRadius: 30, additionalRadius: -30 },
-                      innerRadius: 30,
+                      innerRadius: 20,
                       outerRadius: 90,
-                      paddingAngle: 2,
-                      cornerRadius: 3,
+                      paddingAngle: 3,
+                      cornerRadius: 5,
                       startAngle: 0,
                       endAngle: 360,
                       cx: 100,
-                      // cy: 150,
+                      cy: 100
                     },
                   ]}
                   sx={{
                     [`& .${pieArcClasses.faded}`]: {
                       fill: "gray",
                     },
+                    pieArcClasses,
                   }}
                   {...size}
                 />
@@ -242,16 +261,26 @@ const BudgetView = ({ baseUrl }) => {
               direction="row"
               justifyContent="center"
               alignItems="center"
-              sx={{ mt: 2 }}
+              sx={{
+                mt: 2,
+              }}
             >
               <Grid item align="center">
                 <Typography
                   variant="h5"
-                  sx={{ fontWeight: "bold", padding: "0px 10px" }}
+                  sx={{
+                    // fontWeight: "bold",
+                    padding: "0px 10px",
+                  }}
                 >
                   Monthly Income
                 </Typography>
-                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    // fontWeight: "bold",
+                  }}
+                >
                   {budget.monthly_income?.toLocaleString("en-US", {
                     style: "currency",
                     currency: "USD",
@@ -262,23 +291,37 @@ const BudgetView = ({ baseUrl }) => {
               </Grid>
             </Grid>
             <Grid>
-              <Divider sx={{ mt: 2 }} />
+              <Divider
+                sx={{
+                  mt: 2,
+                }}
+              />
             </Grid>
             <Grid
               container
               direction="row"
               justifyContent="space-evenly"
               align="center"
-              sx={{ mt: 2 }}
+              sx={{
+                mt: 2,
+              }}
             >
               <Grid item>
                 <Typography
                   variant="h5"
-                  sx={{ fontWeight: "bold", padding: "0px 10px" }}
+                  sx={{
+                    // fontWeight: "bold",
+                    padding: "0px 10px",
+                  }}
                 >
                   Total Spent
                 </Typography>
-                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    // fontWeight: "bold",
+                  }}
+                >
                   {budget.monthly_spending_total?.toLocaleString("en-US", {
                     style: "currency",
                     currency: "USD",
@@ -291,11 +334,19 @@ const BudgetView = ({ baseUrl }) => {
               <Grid item>
                 <Typography
                   variant="h5"
-                  sx={{ fontWeight: "bold", padding: "0px 10px" }}
+                  sx={{
+                    // fontWeight: "bold",
+                    padding: "0px 10px",
+                  }}
                 >
                   Remaining
                 </Typography>
-                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    // fontWeight: "bold",
+                  }}
+                >
                   {budget.monthly_balance?.toLocaleString("en-US", {
                     style: "currency",
                     currency: "USD",
@@ -307,30 +358,32 @@ const BudgetView = ({ baseUrl }) => {
             </Grid>
           </Box>
           <div style={{ marginBottom: "60px" }}></div>
-          <Typography variant="h5" align="center" sx={{ fontWeight: "bold" }}>
+          <Typography
+            variant="h4"
+            align="center"
+            sx={{
+              marginBottom: "10px",
+            }}
+          >
             Expense List
           </Typography>
           <Box
             sx={{
               p: 2,
-              margin: "auto",
-              maxWidth: 500,
               flexGrow: 1,
-              backgroundColor: "#ffffff",
-              marginBottom: "10px",
-              borderBottom: "1px solid #ddd",
+              backgroundColor: "#FEFAE0",
+              marginBottom: "15px",
+              borderBottom: "1px solid #344620",
             }}
           >
             <Grid container spacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
               <Grid item xs={6}>
-                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                  Name
-                </Typography>
+                <Typography variant="h5">Name</Typography>
               </Grid>
               <Grid item xs={6}>
-                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                  Amount
-                </Typography>
+                <Typography variant="h5" sx={{
+                  paddingLeft: "12px"
+                }}>Amount</Typography>
               </Grid>
             </Grid>
           </Box>
@@ -340,10 +393,12 @@ const BudgetView = ({ baseUrl }) => {
                 key={expense.expense_id}
                 sx={{
                   p: 2,
-                  margin: "auto",
-                  maxWidth: 500,
+                  // margin: "auto",
+                  alignContent: "",
+                  // maxWidth: 500,
                   flexGrow: 1,
-                  backgroundColor: "#ddf2ff",
+                  backgroundColor: "#606C38",
+                  color: "#ffffff",
                   marginBottom: "10px",
                 }}
               >
@@ -353,12 +408,25 @@ const BudgetView = ({ baseUrl }) => {
                   columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                 >
                   <Grid item xs={6}>
-                    <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        // fontWeight: "bold",
+                      }}
+                    >
                       {expense.expense_name}
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
-                    <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        // fontWeight: "bold",
+                        borderLeft: "2px solid #fff",
+                        paddingLeft: "10px"
+
+                      }}
+                    >
                       {expense.amount?.toLocaleString("en-US", {
                         style: "currency",
                         currency: "USD",
@@ -371,12 +439,22 @@ const BudgetView = ({ baseUrl }) => {
               </Paper>
             );
           })}
-          <Card sx={{ mt: 2, border: "none", boxShadow: "none" }}>
+          <Card
+            sx={{
+              mt: 2,
+              border: "none",
+              boxShadow: "none",
+              bgcolor: "#fefae0",
+            }}
+          >
             <Button
               variant="contained"
               fullWidth
-              color="warning"
-              sx={{ mt: 2, mb: 2 }}
+              color="secondary"
+              sx={{
+                mt: 2,
+                mb: 2,
+              }}
               startIcon={<EditIcon />}
               onClick={() => navigate(`/budgets/${id}/edit`)}
             >
@@ -385,7 +463,11 @@ const BudgetView = ({ baseUrl }) => {
             <Button
               variant="contained"
               fullWidth
-              sx={{ mt: 2, mb: 8, backgroundColor: "#242424" }}
+              sx={{
+                mt: 2,
+                mb: 8,
+                backgroundColor: "#242424",
+              }}
               startIcon={<KeyboardReturnIcon />}
               onClick={() => navigate(`/budgets/`)}
             >
