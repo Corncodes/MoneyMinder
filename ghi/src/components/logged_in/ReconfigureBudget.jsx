@@ -19,6 +19,7 @@ import AddIcon from '@mui/icons-material/Add';
 import WalletOutlinedIcon from '@mui/icons-material/WalletOutlined';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import CancelIcon from '@mui/icons-material/Cancel';
+import AnimatedNumbers from 'react-animated-numbers';
 
 
 const ReconfigureBudget = ({ updatedBudget, baseUrl, setBudgetCreated}) => {
@@ -141,23 +142,47 @@ const ReconfigureBudget = ({ updatedBudget, baseUrl, setBudgetCreated}) => {
           >
             Total Spending
           </Typography>
-          <Typography 
-          variant="h4" 
-          sx={{ fontWeight: "bold" }}
-          >
-            {totalSpending?.toLocaleString("en-US", {style:"currency", currency:"USD", minimumFractionDigits: 0, maximumFractionDigits: 0})}
+          <Grid container direction="row" justifyContent="center" alignItems="center">
+            <Typography variant="h6">$</Typography>
+          <Typography variant='h5'>
+          <AnimatedNumbers 
+          animateToNumber={totalSpending}
+          includeComma
+          locale="en-us"
+          configs={[
+            { mass: 1, tension: 220, friction: 100 },
+            { mass: 1, tension: 180, friction: 130 },
+            { mass: 1, tension: 280, friction: 90 },
+            { mass: 1, tension: 180, friction: 135 },
+            { mass: 1, tension: 260, friction: 100 },
+            { mass: 1, tension: 210, friction: 180 },
+          ]}
+          />
           </Typography>
+          </Grid>
           <Typography 
           variant="overline"
           >
             Remaining
           </Typography>
-          <Typography 
-          variant="h4" 
-          sx={{ fontWeight: "bold" }}
-          >
-            {(updatedBudget.monthly_income - totalSpending).toLocaleString("en-US", {style:"currency", currency:"USD", minimumFractionDigits: 0, maximumFractionDigits: 0})}
+          <Grid container direction="row" justifyContent="center" alignItems="center">
+            <Typography variant="h6">$ </Typography>
+          <Typography variant='h5'>
+          <AnimatedNumbers 
+          animateToNumber={updatedBudget.monthly_income - totalSpending}
+          locale="en-US"
+          includeComma
+          configs={[
+            { mass: 1, tension: 220, friction: 100 },
+            { mass: 1, tension: 180, friction: 130 },
+            { mass: 1, tension: 280, friction: 90 },
+            { mass: 1, tension: 180, friction: 135 },
+            { mass: 1, tension: 260, friction: 100 },
+            { mass: 1, tension: 210, friction: 180 },
+          ]}
+          />
           </Typography>
+          </Grid>
         </Grid>
         {expenseItems.length === 0 ? (
         <Typography variant="overline">Get Started Below!</Typography>
