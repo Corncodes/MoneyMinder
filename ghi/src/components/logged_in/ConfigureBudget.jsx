@@ -126,46 +126,52 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
             {createdBudget.name}
           </Typography>
           <Typography variant="overline">Total Spending</Typography>
-          <Grid container direction="row" justifyContent="center" alignItems="center">
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+          >
             <Typography variant="h6">$</Typography>
-            <Typography variant='h5'>
-              <AnimatedNumbers 
+            <Typography variant="h5">
+              <AnimatedNumbers
                 animateToNumber={totalSpending}
                 includeComma
                 locale="en-us"
                 configs={[
-                  { mass: 1, tension: 220, friction: 100 },
-                  { mass: 1, tension: 180, friction: 130 },
-                  { mass: 1, tension: 280, friction: 90 },
-                  { mass: 1, tension: 180, friction: 135 },
-                  { mass: 1, tension: 260, friction: 100 },
-                  { mass: 1, tension: 210, friction: 180 },
+                  { mass: 1, tension: 1000, friction: 25 },
+                  { mass: 1, tension: 1000, friction: 25 },
+                  { mass: 1, tension: 1000, friction: 25 },
+                  { mass: 1, tension: 1000, friction: 25 },
+                  { mass: 1, tension: 1000, friction: 25 },
+                  { mass: 1, tension: 1000, friction: 25 },
                 ]}
               />
             </Typography>
           </Grid>
-          <Typography 
-          variant="overline"
+          <Typography variant="overline">Remaining</Typography>
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
           >
-            Remaining
-          </Typography>
-          <Grid container direction="row" justifyContent="center" alignItems="center">
             <Typography variant="h6">$ </Typography>
-            <Typography variant='h5'>
-              <AnimatedNumbers 
+            <Typography variant="h5">
+              <AnimatedNumbers
                 animateToNumber={availableSpend - totalSpending}
                 locale="en-US"
                 includeComma
                 configs={[
-                  { mass: 1, tension: 220, friction: 100 },
-                  { mass: 1, tension: 180, friction: 130 },
-                  { mass: 1, tension: 280, friction: 90 },
-                  { mass: 1, tension: 180, friction: 135 },
-                  { mass: 1, tension: 260, friction: 100 },
-                  { mass: 1, tension: 210, friction: 180 },
+                  { mass: 1, tension: 1000, friction: 25 },
+                  { mass: 1, tension: 1000, friction: 25 },
+                  { mass: 1, tension: 1000, friction: 25 },
+                  { mass: 1, tension: 1000, friction: 25 },
+                  { mass: 1, tension: 1000, friction: 25 },
+                  { mass: 1, tension: 1000, friction: 25 },
                 ]}
               />
-          </Typography>
+            </Typography>
           </Grid>
         </Grid>
         {expenseItems.length === 0 ? (
@@ -214,7 +220,14 @@ const ConfigureBudget = ({ createdBudget, baseUrl }) => {
           ))
         )}
 
-        <Card sx={{ mt: 2, border: "none", boxShadow: "none", bgcolor: "background.default" }}>
+        <Card
+          sx={{
+            mt: 2,
+            border: "none",
+            boxShadow: "none",
+            bgcolor: "background.default",
+          }}
+        >
           <Button
             variant="contained"
             color="secondary"
