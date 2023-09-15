@@ -48,9 +48,7 @@ class BudgetQueries:
                         for row in rows:
                             budget["expenses"].append(
                                 self.record_to_dict(
-                                    row,
-                                    cur.description,
-                                    expense_fields
+                                    row, cur.description, expense_fields
                                 )
                             )
                     return budget
@@ -58,8 +56,7 @@ class BudgetQueries:
             print(e)
             return {"message": "Could not get that budget"}
 
-
-    def get_budgets(self, account_id: int) -> BudgetsOut:
+    def get_budgets(self, account_id: int):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
@@ -80,58 +77,34 @@ class BudgetQueries:
             print(e)
             return {"message": "Could not get that budget"}
 
-
     def create_budget(self, budget, account_id):
         id = None
         budgets = self.get_budgets(account_id)
-        if not budgets:
-            with pool.connection() as conn:
-                with conn.cursor() as cur:
-                    cur.execute(
-                        """
-                        INSERT INTO budgets (
-                            name,
-                            primary_budget,
-                            monthly_income,
-                            account_id
-                        )
-                        VALUES (%s, TRUE, %s, %s)
-                        returning id
-                        """,
-                        [
-                            budget.name,
-                            budget.monthly_income,
-                            account_id,
-                        ],
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    INSERT INTO budgets (
+                        name,
+                        primary_budget,
+                        monthly_income,
+                        account_id
                     )
+                    VALUES (%s, %s, %s, %s)
+                    returning id
+                    """,
+                    [
+                        budget.name,
+                        not budgets,
+                        budget.monthly_income,
+                        account_id,
+                    ],
+                )
 
-                    row = cur.fetchone()
-                    id = row[0]
-        else:
-            with pool.connection() as conn:
-                with conn.cursor() as cur:
-                    cur.execute(
-                        """
-                        INSERT INTO budgets (
-                            name,
-                            primary_budget,
-                            monthly_income,
-                            account_id
-                        )
-                        VALUES (%s, FALSE, %s, %s)
-                        returning id
-                        """,
-                        [
-                            budget.name,
-                            budget.monthly_income,
-                            account_id,
-                        ],
-                    )
-                    row = cur.fetchone()
-                    id = row[0]
+                row = cur.fetchone()
+                id = row[0]
         if id is not None:
             return self.get_budget(id)
-
 
     def record_to_dict(self, row, description, fields):
         dictionary = None
@@ -141,7 +114,6 @@ class BudgetQueries:
                 if column.name in fields:
                     dictionary[column.name] = row[i]
         return dictionary
-
 
     def update_budget(self, budget_id, data):
         with pool.connection() as conn:
@@ -187,7 +159,6 @@ class BudgetQueries:
                         "Row is not None. Record has been updated to:", record
                     )
                 return record
-
 
     def delete_budget(self, budget_id):
         with pool.connection() as conn:

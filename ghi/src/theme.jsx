@@ -5,7 +5,7 @@ import { purple, lightGreen } from "@mui/material/colors";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#344620",
+      main: "#283618",
     },
     secondary: {
       main: "#BC6C25",
@@ -32,6 +32,14 @@ const theme = createTheme({
           backgroundColor: "#344620",
           color: "#ffffff",
         },
+      },
+    },
+    MuiIcon: {
+      styleOverrides: {
+        root: {
+          color: "#000",
+          backgroundColor: "#000"
+        }
       },
     },
     MuiPieChart: {

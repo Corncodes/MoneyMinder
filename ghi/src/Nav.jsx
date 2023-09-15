@@ -20,13 +20,12 @@ import useToken from "@galvanize-inc/jwtdown-for-react";
 import { FetchWrapper } from './fetch-wrapper';
 
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 function DrawerAppBar(props) {
   const { window, baseUrl } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { token } = useAuthContext();
-	const FastAPI = new FetchWrapper(baseUrl);
   const { logout } = useToken();
 
 
@@ -61,8 +60,12 @@ function DrawerAppBar(props) {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center"}}>
+      <Typography variant="h6" sx={{
+        my: 2,
+        component: "a",
+        href: "/"
+        }}>
         MoneyMinder
       </Typography>
       <Divider />
@@ -70,10 +73,10 @@ function DrawerAppBar(props) {
 
         {navItems.map((item) => (
           <ListItem key={item.name} disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
+            <ListItemButton sx={{ justifyContent: "center"}}>
               <Link
                 to={`${item.url}`}
-                style={{ color: "#424242", textDecoration: "none" }}
+                style={{ align: "center", color: "#424242", textDecoration: "none" }}
               >
                 <ListItemText
                   primary={item.name}
@@ -84,7 +87,7 @@ function DrawerAppBar(props) {
         ))}
         {token &&(
           <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
+            <ListItemButton sx={{ justifyContent: "center"}}>
               <Link
                 to={'/'}
                 style={{ color: "#424242", textDecoration: "none" }}
@@ -108,7 +111,7 @@ function DrawerAppBar(props) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar bgcolor="#fff"  component="nav" sx={{ backgroundColor: "#242424" }}>
+      <AppBar  component="nav">
         <Toolbar>
           <IconButton
             color="inherit"
@@ -167,6 +170,7 @@ function DrawerAppBar(props) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              bgcolor: "background.default"
             },
           }}
         >

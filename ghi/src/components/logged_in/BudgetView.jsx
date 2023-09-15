@@ -32,6 +32,7 @@ const BudgetView = ({ baseUrl }) => {
   const [isPrimaryBudget, setIsPrimaryBudget] = useState(false);
   const [primaryBudgetId, setPrimaryBudgetId] = useState(undefined);
   const storage = [];
+
   const palette = [
     "#606C38",
     "#493829",
