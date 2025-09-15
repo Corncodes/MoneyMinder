@@ -1,5 +1,20 @@
+# Python dependencies for the MoneyMinder FastAPI backend
+# This file lists all required packages for the backend application
+
+# FastAPI web framework with all optional dependencies
 fastapi[all]==0.89.0
+
+# ASGI server for running FastAPI applications
 uvicorn[standard]==0.17.6
+
+# PostgreSQL database adapter with connection pooling
 psycopg[binary,pool]==3.0.14
+
+# Testing framework for unit and integration tests
 pytest
+
+# JWT authentication library for FastAPI
 jwtdown-fastapi>=0.2.0
+
+# Password hashing library with specific version for compatibility
+bcrypt==4.0.1

@@ -1,3 +1,7 @@
+// BudgetList component for the MoneyMinder React application
+// This component displays all user budgets in a list format with options to view, edit, and delete
+// Uses Material-UI components for consistent styling and user experience
+
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import LoginForm from "../logged_out/LoginForm";
@@ -5,8 +9,10 @@ import { useStore } from "../../ContextStore";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import { FetchWrapper } from '../../fetch-wrapper';
 
-
+// Import React for state management
 import * as React from "react";
+
+// Import Material-UI components for layout and styling
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
@@ -23,81 +29,123 @@ import Box from "@mui/material/Box";
 import { Divider } from "@mui/material";
 import Paper from '@mui/material/Paper';
 
-
+// Import Material-UI typography and layout components
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
+// Import Material-UI accordion components for expandable budget details
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 
-
+/**
+ * BudgetList component that displays all user budgets
+ * 
+ * @param {Object} props - Component props
+ * @param {string} props.baseUrl - Base URL for API requests
+ */
 const BudgetList = ({ baseUrl }) => {
+	// Initialize API wrapper and get authentication token
 	const FastAPI = new FetchWrapper(baseUrl);
 	const { token } = useAuthContext();
+	
+	// Get budgets data from global context store
 	const { budgetsData, setBudgetsData } = useStore();
+	
+	// Navigation hook for programmatic routing
 	const navigate = useNavigate();
+	
+	// Local state for UI interactions
 	const [isPrimaryBudget, setIsPrimaryBudget] = useState(false);
 	const [expanded, setExpanded] = React.useState("");
 
+	/**
+	 * Fetch all budgets from the API and sort them by primary status
+	 * Primary budgets are displayed first in the list
+	 */
 	const getData = async () => {
 		const data = await FastAPI.get('/api/budgets', token)
-    let sortedBudgetsData = [];
-    for (let budget of data.budgets) {
-      if (budget.primary_budget) {
-        sortedBudgetsData.unshift(budget);
-      } else {
-        sortedBudgetsData.push(budget);
-      }
-    }
+		let sortedBudgetsData = [];
+		for (let budget of data.budgets) {
+			if (budget.primary_budget) {
+				sortedBudgetsData.unshift(budget);  // Primary budgets first
+			} else {
+				sortedBudgetsData.push(budget);     // Other budgets after
+			}
+		}
 		setBudgetsData(sortedBudgetsData)
 	}
 
+	// Fetch budgets when component mounts or token changes
 	useEffect(() => {
 		if (token) {getData()}
 	}, [token])
 
+	/**
+	 * Delete a budget from the database and update local state
+	 * 
+	 * @param {number} id - ID of the budget to delete
+	 */
 	const deleteBudget = async (id) => {
+		// Optimistically update UI by removing from local state
 		setBudgetsData(budgetsData.filter(budget => budget.id !== id))
+		// Make API call to delete from database
 		await FastAPI.delete(`/api/budgets/${id}`, token)
 	}
 
+	/**
+	 * Navigate to the detailed view of a specific budget
+	 * 
+	 * @param {number} id - ID of the budget to view
+	 */
 	const viewBudget = (id) => {
-    navigate(`/budgets/${id}`)
+		navigate(`/budgets/${id}`)
 	}
 
+	/**
+	 * Navigate to the create new budget form
+	 */
 	const handleClick = () => {
 		navigate('/budgets/new')
 	}
 
-    const handleChange = (card) => (event, newExpanded) => {
-        setExpanded(newExpanded ? card : false);
-    }
+	/**
+	 * Handle accordion expansion state changes
+	 * 
+	 * @param {string} card - ID of the accordion card
+	 * @returns {Function} Event handler for accordion changes
+	 */
+	const handleChange = (card) => (event, newExpanded) => {
+		setExpanded(newExpanded ? card : false);
+	}
 
-
-  return (
-    <>
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-        mt: 1,
-        mb: 5,
-        fontSize: 'large',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: '#242424'}}>
-          <WalletOutlinedIcon />
-        </Avatar>
-        <Typography variant="h6">
-          Budgets
-        </Typography>
-      </Box>
-      <div style={{ marginBottom: "20px"}}>
-        {budgetsData.map((budget) => (
+	// Render the budget list interface
+	return (
+		<>
+		<Container component="main" maxWidth="xs">
+			{/* Header section with wallet icon and title */}
+			<Box
+				sx={{
+				mt: 1,
+				mb: 5,
+				fontSize: 'large',
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center',
+				}}
+			>
+				<Avatar sx={{ m: 1, bgcolor: '#242424'}}>
+					<WalletOutlinedIcon />
+				</Avatar>
+				<Typography variant="h6">
+					Budgets
+				</Typography>
+			</Box>
+			
+			{/* Budget list container */}
+			<div style={{ marginBottom: "20px"}}>
+				{budgetsData.map((budget) => (
         <Accordion
         sx={{ mt: 2, mb: 2 }}
         key={budget.id}

@@ -1,3 +1,7 @@
+# Account API endpoints for the MoneyMinder API
+# This file defines all HTTP endpoints related to user account operations
+# Handles account creation, authentication, and account retrieval
+
 from fastapi import (
     Depends,
     HTTPException,
@@ -19,18 +23,34 @@ from queries.accounts import AccountQueries
 
 
 class AccountForm(BaseModel):
-    username: str
-    password: str
+    """
+    Form model for login requests.
+    Contains username (email) and password fields.
+    """
+
+    username: str  # User's email address
+    password: str  # Plain text password
 
 
 class AccountToken(Token):
+    """
+    Token model that includes account information.
+    Used for authentication responses.
+    """
+
     account: AccountOut
 
 
 class HttpError(BaseModel):
+    """
+    Standard error response model.
+    Used for consistent error handling across endpoints.
+    """
+
     detail: str
 
 
+# Create the accounts router
 router = APIRouter()
 
 
@@ -41,6 +61,24 @@ async def create_account(
     response: Response,
     accounts: AccountQueries = Depends(),
 ):
+    """
+    Create a new user account and automatically log them in.
+
+    This endpoint:
+    1. Hashes the provided password
+    2. Creates the account in the database
+    3. Generates a JWT token for authentication
+    4. Returns the token with account information
+
+    Args:
+        info: AccountIn object with registration data
+        request: FastAPI request object
+        response: FastAPI response object
+        accounts: AccountQueries dependency
+
+    Returns:
+        AccountToken with authentication token and account data
+    """
     hashed_password = authenticator.hash_password(info.password)
     try:
         account = accounts.create_account(info, hashed_password)
@@ -59,6 +97,16 @@ async def get_token(
     request: Request,
     account: AccountOut = Depends(authenticator.try_get_current_account_data),
 ) -> AccountToken | None:
+    """
+    Get the current authentication token for the logged-in user.
+
+    Args:
+        request: FastAPI request object
+        account: Current account data from authentication
+
+    Returns:
+        AccountToken if user is authenticated, None otherwise
+    """
     if account and authenticator.cookie_name in request.cookies:
         return {
             "access_token": request.cookies[authenticator.cookie_name],
@@ -71,6 +119,16 @@ async def get_token(
 async def get_protected(
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
+    """
+    Protected endpoint that requires authentication.
+    Used to test if a user is properly authenticated.
+
+    Args:
+        account_data: Current account data from authentication
+
+    Returns:
+        True if user is authenticated
+    """
     return True
 
 
@@ -85,6 +143,18 @@ async def get_account(
         authenticator.try_get_current_account_data
     ),  # Will added this
 ):
+    """
+    Get account information by email address.
+
+    Args:
+        account_email: Email address of the account to retrieve
+        response: FastAPI response object
+        queries: AccountQueries dependency
+        account: Current authenticated account
+
+    Returns:
+        AccountOutWithPassword object if found, 404 if not found
+    """
     record = queries.get_account(account_email)
     if record is None:
         response.status_code = 404

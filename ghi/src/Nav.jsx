@@ -1,3 +1,7 @@
+// Navigation component for the MoneyMinder React application
+// This component provides a responsive navigation bar with drawer for mobile devices
+// Handles authentication state and provides navigation links based on user login status
+
 // import React from "react";
 // import { NavLink } from 'react-router-dom';
 
@@ -15,8 +19,12 @@
 // }
 
 // export default Nav;
+
+// Import React for state management
 import * as React from "react";
 import PropTypes from "prop-types";
+
+// Import Material-UI components for responsive navigation
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -31,24 +39,42 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+
+// Import React Router components for navigation
 import { Link } from "react-router-dom";
+
+// Import authentication hooks
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+
+// Import API wrapper for logout functionality
 import { FetchWrapper } from './fetch-wrapper';
 
-
+// Width of the mobile drawer
 const drawerWidth = 240;
 
+/**
+ * Responsive navigation component with drawer for mobile devices
+ * 
+ * @param {Object} props - Component props
+ * @param {Object} props.window - Window object for responsive behavior
+ * @param {string} props.baseUrl - Base URL for API requests
+ */
 function DrawerAppBar(props) {
   const { window, baseUrl } = props;
+  
+  // State for mobile drawer open/close
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  
+  // Get authentication token and logout function
   const { token } = useAuthContext();
-	const FastAPI = new FetchWrapper(baseUrl);
+  const FastAPI = new FetchWrapper(baseUrl);
   const { logout } = useToken();
 
-
+  // Define navigation items based on authentication status
   let navItems = token
     ? [
+        // Navigation items for authenticated users
         {
           name: "Test",
           url: "/test",
@@ -63,6 +89,7 @@ function DrawerAppBar(props) {
         },
       ]
     : [
+        // Navigation items for unauthenticated users
         {
           name: "Home",
           url: "/",
@@ -77,10 +104,16 @@ function DrawerAppBar(props) {
         },
       ];
 
+  /**
+   * Toggle mobile drawer open/close state
+   */
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
+  /**
+   * Render the mobile drawer content
+   */
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
@@ -88,7 +121,7 @@ function DrawerAppBar(props) {
       </Typography>
       <Divider />
       <List>
-
+        {/* Render navigation items as list */}
         {navItems.map((item) => (
           <ListItem key={item.name} disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>

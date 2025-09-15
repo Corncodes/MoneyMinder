@@ -1,59 +1,74 @@
+# Docker Compose configuration for the MoneyMinder application
+# This file defines all services needed to run the full application stack
+# Includes FastAPI backend, React frontend, PostgreSQL database, and pgAdmin
+
+# Define named volumes for persistent data storage
 volumes:
-  moneyminder:
+  moneyminder: # Volume for PostgreSQL database data
     external: true
-  pg-admin:
+  pg-admin: # Volume for pgAdmin configuration and data
     external: true
+
+# Define all application services
 services:
+  # FastAPI backend service
   fastapi:
     environment:
+      # CORS configuration for frontend communication
       CORS_HOST: http://localhost:3000
+      # Database connection string
       DATABASE_URL: postgresql://moneyminder:moneyminder@db/moneyminder
+      # Wait configuration for service dependencies
       WAIT_HOSTS: db:5432
       WAIT_BEFORE: 5
       WAIT_TIMEOUT: 60
+      # JWT signing key for authentication
       SIGNING_KEY: 94adf71a8a30eecb1f5848f6808795dfe6f308be3582a2a37bc45b8c2db37a6d
     build:
       context: api
       dockerfile: Dockerfile.dev
     ports:
-      - 8000:8000
+      - 8000:8000 # Expose FastAPI on port 8000
     volumes:
-      - ./api:/app
+      - ./api:/app # Mount API code for development
 
+  # React frontend service
   ghi:
-    image: node:lts-bullseye
-    command: /bin/bash run.sh
+    image: node:lts-bullseye # Use Node.js LTS image
+    command: /bin/bash run.sh # Run the development script
     working_dir: /app
     volumes:
-      - ./ghi:/app
+      - ./ghi:/app # Mount frontend code for development
     ports:
-      - "3000:3000"
+      - "3000:3000" # Expose React dev server on port 3000
     environment:
       HOST_OS: ${OS}
       NODE_ENV: development
       HOST: "0.0.0.0"
       PUBLIC_URL: ${PUBLIC_URL}
-      REACT_APP_API_HOST: ${REACT_APP_API_HOST}
+      REACT_APP_API_HOST: ${REACT_APP_API_HOST} # Backend API URL
 
+  # PostgreSQL database service
   db:
     build:
       context: data
       dockerfile: Dockerfile.dev
     volumes:
-      - moneyminder:/var/lib/postgresql/data
+      - moneyminder:/var/lib/postgresql/data # Persistent database storage
     environment:
       POSTGRES_PASSWORD: moneyminder
       POSTGRES_USER: moneyminder
       POSTGRES_DB: moneyminder
     ports:
-      - "15432:5432"
+      - "15432:5432" # Expose PostgreSQL on port 15432
 
+  # pgAdmin database management interface
   pg-admin:
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4 # Official pgAdmin image
     volumes:
-      - pg-admin:/var/lib/pgadmin
+      - pg-admin:/var/lib/pgadmin # Persistent pgAdmin configuration
     ports:
-      - 8082:80
+      - 8082:80 # Expose pgAdmin on port 8082
     environment:
       PGADMIN_DEFAULT_EMAIL: me@me.com
       PGADMIN_DEFAULT_PASSWORD: password

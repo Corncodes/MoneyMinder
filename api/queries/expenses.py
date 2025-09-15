@@ -1,16 +1,46 @@
+# Expense database queries for the MoneyMinder API
+# This file handles all database operations related to expenses
+# Uses psycopg_pool for connection management and PostgreSQL
+
 import os
 from psycopg_pool import ConnectionPool
 
 # from models.expenses import ExpenseOut
 
+# Create a connection pool for database operations
+# Uses the DATABASE_URL environment variable for connection details
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
 
 class ExpenseQueries:
+    """
+    Class containing all database operations for expenses.
+    Handles expense creation, updates, deletion, and data transformation.
+    """
+
     def get_expenses(self, id: int):
+        """
+        Retrieve expenses for a specific budget.
+        Currently not implemented.
+
+        Args:
+            id: Budget ID to get expenses for
+
+        Returns:
+            None (method not implemented)
+        """
         pass
 
     def create_expense(self, expense):
+        """
+        Create a new expense in the database.
+
+        Args:
+            expense: ExpenseIn object containing expense data
+
+        Returns:
+            True if expense was created successfully, None otherwise
+        """
         id = None
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -36,6 +66,16 @@ class ExpenseQueries:
                     return True
 
     def update_expense(self, expense_id, data):
+        """
+        Update an existing expense in the database.
+
+        Args:
+            expense_id: ID of the expense to update
+            data: UpdateExpense object containing new expense data
+
+        Returns:
+            Dictionary with updated expense data if successful, None otherwise
+        """
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 params = [
@@ -73,6 +113,15 @@ class ExpenseQueries:
                     return record
 
     def delete_expense(self, expense_id):
+        """
+        Delete an expense from the database.
+
+        Args:
+            expense_id: ID of the expense to delete
+
+        Returns:
+            True if expense was deleted successfully, False otherwise
+        """
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
